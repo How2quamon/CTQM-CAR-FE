@@ -1,6 +1,6 @@
 import React from 'react';
 import useTitle from '../../../hooks/useTitle';
-import MenuItems from 'src/layout /menuItems';
+import MenuItems from 'src/layout/menuItems';
 
 export default function List() {
     useTitle("Danh sách sản phẩm");
