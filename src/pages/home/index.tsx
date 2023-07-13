@@ -1,18 +1,22 @@
 import { SketchOutlined } from '@ant-design/icons';
+import NavigationBar from 'src/layout/navigationBar';
+
 import { Button, Card } from 'antd';
 import React from 'react';
 import useTitle from 'src/hooks/useTitle';
 import homepage1 from 'src/videos/mercedes-amg-car-png-image-pngpix-9.png';
 import Howworks from 'src/videos/mercedes-benz-g-63-amg-mercedes-car-suv-white-front-view-115698742139qrfpozcbr.jpeg';
+import MenuItems from 'src/layout/menuItems';
+import Footer from 'src/layout/Footer';
 
 export default function List() {
     useTitle("Danh sách sản phẩm");
     return (
         <React.Fragment>
             {/* <MenuItems /> */}
-            <main>
+            <main>                
                 <div className=" ">
-                    <video autoPlay muted loop className='w-full ' >
+                    <video autoPlay muted loop className='w-full z-0 relative'>
                         <source src="../Videos/Mercedes-Maybach S-Class Haute Voiture Limited Edition 2022.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
@@ -111,7 +115,6 @@ export default function List() {
                     </div>
                 </div>
             </main>
-
         </React.Fragment >
     )
 }
