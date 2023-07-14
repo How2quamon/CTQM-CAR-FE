@@ -4,6 +4,9 @@ import HomePage from "../pages/home";
 import UserPage from "../pages/user/user";
 import ProtectedRoute from "./ProtectedRoute";
 import List from "../pages/products/list/list";
+import Login from '../pages/auth/login';
+import Register from "../pages/auth/register";
+
 
 export default function IndexRoute() {
   return (
@@ -20,6 +23,12 @@ export default function IndexRoute() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="list" element={<List/>}></Route>
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="login" element={<Login/>}></Route>
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="register" element={<Register/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
