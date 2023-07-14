@@ -1,5 +1,5 @@
 //import {Navbar, MobileNav, Typography, Button, IconButton } from "@material-tailwind/react";
-import logo from "../logo/ctqm-logo-2.png"; 
+import logo from "../logo/ctqm-logo-2.png";
 import React, { useState } from "react";
 import { CaretDownOutlined, CustomerServiceOutlined, EditOutlined, InboxOutlined, LogoutOutlined, UserOutlined, CloseOutlined, SearchOutlined } from "@ant-design/icons";
 import { Input, Space } from 'antd';
@@ -19,7 +19,7 @@ const NavBar = () => {
       <div className="flex justify-between items-center font-bold px-12 p-4 text-sm ">
         <div>
           <a href="#">
-            <img className="h-5" src={logo} alt="CTQM logo"/>
+            <img className="h-5" src={logo} alt="CTQM logo" />
           </a>
         </div>
         <div className="hidden lg:inline">
@@ -50,7 +50,7 @@ const NavBar = () => {
               <a href="#">Cart</a>
             </li> */}
             <li className="flex justify-between items-center py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-              <UserOutlined style={{ fontSize: '18px', paddingRight: '4px'}} rev={undefined} />
+              <UserOutlined style={{ fontSize: '18px', paddingRight: '4px' }} rev={undefined} />
               <a href="#">Account</a>
             </li>
             <li onClick={handleNav} className="py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
@@ -72,10 +72,10 @@ const NavBar = () => {
           }
         >
           <div className="flex justify-end pr-8 pt-7">
-            <CloseOutlined onClick={handleNav} className="rounded p-2 hover:bg-slate-700 transition duration-150 ease-out hover:ease-in" style={{ fontSize: '18px'}} rev={undefined}/>
+            <CloseOutlined onClick={handleNav} className="rounded p-2 hover:bg-slate-700 transition duration-150 ease-out hover:ease-in" style={{ fontSize: '18px' }} rev={undefined} />
           </div>
           <ul className="h-screen pt-8 px-6 bg-stone-950 ">
-            
+
             <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in ">
               <a href="https://www.tesla.com/inventory/new/m3">
                 Existing Inventory
@@ -98,7 +98,7 @@ const NavBar = () => {
             <li className="py-5 pl-3 inline-block align-middle">
               <div className="flex justify-between items-center rounded-md bg-slate-700">
                 <input type={"search"} placeholder="Search..." className="pl-3 bg-transparent w-full text-white text-sm focus:outline-none" />
-                <SearchOutlined className="px-2 py-1 text-white text-lg block float-right cursor-pointer mr-2" rev={undefined}/>
+                <SearchOutlined className="px-2 py-1 text-white text-lg block float-right cursor-pointer mr-2" rev={undefined} />
               </div>
             </li>
           </ul>

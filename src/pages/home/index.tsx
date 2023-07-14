@@ -1,19 +1,18 @@
 import { SketchOutlined } from '@ant-design/icons';
-import NavigationBar from 'src/layout/navigationBar';
 
 import { Button, Card } from 'antd';
 import React from 'react';
 import useTitle from 'src/hooks/useTitle';
+import Footer from 'src/layout/Footer';
+import NavBar from 'src/layout/navigationBar';
 import homepage1 from 'src/videos/mercedes-amg-car-png-image-pngpix-9.png';
 import Howworks from 'src/videos/mercedes-benz-g-63-amg-mercedes-car-suv-white-front-view-115698742139qrfpozcbr.jpeg';
-import MenuItems from 'src/layout/menuItems';
-import Footer from 'src/layout/Footer';
 
 export default function List() {
     useTitle("Danh sách sản phẩm");
     return (
         <React.Fragment>
-            {/* <MenuItems /> */}
+            <NavBar/>
             <main>                
                 <div className=" ">
                     <video autoPlay muted loop className='w-full z-0 relative'>
@@ -115,6 +114,7 @@ export default function List() {
                     </div>
                 </div>
             </main>
+            <Footer/>
         </React.Fragment >
     )
 }

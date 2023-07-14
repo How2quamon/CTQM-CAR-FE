@@ -3,7 +3,7 @@ import AuthPage from "../pages/auth";
 import HomePage from "../pages/home";
 import UserPage from "../pages/user/user";
 import ProtectedRoute from "./ProtectedRoute";
-import List from "../pages/products/list/list";
+import List from "../pages/products/list/list"
 
 export default function IndexRoute() {
   return (

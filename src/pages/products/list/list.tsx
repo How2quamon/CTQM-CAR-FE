@@ -1,12 +1,13 @@
 import React from 'react';
 import useTitle from '../../../hooks/useTitle';
-import MenuItems from 'src/layout/menuItems';
+import Footer from 'src/layout/Footer';
+import NavBar from 'src/layout/navigationBar';
 
 export default function List() {
     useTitle("Danh sách sản phẩm");
     return (
         <React.Fragment>
-            <MenuItems/>
+            <NavBar/>
             <div className=" px-36">
                 <div className="">
                     <video autoPlay muted loop>
@@ -34,7 +35,7 @@ export default function List() {
                                     quyến rũ truyền thống của những chiếc xe mang thương hiệu Mercedes thì AMG còn cho vẻ đẹp khỏe khoắn.
                                 </p>
                                 <div className="">
-                                    <a href="#">
+                                    <a href="/">
                                         <button
                                             className=""
                                             onClick={() => (window.location.href = '@Url.Action("Product", "Xes")')}
@@ -167,7 +168,7 @@ export default function List() {
                     </div>
                 </div>
             </div>
-
+            <Footer/>
         </React.Fragment>
     )
 }
