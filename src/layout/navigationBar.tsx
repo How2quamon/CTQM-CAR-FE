@@ -51,7 +51,7 @@ const NavBar = () => {
             </li> */}
             <li className="flex justify-between items-center py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
               <UserOutlined style={{ fontSize: '18px', paddingRight: '4px' }} rev={undefined} />
-              <a href="#">Account</a>
+              <a href="/login">Account</a>
             </li>
             <li onClick={handleNav} className="py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
               Menu
