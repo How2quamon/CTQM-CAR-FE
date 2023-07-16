@@ -4,7 +4,7 @@ import { Typography } from "@material-tailwind/react";
  
 export default function Footer() {
   return (
-    <footer className="flex w-full flex-row flex-wrap items-center justify-center px-7 border-t border-blue-gray-50 py-3 text-center md:justify-between">
+    <footer className="sticky top-[100vh] flex w-full flex-row flex-wrap items-center justify-center px-7 border-t border-blue-gray-50 py-3 text-center md:justify-between">
       <Typography variant="small" color="blue-gray" className="font-normal">
         &copy; 2023 CTQM Group
       </Typography>
