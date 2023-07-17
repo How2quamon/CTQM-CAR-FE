@@ -222,22 +222,6 @@ export default function Login() {
                         </div>
                         <div className="px-3 md:w-5/12">
                             <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-3 text-gray-800 font-light mb-6">
-                                {/* <div className="w-full flex mb-3 items-center">
-                                    <div className="w-32">
-                                        <span className="text-gray-600 font-semibold">Contact</span>
-                                    </div>
-                                    <div className="flex-grow pl-3">
-                                        <span>Scott Windon</span>
-                                    </div>
-                                </div>
-                                <div className="w-full flex items-center">
-                                    <div className="w-32">
-                                        <span className="text-gray-600 font-semibold">Billing Address</span>
-                                    </div>
-                                    <div className="flex-grow pl-3">
-                                        <span>123 George Street, Sydney, NSW 2000 Australia</span>
-                                    </div>
-                                </div> */}
                                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                                     <div className="-mx-3 md:flex mb-6">
                                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -255,16 +239,25 @@ export default function Login() {
                                         </div>
                                     </div>
                                     <div className="-mx-3 md:flex mb-6">
-                                    <div className="md:w-full px-3">
-                                        <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" htmlFor="grid-password">
-                                            Password
-                                        </label>
-                                        <input className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3" id="grid-password" type="password" placeholder="******************" />
-                                        <p className="text-grey-dark text-xs italic">Make it as long and as crazy as you'd like</p>
+                                        <div className="md:w-full px-3">
+                                            <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" htmlFor="grid-address">
+                                                Address
+                                            </label>
+                                            <input className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3" id="grid-address" type="" placeholder="35 tran Hung Dao Quan 5 HCM  " />
+                                            <p className="text-grey-dark text-xs italic">Fill in the address information</p>
+                                        </div>
+                                    </div>
+                                    <div className="-mx-3 md:flex mb-6">
+                                        <div className="md:w-full px-3">
+                                            <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" htmlFor="grid-phonenumber">
+                                            Phone number
+                                            </label>
+                                            <input className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3" id="grid-phonenumber" type="" placeholder="01234567899" />
+                                            <p className="text-grey-dark text-xs italic">Fill in the phone number information</p>
+                                        </div>
                                     </div>
                                 </div>
-                                </div>
-        
+
                                 <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 text-gray-800 font-light mb-6">
                                     <div className="w-full p-3 border-b border-gray-200">
                                         <div className="mb-5">
