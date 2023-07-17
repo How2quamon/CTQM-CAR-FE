@@ -20,59 +20,7 @@ export default function Login() {
     };
  
     return (
-        // <div className="hero">
-        //     <div className="form-box absolute w-[50%] top-[50%] left-[30%] backdrop-sepia-0 bg-white/30">
-        //         <div className="button-box text-center text-3xl">
-        //             <button type="button" className="toggle-btn " onClick={handleToggleForm}>
-        //                 {isLoginForm ? 'Log In' : 'Register'}
-        //             </button>
-        //             <button type="button" className="toggle-btn items-center" onClick={handleToggleForm}>
-        //                 {isLoginForm ? 'Register' : 'Log In'}
-        //             </button>
-        //         </div>
-        //         {/* <div className="social-icons">
-        //             <img src="~/images/login/mercedes-logo-png-mercedes-benz-logo-vector-icons-and-png-17.png" alt="Mercedes Logo" />
-        //         </div> */}
-        //         {isLoginForm ? (
-        //             <form action="/Access/Check" method="post" id="Login" className="flex flex-col">
-        //                 <div className=''>
-        //                     <input type="email" name="Email" className="w-[340px]" placeholder="Your Email Here" required />
-        //                 </div>
-        //                 <input type="password" name="Password" className=" w-[340px]" placeholder="Enter Password" required />
-        //                 <input type="checkbox" name="KeepLogedIn" className="check-box " />
-        //                 <span>Keep me Logged in</span>
-        //                 <button type="submit" className="submit-btn">LOG IN</button>
-        //             </form>
-        //         ) : (
-        //             <form action="/KhachHangs/SignUp" method="post" id="Register" className="input-group">
-        //                 <input type="email" name="NewEmail" className="input-field" placeholder="Your Email" required />
-        //                 <input type="password" name="NewPassword" className="input-field" placeholder="Your Password" required />
-        //                 <input type="text" name="NewName" className="input-field" placeholder="Your Name" required />
-        //                 <input type="tel" name="NewPhone" className="input-field" placeholder="Your Phone" required />
-        //                 <input type="checkbox" className="check-box" required />
-        //                 <span>I agree to the terms &amp; conditions</span>
-        //                 <button type="submit" className="submit-btn">REGISTER</button>
-        //             </form>
-        //         )}
-        //     </div>
-        //     {/* <Form className='absolute'>
-        //         <Form.Item
-        //             label="Username"
-        //             name="username"
-        //             rules={[{ required: true, message: 'Please input your username!' }]}
-        //         >
-        //             <Input  className='w-[100px]'/>
-        //         </Form.Item>
-        //         <Form.Item
-        //             label="Password"
-        //             name="password"
-        //             rules={[{ required: true, message: 'Please input your password!' }]}
-        //         >
-        //             <Input.Password className='w-[100px]'/>
-        //         </Form.Item>
-        //     </Form> */}
-        //     <img src="mec5.jpg" alt="Mercedes Main" className='h-screen font-medium bg-no-repeat bg-cover w-full' />
-        // </div>
+        
         <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
             <head>
                 <title>Create Next App</title>

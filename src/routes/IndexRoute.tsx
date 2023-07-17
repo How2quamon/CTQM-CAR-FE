@@ -7,7 +7,7 @@ import List from "../pages/products/list/list";
 import Login from '../pages/auth/login';
 import Register from "../pages/auth/register";
 import ProductDetails from "../pages/products/productDetails/productDetails";
-
+import Payment from "../pages/auth/payment";
 export default function IndexRoute() {
   return (
     <BrowserRouter>
@@ -32,6 +32,9 @@ export default function IndexRoute() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="productDetails" element={<ProductDetails/>}></Route>
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="payment" element={<Payment/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
