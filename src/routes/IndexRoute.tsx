@@ -33,6 +33,9 @@ export default function IndexRoute() {
         <Route element={<ProtectedRoute />}>
           <Route path="productDetails" element={<ProductDetails/>}></Route>
         </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="user" element={<UserPage/>}></Route>
+        </Route>
       </Routes>
     </BrowserRouter>
   );  
