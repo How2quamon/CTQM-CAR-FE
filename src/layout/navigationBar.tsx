@@ -20,65 +20,6 @@ const NavBar = () => {
 
   return (
     <div className="sticky top-0 z-10 bg-stone-950 text-slate-50">
-<<<<<<< HEAD
-      <div className="flex justify-between items-center font-bold px-12 p-4 text-sm ">
-        <div>
-          <a href="#">
-            <img className="h-5" src={logo} alt="CTQM logo" />
-          </a>
-        </div>
-        <div className="hidden lg:inline">
-          <ul className="flex justify-center hover:cursor-pointer">
-            <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-              <a href="#">Mayback</a>
-            </li>
-            <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-              <a href="#">Mercedes</a>
-            </li>
-            <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-              <a href="#">AMG</a>
-            </li>
-            <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-              <a href="#">Model Y</a>
-            </li>
-            <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-              <a href="#">Solar Roof</a>
-            </li>
-            <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-              <a href="#">Solar Panels</a>
-            </li>
-          </ul>
-        </div>
-        <div className="hidden lg:inline">
-          <ul className="flex justify-center hover:cursor-pointer">
-            {/* <li className="py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-              <a href="#">Cart</a>
-            </li> */}
-            <li className="flex justify-between items-center py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-              <UserOutlined style={{ fontSize: '18px', paddingRight: '4px' }} rev={undefined} />
-              <a href="/login">Account</a>
-            </li>
-            <li onClick={handleNav} className="py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-              Menu
-            </li>
-          </ul>
-        </div>
-        <div className="lg:hidden">
-          <button onClick={handleNav} className="inline-flex items-center rounded-md py-2 px-4 p-2 text-sm font-medium bg-black/5 shadow-sm hover:bg-black/10 transition duration-150 ease-out hover:ease-in">
-            Menu
-          </button>
-        </div>
-
-        <div
-          className={
-            showSideBar
-              ? "bg-stone-950 absolute right-0 top-0 w-80 max-h-screen z-1001 ease-in-out duration-300 backdrop-blur-sm"
-              : "fixed right-[-100%] "
-          }
-        >
-          <div className="flex justify-end pr-8 pt-7">
-            <CloseOutlined onClick={handleNav} className="rounded p-2 hover:bg-slate-700 transition duration-150 ease-out hover:ease-in" style={{ fontSize: '18px' }} rev={undefined} />
-=======
       <div className="max-w-7xl- mx-auto px-4 sm:px-6 lg:px-8 py-1 md:py-4">
         <div className="flex justify-between items-center font-bold text-sm md:justify-start">
           
@@ -101,7 +42,6 @@ const NavBar = () => {
                 <a href="#">Model Y</a>
               </li>
             </ul>
->>>>>>> f7517ead0e775e7a1a7abec38accca59312f564b
           </div>
           <div className="flex justify-between items-center space-x-4">
             <div className="relative hidden md:block">
