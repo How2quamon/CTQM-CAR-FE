@@ -7,20 +7,6 @@ import Footer from 'src/layout/Footer';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
-const ProductVariants = [
-    {
-      color: 'Emerald Green metallic',
-    },
-    {
-      color: 'Magnetite Black metallic',
-    },
-    {
-      color: 'Ocean Blue metallic',
-    }
-  ]
-
-const { Meta } = Card;
-
 const ProductDetails: React.FC = () => {
     useTitle("Chi tiết sản phẩm");
     const [images, setImages] = useState({
