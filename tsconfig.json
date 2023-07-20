@@ -38,7 +38,10 @@
       ],
       "@services/*": [
         "./src/services/*"
-      ]
+      ],
+      "@share/*": [
+        "./src/share/*"
+      ],
     }
   },
   "include": [
