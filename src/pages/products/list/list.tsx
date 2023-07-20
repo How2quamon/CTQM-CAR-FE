@@ -1,13 +1,34 @@
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { Button, Card, Select } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from 'src/layout/Footer';
 import NavBar from 'src/layout/navigationBar';
 import Image1 from 'src/videos/png_mercedes_21788.png';
 import useTitle from '../../../hooks/useTitle';
+import { CarService } from '@share/service-proxies/service-proxies';
+import { CarDTO } from '@share/dtos/service-proxies-dtos';
+
 export default function List() {
+    // const [listCars, setListCars] = useState<CarDTO[]>([]);
     useTitle("Danh sách sản phẩm");
+    
+    // useEffect(() => {
+    //     // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
+    //     getListCar();
+    // }, []);
+
+    // const getListCar = () => {
+    //     const _carService = new CarService();
+    //     _carService.carAll()
+    //     .then((response: CarDTO[]) => {
+    //     setListCars(response); // Cập nhật state cars với dữ liệu trả về từ API
+    //     console.log(listCars);
+    // })
+    //     .catch((error) => {
+    //     console.error('Error fetching cars:', error);
+    // })
+    // };
     return (
         <React.Fragment>
             <NavBar />
