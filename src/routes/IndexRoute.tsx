@@ -7,7 +7,8 @@ import List from "../pages/products/list/list";
 import Login from '../pages/auth/login';
 import Register from "../pages/auth/register";
 import ProductDetails from "../pages/products/productDetails/productDetails";
-import Payment from "../pages/auth/payment";
+import Payment from "../pages/paymentt/payment";
+import Cart from "../pages/paymentt/cart";
 import PurchaseHistory from "../pages/user/PurchaseHistory";
 import ChangePassword from "../pages/user/ChangePassword";
 export default function IndexRoute() {
@@ -32,6 +33,7 @@ export default function IndexRoute() {
           <Route path="payment" element={<Payment/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
+          <Route path="cart" element={<Cart/>}></Route>
           <Route path="user" element={<UserPage/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
