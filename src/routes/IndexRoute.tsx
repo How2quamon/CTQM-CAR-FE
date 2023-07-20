@@ -7,7 +7,9 @@ import List from "../pages/products/list/list";
 import Login from '../pages/auth/login';
 import Register from "../pages/auth/register";
 import ProductDetails from "../pages/products/productDetails/productDetails";
-import Payment from "../pages/auth/payment";
+import Payment from "../pages/paymentt/payment";
+import Cart from "../pages/paymentt/cart";
+
 export default function IndexRoute() {
   return (
     <BrowserRouter>
@@ -35,6 +37,9 @@ export default function IndexRoute() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="payment" element={<Payment/>}></Route>
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="cart" element={<Cart/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
