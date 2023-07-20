@@ -10,11 +10,6 @@ export default function Footer() {
       </Typography>
       <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
         <li className='py-1 px-4 hover:bg-slate-200 hover:rounded transition duration-150 ease-out hover:ease-in'>
-          <Typography variant="small" as="a" href="/login" className="font-normal transition-colors focus:text-blue-500">
-            About Us
-          </Typography>
-        </li>
-        <li className='py-1 px-4 hover:bg-slate-200 hover:rounded transition duration-150 ease-out hover:ease-in'>
           <Typography variant="small" as="a" href="#" className="font-normal transition-colors focus:text-blue-500">
             License
           </Typography>

@@ -26,32 +26,22 @@ const NavBar = () => {
             <a href="#">
               <img className="h-5" src={logo} alt="CTQM logo" />
             </a>
-          
           <div className="hidden lg:inline md:flex space-x-3 flex-1 lg:ml-8">
             <ul className="flex justify-start ">
               <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
-                <a href="#">Mayback</a>
+                <a href="#">Catalogs</a>
               </li>
               <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
-                <a href="#">Mercedes</a>
-              </li>
-              <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
-                <a href="#">AMG</a>
-              </li>
-              <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
-                <a href="#">Model Y</a>
+                <a href="#">About Us</a>
               </li>
             </ul>
           </div>
           <div className="flex justify-between items-center space-x-4">
             <div className="relative hidden md:block">
-              
                 <div onClick={handleSearchBar} className={changeSearchColor ? "flex items-center border-b border-b-gray-700 bg-slate-700 rounded-lg" : "flex items-center border-b border-b-gray-700"}>                
                   <SearchOutlined className="pl-2 pt-1 text-white text-lg block float-left cursor-pointer mr-2" rev={undefined} />
                   <input type={"search"} placeholder="Search..." className="bg-transparent w-full text-white text-sm focus:outline-none focus:shadow-inner leading-none" />
-                </div>
-              
-             
+                </div> 
             </div>
             <div className="flex items-center py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
                 <UserOutlined style={{ fontSize: '18px', paddingRight: '4px' }} rev={undefined} />
@@ -61,12 +51,6 @@ const NavBar = () => {
                 Menu
               </div>
           </div>
-          <div className="lg:hidden">
-            <button onClick={handleNav} className="inline-flex items-center rounded-md py-2 px-4 p-2 text-sm font-medium bg-black/5 shadow-sm hover:bg-black/10 transition duration-150 ease-out hover:ease-in">
-              Menu
-            </button>
-          </div>
-
           <div
             className={
               showSideBar
