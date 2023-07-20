@@ -1,23 +1,11 @@
 import React, { useState } from 'react'
 import useTitle from 'src/hooks/useTitle';
 import NavBar from 'src/layout/navigationBar';
-import { Select } from 'antd';
+import { Button, Select } from 'antd';
 import { Card } from 'antd';
 import Footer from 'src/layout/Footer';
-
-const ProductVariants = [
-    {
-      color: 'Emerald Green metallic',
-    },
-    {
-      color: 'Magnetite Black metallic',
-    },
-    {
-      color: 'Ocean Blue metallic',
-    }
-  ]
-
-const { Meta } = Card;
+import { ShoppingCartOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const ProductDetails: React.FC = () => {
     useTitle("Chi tiết sản phẩm");
@@ -31,21 +19,19 @@ const ProductDetails: React.FC = () => {
 
     const [amount, setAmount] = useState(1);
 
-    const [ProductVariant, setProductVariant] = useState(ProductVariants[0])
-
     const handleChange = (value: { value: string; label: React.ReactNode }) => {
-        console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+        console.log(value);
       };
 
     return (
         <React.Fragment>
             <NavBar/>
             <main>
-                <div className='flex flex-col justify-center items-center min-h-screen'>
-                <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:place-items-center lg:py-20">
+                <div className='flex flex-col justify-center min-h-screen'>
+                <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 flex items-start lg:py-14">
                         <article>
-                            <img src={activeImg} alt="" className="w-full h-full aspect-square object-cover rounded-xl"/>
-                            <div className='hidden lg:flex items-center justify-center gap-5 flex-wrap mt-5'>
+                            <img src={activeImg} alt="" className="w-11/12 h-11/12 aspect-square object-cover rounded-xl items-center justify-center"/>
+                            <div className='hidden lg:flex justify-items-center gap-5 flex-wrap mt-5'>
                                 <img src={images.img1} alt="" className='w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer' onClick={() => setActiveImage(images.img1)}/>
                                 <img src={images.img2} alt="" className='w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer' onClick={() => setActiveImage(images.img2)}/>
                                 <img src={images.img3} alt="" className='w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer' onClick={() => setActiveImage(images.img3)}/>
@@ -53,8 +39,8 @@ const ProductDetails: React.FC = () => {
                             </div> 
                         </article>
                          {/* ABOUT */}
-                        <article className='space-x-4'>
-                            <div className='space-x-4 mb-4'>
+                        <article className='space-x-4 flex flex-col'>
+                            <div className='space-x-4 mb-3'>
                                 <span className='mx-4 mb-2 text-sky-600 font-semibold'>Mercedes</span>
                                 <h1 className='text-3xl font-bold'>Mercedes-AMG G63 2019</h1>
                             </div>
@@ -82,10 +68,11 @@ const ProductDetails: React.FC = () => {
                                     />
                             </div>
                            
-                            <div className='items-center'>
+                            <div className='items-center my-3'>
+                                <h6 className='mb-2'>Quantity</h6>                                
                                 <div className="my-4 w-1/4 flex justify-between items-center border border-gray-200 rounded">
                                     <button                                    
-                                    className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75" onClick={() => setAmount((prev) => prev - 1)}>
+                                    className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75" onClick={() => {if(amount > 0) {setAmount((prev) => prev - 1)}}}>
                                     -
                                     </button>
                                     <span className="text-center items-center">{amount}</span>
@@ -104,49 +91,211 @@ const ProductDetails: React.FC = () => {
                 </section>
                 <section className='mx-20'>
                     <h1 className='text-[30px] font-bold text-center'>Related Products</h1>
-                    <div className='my-4 flex flex-col sm:flex-row items-center justify-evenly flex-wrap gap-5'>
-                    <Card
-                        hoverable
-                        style={{ width: 300 }}
-                        cover={<img alt="example" src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" />}
-                    >
-                        <Meta title="Mercedes-AMG GT" description="7.000.000.000 VND" />
-                    </Card>
-                    <Card
-                        hoverable
-                        style={{ width: 300 }}
-                        cover={<img alt="example" src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" />}
-                    >
-                        <Meta title="Mercedes-AMG GT" description="7.000.000.000 VND" />
-                    </Card>
-                    <Card
-                        hoverable
-                        style={{ width: 300 }}
-                        cover={<img alt="example" src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" />}
-                    >
-                        <Meta title="Mercedes-AMG GT" description="7.000.000.000 VND" />
-                    </Card>
-                    <Card
-                        hoverable
-                        style={{ width: 300 }}
-                        cover={<img alt="example" src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" />}
-                    >
-                        <Meta title="Mercedes-AMG GT" description="7.000.000.000 VND" />
-                    </Card>
-                    <Card
-                        hoverable
-                        style={{ width: 300 }}
-                        cover={<img alt="example" src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" />}
-                    >
-                        <Meta title="Mercedes-AMG GT" description="7.000.000.000 VND" />
-                    </Card>
-                    <Card
-                        hoverable
-                        style={{ width: 300 }}
-                        cover={<img alt="example" src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" />}
-                    >
-                        <Meta title="Mercedes-AMG GT" description="7.000.000.000 VND" />
-                    </Card>
+                    <div className='flex flex-wrap justify-center gap-3 m-2 mt-10'>
+                        <Link to={''}>
+                            <Card >
+                                <img src={images.img1} alt="" className='w-[300px] rounded' />
+                                <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
+                                <div className="flex flex-col gap-3">
+                                    <p className='text-[15px] font-semibold mt-2'>Porsche Cayenne GTS 2022</p>
+                                    <p className='text-[15px] font-semibold'>$208,560</p>
+                                    <Card className='border-none bg-gray-100 !p-0 m-0' >
+                                        <div className="flex gap-8 justify-center ">
+                                            <div className="flex flex-col justify-center items-center">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_1_5117)">
+                                                        <path d="M10 1.66669V3.75002M10 1.66669C5.39765 1.66669 1.66669 5.39765 1.66669 10M10 1.66669C14.6024 1.66669 18.3334 5.39765 18.3334 10M10 16.25V18.3334M10 18.3334C14.6024 18.3334 18.3334 14.6024 18.3334 10M10 18.3334C5.39765 18.3334 1.66669 14.6024 1.66669 10M3.75002 10H1.66669M18.3334 10H16.25M15.8987 15.8987L14.4206 14.4206M4.10138 15.8987L5.58098 14.4191M4.10138 4.16669L5.54842 5.61373M15.8987 4.16669L11.2499 8.75002M11.6667 10C11.6667 10.9205 10.9205 11.6667 10 11.6667C9.07955 11.6667 8.33335 10.9205 8.33335 10C8.33335 9.07955 9.07955 8.33335 10 8.33335C10.9205 8.33335 11.6667 9.07955 11.6667 10Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_1_5117">
+                                                            <rect width="20" height="20" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                                <p className='text-[13px]'>4,000</p>
+                                            </div>
+                                            <div className="flex flex-col items-center justify-center">
+                                                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <ellipse cx="4.83332" cy="4.99998" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="10.6667" cy="4.99998" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="16.5" cy="4.99998" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="4.83332" cy="15" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="10.6667" cy="15" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M4.83332 6.66669V13.3334" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M10.6667 6.66669V13.3334" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M16.5 6.66669V8.33335C16.5 9.25383 15.7538 10 14.8333 10H4.83331" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                <p>Auto</p>
+                                            </div>
+                                            <div className="flex flex-col items-center justify-center">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11.6667 9.16667H12.5C13.4205 9.16667 14.1667 9.91286 14.1667 10.8333V13.3333C14.1667 14.0237 14.7263 14.5833 15.4167 14.5833C16.107 14.5833 16.6667 14.0237 16.6667 13.3333V7.5L14.1667 5" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M3.33334 16.6666V4.99998C3.33334 4.07951 4.07954 3.33331 5.00001 3.33331H10C10.9205 3.33331 11.6667 4.07951 11.6667 4.99998V16.6666" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.5 16.6667H12.5" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M15 5.83331V6.66665C15 7.12688 15.3731 7.49998 15.8333 7.49998H16.6667" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M3.33334 9.16667H11.6667" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                <p>Electrics</p>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                    <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                                </div>
+                            </Card>
+                        </Link>
+                        <Link to={''}>
+                            <Card >
+                                <img src={images.img1} alt="" className='w-[300px] rounded' />
+                                <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
+                                <div className="flex flex-col gap-3">
+                                    <p className='text-[15px] font-semibold mt-2'>Porsche Cayenne GTS 2022</p>
+                                    <p className='text-[15px] font-semibold'>$208,560</p>
+                                    <Card className='border-none bg-gray-100 !p-0 m-0' >
+                                        <div className="flex gap-8 justify-center ">
+                                            <div className="flex flex-col justify-center items-center">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_1_5117)">
+                                                        <path d="M10 1.66669V3.75002M10 1.66669C5.39765 1.66669 1.66669 5.39765 1.66669 10M10 1.66669C14.6024 1.66669 18.3334 5.39765 18.3334 10M10 16.25V18.3334M10 18.3334C14.6024 18.3334 18.3334 14.6024 18.3334 10M10 18.3334C5.39765 18.3334 1.66669 14.6024 1.66669 10M3.75002 10H1.66669M18.3334 10H16.25M15.8987 15.8987L14.4206 14.4206M4.10138 15.8987L5.58098 14.4191M4.10138 4.16669L5.54842 5.61373M15.8987 4.16669L11.2499 8.75002M11.6667 10C11.6667 10.9205 10.9205 11.6667 10 11.6667C9.07955 11.6667 8.33335 10.9205 8.33335 10C8.33335 9.07955 9.07955 8.33335 10 8.33335C10.9205 8.33335 11.6667 9.07955 11.6667 10Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_1_5117">
+                                                            <rect width="20" height="20" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                                <p className='text-[13px]'>4,000</p>
+                                            </div>
+                                            <div className="flex flex-col items-center justify-center">
+                                                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <ellipse cx="4.83332" cy="4.99998" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="10.6667" cy="4.99998" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="16.5" cy="4.99998" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="4.83332" cy="15" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="10.6667" cy="15" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M4.83332 6.66669V13.3334" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M10.6667 6.66669V13.3334" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M16.5 6.66669V8.33335C16.5 9.25383 15.7538 10 14.8333 10H4.83331" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                <p>Auto</p>
+                                            </div>
+                                            <div className="flex flex-col items-center justify-center">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11.6667 9.16667H12.5C13.4205 9.16667 14.1667 9.91286 14.1667 10.8333V13.3333C14.1667 14.0237 14.7263 14.5833 15.4167 14.5833C16.107 14.5833 16.6667 14.0237 16.6667 13.3333V7.5L14.1667 5" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M3.33334 16.6666V4.99998C3.33334 4.07951 4.07954 3.33331 5.00001 3.33331H10C10.9205 3.33331 11.6667 4.07951 11.6667 4.99998V16.6666" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.5 16.6667H12.5" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M15 5.83331V6.66665C15 7.12688 15.3731 7.49998 15.8333 7.49998H16.6667" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M3.33334 9.16667H11.6667" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                <p>Electrics</p>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                    <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                                </div>
+                            </Card>
+                        </Link>
+                        <Link to={''}>
+                            <Card >
+                                <img src={images.img1} alt="" className='w-[300px] rounded' />
+                                <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
+                                <div className="flex flex-col gap-3">
+                                    <p className='text-[15px] font-semibold mt-2'>Porsche Cayenne GTS 2022</p>
+                                    <p className='text-[15px] font-semibold'>$208,560</p>
+                                    <Card className='border-none bg-gray-100 !p-0 m-0' >
+                                        <div className="flex gap-8 justify-center ">
+                                            <div className="flex flex-col justify-center items-center">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_1_5117)">
+                                                        <path d="M10 1.66669V3.75002M10 1.66669C5.39765 1.66669 1.66669 5.39765 1.66669 10M10 1.66669C14.6024 1.66669 18.3334 5.39765 18.3334 10M10 16.25V18.3334M10 18.3334C14.6024 18.3334 18.3334 14.6024 18.3334 10M10 18.3334C5.39765 18.3334 1.66669 14.6024 1.66669 10M3.75002 10H1.66669M18.3334 10H16.25M15.8987 15.8987L14.4206 14.4206M4.10138 15.8987L5.58098 14.4191M4.10138 4.16669L5.54842 5.61373M15.8987 4.16669L11.2499 8.75002M11.6667 10C11.6667 10.9205 10.9205 11.6667 10 11.6667C9.07955 11.6667 8.33335 10.9205 8.33335 10C8.33335 9.07955 9.07955 8.33335 10 8.33335C10.9205 8.33335 11.6667 9.07955 11.6667 10Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_1_5117">
+                                                            <rect width="20" height="20" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                                <p className='text-[13px]'>4,000</p>
+                                            </div>
+                                            <div className="flex flex-col items-center justify-center">
+                                                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <ellipse cx="4.83332" cy="4.99998" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="10.6667" cy="4.99998" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="16.5" cy="4.99998" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="4.83332" cy="15" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="10.6667" cy="15" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M4.83332 6.66669V13.3334" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M10.6667 6.66669V13.3334" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M16.5 6.66669V8.33335C16.5 9.25383 15.7538 10 14.8333 10H4.83331" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                <p>Auto</p>
+                                            </div>
+                                            <div className="flex flex-col items-center justify-center">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11.6667 9.16667H12.5C13.4205 9.16667 14.1667 9.91286 14.1667 10.8333V13.3333C14.1667 14.0237 14.7263 14.5833 15.4167 14.5833C16.107 14.5833 16.6667 14.0237 16.6667 13.3333V7.5L14.1667 5" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M3.33334 16.6666V4.99998C3.33334 4.07951 4.07954 3.33331 5.00001 3.33331H10C10.9205 3.33331 11.6667 4.07951 11.6667 4.99998V16.6666" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.5 16.6667H12.5" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M15 5.83331V6.66665C15 7.12688 15.3731 7.49998 15.8333 7.49998H16.6667" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M3.33334 9.16667H11.6667" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                <p>Electrics</p>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                    <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                                </div>
+                            </Card>
+                        </Link>
+                        <Link to={''}>
+                            <Card >
+                                <img src={images.img1} alt="" className='w-[300px] rounded' />
+                                <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
+                                <div className="flex flex-col gap-3">
+                                    <p className='text-[15px] font-semibold mt-2'>Porsche Cayenne GTS 2022</p>
+                                    <p className='text-[15px] font-semibold'>$208,560</p>
+                                    <Card className='border-none bg-gray-100 !p-0 m-0' >
+                                        <div className="flex gap-8 justify-center ">
+                                            <div className="flex flex-col justify-center items-center">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_1_5117)">
+                                                        <path d="M10 1.66669V3.75002M10 1.66669C5.39765 1.66669 1.66669 5.39765 1.66669 10M10 1.66669C14.6024 1.66669 18.3334 5.39765 18.3334 10M10 16.25V18.3334M10 18.3334C14.6024 18.3334 18.3334 14.6024 18.3334 10M10 18.3334C5.39765 18.3334 1.66669 14.6024 1.66669 10M3.75002 10H1.66669M18.3334 10H16.25M15.8987 15.8987L14.4206 14.4206M4.10138 15.8987L5.58098 14.4191M4.10138 4.16669L5.54842 5.61373M15.8987 4.16669L11.2499 8.75002M11.6667 10C11.6667 10.9205 10.9205 11.6667 10 11.6667C9.07955 11.6667 8.33335 10.9205 8.33335 10C8.33335 9.07955 9.07955 8.33335 10 8.33335C10.9205 8.33335 11.6667 9.07955 11.6667 10Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_1_5117">
+                                                            <rect width="20" height="20" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                                <p className='text-[13px]'>4,000</p>
+                                            </div>
+                                            <div className="flex flex-col items-center justify-center">
+                                                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <ellipse cx="4.83332" cy="4.99998" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="10.6667" cy="4.99998" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="16.5" cy="4.99998" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="4.83332" cy="15" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <ellipse cx="10.6667" cy="15" rx="1.66667" ry="1.66667" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M4.83332 6.66669V13.3334" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M10.6667 6.66669V13.3334" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M16.5 6.66669V8.33335C16.5 9.25383 15.7538 10 14.8333 10H4.83331" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                <p>Auto</p>
+                                            </div>
+                                            <div className="flex flex-col items-center justify-center">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11.6667 9.16667H12.5C13.4205 9.16667 14.1667 9.91286 14.1667 10.8333V13.3333C14.1667 14.0237 14.7263 14.5833 15.4167 14.5833C16.107 14.5833 16.6667 14.0237 16.6667 13.3333V7.5L14.1667 5" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M3.33334 16.6666V4.99998C3.33334 4.07951 4.07954 3.33331 5.00001 3.33331H10C10.9205 3.33331 11.6667 4.07951 11.6667 4.99998V16.6666" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M2.5 16.6667H12.5" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M15 5.83331V6.66665C15 7.12688 15.3731 7.49998 15.8333 7.49998H16.6667" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <path d="M3.33334 9.16667H11.6667" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                                <p>Electrics</p>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                    <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                                </div>
+                            </Card>
+                        </Link>
                     </div>
                 </section>
                 </div>
