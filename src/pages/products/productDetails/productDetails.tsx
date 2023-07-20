@@ -20,7 +20,7 @@ const ProductDetails: React.FC = () => {
     const [amount, setAmount] = useState(1);
 
     const handleChange = (value: { value: string; label: React.ReactNode }) => {
-        console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+        console.log(value);
       };
 
     return (
