@@ -6,7 +6,14 @@ import useTitle from 'src/hooks/useTitle';
 
 export default function Cart() {
     useTitle("Giỏ Hàng");
-    const [amount, setAmount] = useState(1);
+    const [amounts, setAmounts] = useState([1, 1]); // Mảng lưu trữ số lượng cho từng item
+
+    // Hàm thay đổi số lượng cho một item cụ thể
+    const handleChangeAmount = (index: any, newAmount: any) => {
+        const newAmounts = [...amounts];
+        newAmounts[index] = newAmount;
+        setAmounts(newAmounts);
+    };
 
     return (
         <React.Fragment>
@@ -16,7 +23,7 @@ export default function Cart() {
                 <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
                     <div className="rounded-lg md:w-2/3">
                         <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-                            <img src="Homepage.png" alt="product-image" className="w-full rounded-lg sm:w-40" />
+                            <img src="Homepage.png" alt="product" className="w-full rounded-lg sm:w-40" />
                             <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                                 <div className="mt-5 sm:mt-0">
                                     <h2 className="text-lg font-bold text-gray-900">Cao Viet Thang</h2>
@@ -25,13 +32,17 @@ export default function Cart() {
                                 <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
                                     <div className="flex items-center border border-gray-200 rounded">
                                         <button
-                                            className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75" onClick={() => {if (amount > 0) {setAmount((prev) => prev - 1)}}}>
+                                            className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
+                                            onClick={() => handleChangeAmount(0, amounts[0] - 1)} // Xử lý cho item đầu tiên
+                                        >
                                             -
                                         </button>
-                                        <span className="text-center items-center">{amount}</span>
+                                        <span className="text-center items-center">{amounts[0]}</span>
                                         <button
                                             type="button"
-                                            className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75" onClick={() => setAmount((prev) => prev + 1)}>
+                                            className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
+                                            onClick={() => handleChangeAmount(0, amounts[0] + 1)} // Xử lý cho item đầu tiên
+                                        >
                                             +
                                         </button>
                                     </div>
@@ -43,7 +54,7 @@ export default function Cart() {
                             </div>
                         </div>
                         <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-                            <img src="Homepage2.jpeg" alt="product-image" className="w-full rounded-lg sm:w-40" />
+                            <img src="Homepage2.jpeg" alt="product" className="w-full rounded-lg sm:w-40" />
                             <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                                 <div className="mt-5 sm:mt-0">
                                     <h2 className="text-lg font-bold text-gray-900">Cao Anh Tri</h2>
@@ -52,13 +63,17 @@ export default function Cart() {
                                 <div className="mt-4 flex justify-between im sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
                                     <div className="flex items-center border border-gray-200 rounded">
                                         <button
-                                            className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75" onClick={() => setAmount((prev) => prev - 1)}>
+                                            className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
+                                            onClick={() => handleChangeAmount(1, amounts[1] - 1)} // Xử lý cho item thứ hai
+                                        >
                                             -
                                         </button>
-                                        <span className="text-center items-center">{amount}</span>
+                                        <span className="text-center items-center">{amounts[1]}</span>
                                         <button
                                             type="button"
-                                            className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75" onClick={() => setAmount((prev) => prev + 1)}>
+                                            className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
+                                            onClick={() => handleChangeAmount(1, amounts[1] + 1)} // Xử lý cho item thứ hai
+                                        >
                                             +
                                         </button>
                                     </div>
