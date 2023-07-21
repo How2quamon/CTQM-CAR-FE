@@ -29,7 +29,7 @@ const NavBar = () => {
           <div className="hidden lg:inline md:flex space-x-3 flex-1 lg:ml-8">
             <ul className="flex justify-start ">
               <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
-                <a href="#">Catalogs</a>
+                <a href="/list">Catalogs</a>
               </li>
               <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
                 <a href="#">About Us</a>
