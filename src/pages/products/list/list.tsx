@@ -18,21 +18,21 @@ export default function List() {
     //     getListCar();
     // }, []);
 
-    // const getListCar = () => {
-    //     const _carService = new CarService();
-    //     _carService.carAll()
-    //     .then((response: CarDTO[]) => {
-    //     setListCars(response); // Cập nhật state cars với dữ liệu trả về từ API
-    //     console.log(listCars);
-    // })
-    //     .catch((error) => {
-    //     console.error('Error fetching cars:', error);
-    // })
-    // };
+    // // const getListCar = () => {
+    // //     const _carService = new CarService();
+    // //     _carService.carAll()
+    // //     .then((response: CarDTO[]) => {
+    // //     setListCars(response); // Cập nhật state cars với dữ liệu trả về từ API
+    // //     console.log(listCars);
+    // // })
+    // //     .catch((error) => {
+    // //     console.error('Error fetching cars:', error);
+    // // })
+    // // };
     // const getListCar = async (filterParam: string) => {
     //     setIsLoading(true);
-    //     await CarService.carAll()
-    //       .getExpertPercentageInCenter(filterParam)
+    //     await CarService.carAll
+          
     //       .then((response: CarDTO[]) => {
     //         setListCars(response)
     //       })
@@ -75,7 +75,7 @@ export default function List() {
                 </div>
             </div>
             <section className='flex flex-wrap justify-center gap-3 m-2 mt-10' >
-                <Link to={''}>
+               
                     <Card >
                         <img src={Image1} alt="" className='w-[300px] rounded' />
                         <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
@@ -122,11 +122,10 @@ export default function List() {
                                     </div>
                                 </div>
                             </Card>
-                            <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                            <Link to={'/product-details'}><Button className='w-full'>Details</Button></Link>
                         </div>
                     </Card>
-                </Link>
-                <Link to={''}>
+                
                     <Card >
                         <img src={Image1} alt="" className='w-[300px] rounded' />
                         <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
@@ -173,11 +172,11 @@ export default function List() {
                                     </div>
                                 </div>
                             </Card>
-                            <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                            <Link to={'/product-details'}><Button className='w-full'>Details</Button></Link>
                         </div>
                     </Card>
-                </Link>
-                <Link to={''}>
+             
+                
                     <Card>
                         <img src={Image1} alt="" className='w-[300px] rounded' />
                         <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
@@ -224,11 +223,10 @@ export default function List() {
                                     </div>
                                 </div>
                             </Card>
-                            <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                            <Link to={'/product-details'}><Button className='w-full'>Details</Button></Link>
                         </div>
                     </Card>
-                </Link>
-                <Link to={''}>
+                
                     <Card >
                         <img src={Image1} alt="" className='w-[300px] rounded' />
                         <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
@@ -275,11 +273,10 @@ export default function List() {
                                     </div>
                                 </div>
                             </Card>
-                            <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                            <Link to={'/product-details'}><Button className='w-full'>Details</Button></Link>
                         </div>
                     </Card>
-                </Link>
-                <Link to={''}>
+              
                     <Card>
                         <img src={Image1} alt="" className='w-[300px] rounded' />
                         <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
@@ -326,11 +323,10 @@ export default function List() {
                                     </div>
                                 </div>
                             </Card>
-                            <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                            <Link to={'/product-details'}><Button className='w-full'>Details</Button></Link>
                         </div>
                     </Card>
-                </Link>
-                <Link to={''}>
+              
                     <Card>
                         <img src={Image1} alt="" className='w-[300px] rounded' />
                         <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
@@ -377,11 +373,10 @@ export default function List() {
                                     </div>
                                 </div>
                             </Card>
-                            <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                            <Link to={'/product-details'}><Button className='w-full'>Details</Button></Link>
                         </div>
                     </Card>
-                </Link>
-                <Link to={''}>
+              
                     <Card>
                         <img src={Image1} alt="" className='w-[300px] rounded' />
                         <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
@@ -428,11 +423,10 @@ export default function List() {
                                     </div>
                                 </div>
                             </Card>
-                            <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                            <Link to={'/product-details'}><Button className='w-full'>Details</Button></Link>
                         </div>
                     </Card>
-                </Link>
-                <Link to={''}>
+             
                     <Card>
                         <img src={Image1} alt="" className='w-[300px] rounded' />
                         <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
@@ -479,11 +473,10 @@ export default function List() {
                                     </div>
                                 </div>
                             </Card>
-                            <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                            <Link to={'/product-details'}><Button className='w-full'>Details</Button></Link>
                         </div>
                     </Card>
-                </Link>
-                <Link to={''}>
+                
                     <Card>
                         <img src={Image1} alt="" className='w-[300px] rounded' />
                         <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
@@ -530,10 +523,10 @@ export default function List() {
                                     </div>
                                 </div>
                             </Card>
-                            <Link to={'/'}><Button className='w-full'>Details</Button></Link>
+                            <Link to={'/product-details'}><Button className='w-full'>Details</Button></Link>
                         </div>
                     </Card>
-                </Link>
+               
             </section>
             <Footer />
         </React.Fragment>
