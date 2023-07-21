@@ -1,24 +1,9 @@
-import React, { useState } from 'react';
-import NavBar from 'src/layout/navigationBar';
-import Footer from 'src/layout/Footer';
 import { Link } from 'react-router-dom';
-interface VMLogin {
-    Email: string;
-    Password: string;
-    KeepLogedIn: boolean;
-    NewEmail: string;
-    NewPassword: string;
-    NewName: string;
-    NewPhone: string;
-}
+import Footer from 'src/layout/Footer';
+import NavBar from 'src/layout/navigationBar';
+
 
 export default function Payment() {
-    const [isLoginForm, setIsLoginForm] = useState(true);
-
-    const handleToggleForm = () => {
-        setIsLoginForm(!isLoginForm);
-    };
-
     return (
         <><><NavBar /><main>
                 <div className="min-w-screen min-h-screen bg-gray-50 py-5">
@@ -150,7 +135,7 @@ export default function Payment() {
                                                 <div className="mb-5">
                                                     <label htmlFor="type1" className="flex items-center cursor-pointer">
                                                         <input type="radio" className="form-radio h-5 w-5 text-indigo-500" name="type" id="type1" checked />
-                                                        <img src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png" className="h-6 ml-3" />
+                                                        <img src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png" className="h-6 ml-3" alt='' />
                                                     </label>
                                                     <div>
                                                         <div className="mb-3">
@@ -211,7 +196,7 @@ export default function Payment() {
                                                 <div className="w-full p-3">
                                                     <label htmlFor="type2" className="flex items-center cursor-pointer">
                                                         <input type="radio" className="form-radio h-5 w-5 text-indigo-500" name="type" id="type2" />
-                                                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" width="80" className="ml-3" />
+                                                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" width="80" className="ml-3" alt=''/>
                                                     </label>
                                                 </div>
                                             </div>
