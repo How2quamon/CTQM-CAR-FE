@@ -3,8 +3,7 @@ import NavBar from 'src/layout/navigationBar';
 import Footer from 'src/layout/Footer';
 import { Link } from 'react-router-dom';
 import useTitle from 'src/hooks/useTitle';
-import { red } from '@mui/material/colors';
-import { colors } from '@mui/material';
+
 
 export default function Cart() {
     useTitle("Giỏ Hàng");
