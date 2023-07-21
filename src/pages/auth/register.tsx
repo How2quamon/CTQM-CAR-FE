@@ -1,6 +1,20 @@
 
 import React, { useState } from 'react';
+import type { CascaderProps } from 'antd';
+import {
+    AutoComplete,
+    Button,
+    Cascader,
+    Checkbox,
+    Col,
+    Form,
+    Input,
+    InputNumber,
+    Row,
+    Select,
+} from 'antd';
 import { Link } from 'react-router-dom';
+
 interface VMLogin {
     Email: string;
     Password: string;
@@ -11,9 +25,101 @@ interface VMLogin {
     NewPhone: string;
 }
 
-export default function Login() {
-    const [isLoginForm, setIsLoginForm] = useState(true);
+export default function Register() {
 
+    const [isLoginForm, setIsLoginForm] = useState(true);
+    const { Option } = Select;
+
+    interface DataNodeType {
+        value: string;
+        label: string;
+        children?: DataNodeType[];
+    }
+
+    const residences: CascaderProps<DataNodeType>['options'] = [
+        {
+            value: 'zhejiang',
+            label: 'Zhejiang',
+            children: [
+                {
+                    value: 'hangzhou',
+                    label: 'Hangzhou',
+                    children: [
+                        {
+                            value: 'xihu',
+                            label: 'West Lake',
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            value: 'jiangsu',
+            label: 'Jiangsu',
+            children: [
+                {
+                    value: 'nanjing',
+                    label: 'Nanjing',
+                    children: [
+                        {
+                            value: 'zhonghuamen',
+                            label: 'Zhong Hua Men',
+                        },
+                    ],
+                },
+            ],
+        },
+    ];
+
+    const formItemLayout = {
+        labelCol: {
+            xs: { span: 24 },
+            sm: { span: 8 },
+        },
+        wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 16 },
+        },
+    };
+
+    const tailFormItemLayout = {
+        wrapperCol: {
+            xs: {
+                span: 24,
+                offset: 0,
+            },
+            sm: {
+                span: 16,
+                offset: 8,
+            },
+        },
+    };
+
+    const prefixSelector = (
+        <Form.Item name="prefix" noStyle>
+            <Select style={{ width: 70 }}>
+                <Option value="86">+86</Option>
+                <Option value="87">+87</Option>
+            </Select>
+        </Form.Item>
+    );
+    const suffixSelector = (
+        <Form.Item name="suffix" noStyle>
+            <Select style={{ width: 70 }}>
+                <Option value="USD">$</Option>
+                <Option value="CNY">¥</Option>
+            </Select>
+        </Form.Item>
+    );
+    const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
+
+    const onWebsiteChange = (value: string) => {
+        if (!value) {
+            setAutoCompleteResult([]);
+        } else {
+            setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
+        }
+    };
     const InputType = (props: { inputName: any; inputTypes: any; descriptionInput: any; onChangHandler: any; onBlurHandler: any; iconName: any; }) => {
 
         const { inputName, inputTypes, descriptionInput, onChangHandler, onBlurHandler, iconName } = props;
@@ -23,46 +129,131 @@ export default function Login() {
         setIsLoginForm(!isLoginForm);
 
     };
+    const [form] = Form.useForm();
+
+    const onFinish = (values: any) => {
+        console.log('Received values of form: ', values);
+    };
+    const websiteOptions = autoCompleteResult.map((website) => ({
+        label: website,
+        value: website,
+    }));
 
     return (
-            <div className='flex justify-center items-center h-screen bg-slate-200 '  >
-                <div id="form" className='block bg-slate-50 p-6 rounded-xl shodow-md shadow-slate-300 w-[450px]'>
-                    <form action=''>
-                        <h2 className='text-black text-3xl font-semibold my-4'>Register</h2>
-                        <div id='fullName' className="flex flex-row">
-                            <div id='firstName' className='w-1/2 mr-1'>
-                                <label htmlFor='fname' className='text-sm'>First Name</label>
-                                <input type='text' name='' id='fname' className='h-8 w-full rounded-md border border-slate-300 text-sm pl-2 bg-transparent outline-black shadow-sm'></input>
-                            </div>
-                            <div id='lastName' className='w-1/2 mr-1'>
-                                <label htmlFor='fname' className='text-sm'>Last Name</label>
-                                <input type='text' name='' id='lname' className='h-8 w-full rounded-md border border-slate-300 text-sm pl-2 bg-transparent outline-black shadow-sm'></input>
-                            </div>
-                        </div>
-                        <label htmlFor='email' className='text-sm'>Email</label>
-                        <input type='email' name='' id='email' className='h-8 w-full rounded-md border border-slate-300 text-sm pl-2 bg-transparent outline-black shadow-sm'></input>
+        <div className='flex justify-center items-center h-screen bg-slate-200 '  >
+            <div id="form" className='block bg-slate-50 p-6 rounded-xl shodow-md shadow-slate-300 w-[580px] h-[545px]'>
+            <h2 className='text-black text-3xl font-semibold my-4 ml-[200px]'>Register</h2>
+                <Form
+                    {...formItemLayout}
+                    form={form}
+                    name="register"
+                    onFinish={onFinish}
+                    initialValues={{ residence: ['zhejiang', 'hangzhou', 'xihu'], prefix: '86' }}
+                    style={{ maxWidth: 600 }}
+                    scrollToFirstError
+                >
+                    <Form.Item
+                        name="email"
+                        label="E-mail"
+                        rules={[
+                            {
+                                type: 'email',
+                                message: 'The input is not valid E-mail!',
+                            },
+                            {
+                                required: true,
+                                message: 'Please input your E-mail!',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        label="Password"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your password!',
+                            },
+                        ]}
+                        hasFeedback
+                    >
+                        <Input.Password />
+                    </Form.Item>
 
-                        <label htmlFor='Identification' className='text-sm'>Identification</label>
-                        <input type='text' name='' id='Identification' className='h-8 w-full rounded-md border border-slate-300 text-sm pl-2 bg-transparent outline-black shadow-sm'></input>
+                    <Form.Item
+                        name="confirm"
+                        label="Confirm Password"
+                        dependencies={['password']}
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please confirm your password!',
+                            },
+                            ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    if (!value || getFieldValue('password') === value) {
+                                        return Promise.resolve();
+                                    }
+                                    return Promise.reject(new Error('The new password that you entered do not match!'));
+                                },
+                            }),
+                        ]}
+                    >
+                        <Input.Password />
+                    </Form.Item>
 
-                        <label htmlFor='password' className='text-sm'>Password</label>
-                        <input type='password' name='' id='Password' className='h-8 w-full rounded-md border border-slate-300 text-sm pl-2 bg-transparent outline-black shadow-sm'></input>
-
-                        <label htmlFor='confirmPassword' className='text-sm'>Confirmpassword</label>
-                        <input type='password' name='' id='confirmPassword' className='h-8 w-full rounded-md border border-slate-300 text-sm pl-2 bg-transparent outline-black shadow-sm'></input>
-
-                        <div id='gender' className='text-sm mb-2'>
-                            <p className='mt-2'>Gender</p>
-                            <input type='radio' name='gender' id='male' className='text-sm mx-1' checked /><label htmlFor="'male">Male</label>
-                            <input type='radio' name='gender' id='female' className='text-sm mx-1' checked /><label htmlFor="'female">Female</label>
-                            <input type='radio' name='gender' id='other' className='text-sm mx-1' checked /><label htmlFor="'other">Other</label>
-                        </div>
-                        <input type='submit' name='' id='signUp' className='bg-slate-900 w-full h-10 text-white cursor-pointer rounded-md hover:bg-slate-900 hover:outline outline-2 outline-black outline-offset-2 text-sm'></input>
-                        <Link to={''}>
-                        <p className="text-xs my-2"> Already have an account?<Link to ={'/login'} className='text-blue-500'>Login</Link></p>
-                        </Link>
-                    </form>
-                </div>
+                    <Form.Item
+                        name="nickname"
+                        label="Nickname"
+                        tooltip="What do you want others to call you?"
+                        rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="phone"
+                        label="Phone Number"
+                        rules={[{ required: true, message: 'Please input your phone number!' }]}
+                    >
+                        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+                    </Form.Item>
+                    <Form.Item
+                        name="gender"
+                        label="Gender"
+                        rules={[{ required: true, message: 'Please select gender!' }]}
+                    >
+                        <Select placeholder="select your gender">
+                            <Option value="male">Male</Option>
+                            <Option value="female">Female</Option>
+                            <Option value="other">Other</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        name="agreement"
+                        valuePropName="checked"
+                        rules={[
+                            {
+                                validator: (_, value) =>
+                                    value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement')),
+                            },
+                        ]}
+                        {...tailFormItemLayout}
+                    >
+                        <Checkbox>
+                            I have read the <a href="">agreement</a>
+                        </Checkbox>
+                    </Form.Item>
+                    <Form.Item {...tailFormItemLayout}>
+                        <Button type="primary" htmlType="submit" className='bg-slate-900 h-10 text-white cursor-pointer rounded-md hover:bg-slate-900 hover:outline outline-2 outline-black outline-offset-2 text-sm'>
+                            Register
+                        </Button>
+                    </Form.Item>
+                </Form>
             </div>
+        </div>
+
     );
 };
