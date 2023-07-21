@@ -25,7 +25,6 @@ export default function Login() {
     };
 
     return (
-        <Link to={''}>
             <div className='flex justify-center items-center h-screen bg-slate-200 '  >
                 <div id="form" className='block bg-slate-50 p-6 rounded-xl shodow-md shadow-slate-300 w-[450px]'>
                     <form action=''>
@@ -59,10 +58,11 @@ export default function Login() {
                             <input type='radio' name='gender' id='other' className='text-sm mx-1' checked /><label htmlFor="'other">Other</label>
                         </div>
                         <input type='submit' name='' id='signUp' className='bg-slate-900 w-full h-10 text-white cursor-pointer rounded-md hover:bg-slate-900 hover:outline outline-2 outline-black outline-offset-2 text-sm'></input>
+                        <Link to={''}>
                         <p className="text-xs my-2"> Already have an account?<Link to ={'/login'} className='text-blue-500'>Login</Link></p>
+                        </Link>
                     </form>
                 </div>
             </div>
-        </Link>
     );
 };

@@ -18,7 +18,6 @@ export default function Payment() {
     const handleToggleForm = () => {
         setIsLoginForm(!isLoginForm);
     };
-
     return (
         <><><NavBar /><main>
                 <div className="min-w-screen min-h-screen bg-gray-50 py-5">
