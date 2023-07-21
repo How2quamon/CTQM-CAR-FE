@@ -10,9 +10,9 @@ import { CarService } from '@share/service-proxies/service-proxies';
 import { CarDTO } from '@share/dtos/service-proxies-dtos';
 
 export default function List() {
-    // const [listCars, setListCars] = useState<CarDTO[]>([]);
+    const [listCars, setListCars] = useState<CarDTO[]>([]);
     useTitle("Danh sách sản phẩm");
-    
+    const [loading, setIsLoading] = useState<boolean>(false);
     // useEffect(() => {
     //     // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
     //     getListCar();
@@ -29,6 +29,19 @@ export default function List() {
     //     console.error('Error fetching cars:', error);
     // })
     // };
+    // const getListCar = async (filterParam: string) => {
+    //     setIsLoading(true);
+    //     await CarService.carAll()
+    //       .getExpertPercentageInCenter(filterParam)
+    //       .then((response: CarDTO[]) => {
+    //         setListCars(response)
+    //       })
+         
+    //       .finally(() => {
+    //         setIsLoading(false);
+    //       });
+    //   };
+    
     return (
         <React.Fragment>
             <NavBar />
