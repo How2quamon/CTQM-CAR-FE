@@ -168,7 +168,7 @@ export default function Register() {
                     >
                         <Input />
                     </Form.Item>
-                    <Form.Item
+                    <Form.Item 
                         name="password"
                         label="Password"
                         rules={[
@@ -179,7 +179,7 @@ export default function Register() {
                         ]}
                         hasFeedback
                     >
-                        <Input.Password />
+                        <Input.Password className='mr-[50px]'/>
                     </Form.Item>
 
                     <Form.Item
@@ -206,10 +206,10 @@ export default function Register() {
                     </Form.Item>
 
                     <Form.Item
-                        name="nickname"
-                        label="Nickname"
+                        name="fullname"
+                        label="fullname"
                         tooltip="What do you want others to call you?"
-                        rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
+                        rules={[{ required: true, message: 'Please input your fullname!', whitespace: true }]}
                     >
                         <Input />
                     </Form.Item>
