@@ -13,25 +13,31 @@ export default function List() {
     const [listCars, setListCars] = useState<CarDTO[]>([]);
     useTitle("Danh sách sản phẩm");
     const [loading, setIsLoading] = useState<boolean>(false);
-    // useEffect(() => {
-    //     // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
-    //     getListCar();
-    // }, []);
+    useEffect(() => {
+        // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
+        getListCar();
+    }, []);
 
-    // // const getListCar = () => {
-    // //     const _carService = new CarService();
-    // //     _carService.carAll()
-    // //     .then((response: CarDTO[]) => {
-    // //     setListCars(response); // Cập nhật state cars với dữ liệu trả về từ API
-    // //     console.log(listCars);
-    // // })
-    // //     .catch((error) => {
-    // //     console.error('Error fetching cars:', error);
-    // // })
-    // // };
-    // const getListCar = async (filterParam: string) => {
+    const getListCar = () => {
+        const _carService = new CarService();
+        setIsLoading(true);
+        _carService.carAll()
+        .then((response: CarDTO[]) => {
+        setListCars(response); // Cập nhật state cars với dữ liệu trả về từ API
+        // console.log(listCars);
+    })
+        .catch((error) => {
+        console.error('Error fetching cars:', error);
+    })
+    .finally(() => {
+                setIsLoading(false);
+              });
+    };
+   
+   
+    // const getListCar = async () => {
     //     setIsLoading(true);
-    //     await CarService.carAll
+    //     await CarService.carAll()
           
     //       .then((response: CarDTO[]) => {
     //         setListCars(response)
