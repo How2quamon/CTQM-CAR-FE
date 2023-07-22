@@ -4,6 +4,7 @@ import Footer from 'src/layout/Footer';
 import { Link } from 'react-router-dom';
 import useTitle from 'src/hooks/useTitle';
 
+
 export default function Cart() {
     useTitle("Giỏ Hàng");
     const [amounts, setAmounts] = useState([1, 1]); // Mảng lưu trữ số lượng cho từng item
@@ -19,7 +20,7 @@ export default function Cart() {
         <React.Fragment>
             <NavBar />
             <div className="h-screen bg-gray-100 pt-20">
-                <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
+                <h1 className="mb-8 text-center text-2xl font-bold">Cart Items</h1>
                 <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
                     <div className="rounded-lg md:w-2/3">
                         <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
@@ -46,6 +47,9 @@ export default function Cart() {
                                             +
                                         </button>
                                     </div>
+                                    <button className='underline decoration-solid bg-white hover:bg-gray-200'>
+                                         Remove
+                                    </button>
                                     <div className="flex items-center space-x-4">
                                         <p className="text-sm">20000 $</p>
 
@@ -77,6 +81,9 @@ export default function Cart() {
                                             +
                                         </button>
                                     </div>
+                                    <button className='underline decoration-solid bg-white hover:bg-gray-200'>
+                                         Remove
+                                    </button>
                                     <div className="flex items-center space-x-4">
                                         <p className="text-sm">20000 $</p>
                                     </div>

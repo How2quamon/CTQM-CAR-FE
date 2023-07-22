@@ -8,7 +8,7 @@ import Login from '../pages/auth/login';
 import Register from "../pages/auth/register";
 import ProductDetails from "../pages/products/productDetails/productDetails";
 import Payment from "../pages/paymentt/payment";
-import Cart from "../pages/paymentt/cart";
+import Cart from "../pages/cart/cart";
 import PurchaseHistory from "../pages/user/PurchaseHistory";
 import ChangePassword from "../pages/user/ChangePassword";
 export default function IndexRoute() {

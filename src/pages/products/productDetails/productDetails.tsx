@@ -28,7 +28,7 @@ const ProductDetails: React.FC = () => {
             <NavBar/>
             <main>
                 <div className='flex flex-col justify-center min-h-screen'>
-                <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 flex items-start lg:py-14">
+                <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10  items-start lg:py-14">
                         <article>
                             <img src={activeImg} alt="" className="w-11/12 h-11/12 aspect-square object-cover rounded-xl items-center justify-center"/>
                             <div className='hidden lg:flex justify-items-center gap-5 flex-wrap mt-5'>
