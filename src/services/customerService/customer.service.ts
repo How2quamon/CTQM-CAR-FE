@@ -57,7 +57,7 @@ const deleteCustomerWithId = async (id: string) => {
     return response.data;
 }
 
-export{
+export const customerService = {
     loginAction,
     logoutAction,
     getAllCustomer,

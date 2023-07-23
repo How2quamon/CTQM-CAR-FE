@@ -37,7 +37,7 @@ const deleteOrderWithId = async (id: string) => {
     return response.data;
 }
 
-export {
+export const orderService = {
     getOrderWithId,
     createNewOrder,
     updateOrder,

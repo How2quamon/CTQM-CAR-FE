@@ -42,7 +42,7 @@ const updateCarDetail = async (id: string, body: CarDetailDTO) => {
 //     return response.data;
 // }
 
-export{
+export const carDetailService = {
     getCarDetailWithId,
     getCarDetailWithName,
     createNewCarDetail,
