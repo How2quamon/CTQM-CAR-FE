@@ -1,8 +1,13 @@
+import { carDetailService } from "./carDetailsService/carDetails.service";
+import { carService } from "./carService/car.service";
+import { cartService } from "./cartService/cart.service";
+import { customerService } from "./customerService/customer.service";
+import { orderService} from "./orderService/order.service";
 
 export const ctqmService = {
-    //list: listService,
-    //detailsProducts: detailsProductService,
-    //customer: customerService,
-    //order: orderService,
-    //cart: cartService
+    customerApi: customerService,
+    carApi: carService,
+    carDetailApi: carDetailService,
+    cartApi: cartService,
+    orderApi:  orderService
 };
