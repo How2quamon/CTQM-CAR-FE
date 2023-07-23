@@ -32,7 +32,7 @@ export default function Payment() {
     return (
         <><><NavBar /><main>
                 <div className="w-full bg-white border-t border-b border-gray-200 px-5 py-10 text-gray-800">
-                <h1 className="text-3xl md:text-5xl font-bold mb-[35px]">Check out</h1>
+                <h1 className="text-3xl md:text-4xl font-bold mb-[35px]">Check out</h1>
                     <div className="w-full">
                         <div className="-mx-3 md:flex items-start">
                             <div className="px-3 md:w-7/12 lg:pr-10">
@@ -116,19 +116,23 @@ export default function Payment() {
                                         validateMessages={validateMessages}
                                     >
                                         <Form.Item name={['user', 'Name']} label="Name" rules={[{ required: true }]}
-                                            className="mb-8 mr-[100px]">
+                                            className="mr-[100px]">
                                             <Input />
                                         </Form.Item>
                                         <Form.Item name={['user', 'Email']} label="Email" rules={[{ required: true }]}
-                                            className="mb-8 mr-[100px]">
+                                            className=" mr-[100px]">
                                             <Input />
                                         </Form.Item>
                                         <Form.Item name={['user', 'CCCD/CMND']} label="CCCD/CMND" rules={[{ required: true }]}
-                                            className="mb-8 mr-[100px]">
+                                            className=" mr-[100px]">
                                             <Input />
                                         </Form.Item>
                                         <Form.Item name={['user', 'Address']} label="Address" rules={[{ required: true }]}
-                                            className="mb-8 mr-[100px]">
+                                            className=" mr-[100px]">
+                                            <Input />
+                                        </Form.Item>
+                                        <Form.Item name={['user', 'Phone Number']} label="Phone Number" rules={[{ required: true }]}
+                                            className=" mr-[100px]">
                                             <Input />
                                         </Form.Item>
                                         <Form.Item name={['user', 'Note']} label="Note" className='mr-[100px]'>
@@ -199,10 +203,6 @@ export default function Payment() {
                                                 </label>
                                             </div>
                                         </div>
-                                        {/* <div>
-                                                    <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-2 font-semibold"><i className="mdi mdi-lock-outline mr-1"></i> PAY NOW</button>
-                                                </div> */}
-
                                         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }} className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-2 font-semibold">
                                             <Button type="primary" htmlType="submit">
                                             PAY NOW
