@@ -109,7 +109,7 @@ export default function Payment() {
                             <div className="px-3 md:w-5/12">
                                 <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-3 text-gray-800 font-light mb-6">
                                     <Form
-                                        {...layout}
+                                        layout="vertical"   
                                         name="nest-messages"
                                         onFinish={onFinish}
                                         style={{ maxWidth: 600 }}
@@ -209,7 +209,6 @@ export default function Payment() {
                                             </Button>
                                         </Form.Item>
                                     </Form>
-
                                 </div>
                             </div>
                         </div>
