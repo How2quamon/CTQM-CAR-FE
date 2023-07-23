@@ -10,12 +10,14 @@ export default function Cart() {
     const [amounts, setAmounts] = useState([1, 1]); // Mảng lưu trữ số lượng cho từng item
 
     // Hàm thay đổi số lượng cho một item cụ thể
-    const handleChangeAmount = (index: any, newAmount: any) => {
-        const newAmounts = [...amounts];
-        newAmounts[index] = newAmount;
-        setAmounts(newAmounts);
+    const handleChangeAmount = (index: number, newAmount: number) => {
+        if (newAmount >= 1) {
+            const newAmounts = [...amounts];
+            newAmounts[index] = newAmount;
+            setAmounts(newAmounts);
+        }
     };
-
+    
     return (
         <React.Fragment>
             <NavBar />
