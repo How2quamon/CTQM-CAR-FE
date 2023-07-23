@@ -42,7 +42,7 @@ const deleteCarWithId = async (id: string) => {
     return response.data;
 }
 
-export{
+export const  carService = {
     getAllCar,
     getCarWithId,
     createNewCar,

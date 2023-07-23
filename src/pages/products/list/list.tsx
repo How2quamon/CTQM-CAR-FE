@@ -1,4 +1,5 @@
 import { ShoppingCartOutlined } from '@ant-design/icons';
+import { CarDTO } from '@share/dtos/service-proxies-dtos';
 import { Button, Card, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -6,8 +7,7 @@ import Footer from 'src/layout/Footer';
 import NavBar from 'src/layout/navigationBar';
 import Image1 from 'src/videos/png_mercedes_21788.png';
 import useTitle from '../../../hooks/useTitle';
-import { CarService } from '@share/service-proxies/service-proxies';
-import { CarDTO } from '@share/dtos/service-proxies-dtos';
+import { ctqmService } from '../../../services/ctqm.services';
 
 export default function List() {
     const [listCars, setListCars] = useState<CarDTO[]>([]);
@@ -18,35 +18,34 @@ export default function List() {
         getListCar();
     }, []);
 
-    const getListCar = () => {
-        const _carService = new CarService();
-        setIsLoading(true);
-        _carService.carAll()
-            .then((response: CarDTO[]) => {
-                setListCars(response); // Cập nhật state cars với dữ liệu trả về từ API
-                // console.log(listCars);
-            })
-            .catch((error) => {
-                console.error('Error fetching cars:', error);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-    };
-
-
-    // const getListCar = async () => {
+    // const getListCar = () => {
+    //     const _carService = new CarService();
     //     setIsLoading(true);
-    //     await CarService.carAll()
+    //     _carService.carAll()
+    //         .then((response: CarDTO[]) => {
+    //             setListCars(response); // Cập nhật state cars với dữ liệu trả về từ API
+    //             // console.log(listCars);
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error fetching cars:', error);
+    //         })
+    //         .finally(() => {
+    //             setIsLoading(false);
+    //         });
+    // };
 
-    //       .then((response: CarDTO[]) => {
-    //         setListCars(response)
-    //       })
 
-    //       .finally(() => {
-    //         setIsLoading(false);
-    //       });
-    //   };
+    const getListCar = async () => {
+        setIsLoading(true);
+        await ctqmService.carApi
+            .getAllCar()
+          .then (({response})=> {
+            setListCars(response)
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      };
 
     return (
         <React.Fragment>
@@ -81,7 +80,6 @@ export default function List() {
                 </div>
             </div>
             <section className='flex flex-wrap justify-center gap-3 m-2 mt-10' >
-
                 <Card >
                     <img src={Image1} alt="" className='w-[300px] rounded' />
                     <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
@@ -136,7 +134,7 @@ export default function List() {
                     <img src={Image1} alt="" className='w-[300px] rounded' />
                     <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
                     <div className="flex flex-col gap-3">
-                        <p className='text-[15px] font-semibold mt-2'>Porsche Cayenne GTS 2022</p>
+                        <p className='text-[15px] font-semibold mt-2'>{}</p>
                         <p className='text-[15px] font-semibold'>$208,560</p>
                         <Card className='border-none bg-gray-100 !p-0 m-0' >
                             <div className="flex gap-8 justify-center ">

@@ -42,7 +42,7 @@ const deleteCartWithId = async (id: string) => {
     return response.data;
 }
 
-export{
+export const cartService ={
     getAllCart,
     getCustomerCart,
     addToCart,
