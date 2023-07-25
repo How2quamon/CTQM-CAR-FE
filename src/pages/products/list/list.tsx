@@ -10,7 +10,7 @@ import useTitle from '../../../hooks/useTitle';
 import { ctqmService } from '../../../services/ctqm.services';
 
 export default function List() {
-    const [listCars, setListCars] = useState<CarDTO[]>([]);
+    const [listCars, setListCars] = useState<CarDTO>();
     useTitle("Danh sách sản phẩm");
     const [loading, setIsLoading] = useState<boolean>(false);
     useEffect(() => {
@@ -84,8 +84,8 @@ export default function List() {
                     <img src={Image1} alt="" className='w-[300px] rounded' />
                     <Link to={''} className='absolute right-1 top-2'><ShoppingCartOutlined rev={undefined} className='text-[17px]' /></Link>
                     <div className="flex flex-col gap-3">
-                        <p className='text-[15px] font-semibold mt-2'>Porsche Cayenne GTS 2022</p>
-                        <p className='text-[15px] font-semibold'>$208,560</p>
+                        <p className='text-[15px] font-semibold mt-2'>{listCars?.carName}</p>
+                        <p className='text-[15px] font-semibold'>{listCars?.carPrice}</p>
                         <Card className='border-none bg-gray-100 !p-0 m-0' >
                             <div className="flex gap-8 justify-center ">
                                 <div className="flex flex-col justify-center items-center">
@@ -99,7 +99,7 @@ export default function List() {
                                             </clipPath>
                                         </defs>
                                     </svg>
-                                    <p className='text-[13px]'>4,000</p>
+                                    <p className='text-[13px]'>{listCars?.carModel}</p>
                                 </div>
                                 <div className="flex flex-col items-center justify-center">
                                     <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -122,7 +122,7 @@ export default function List() {
                                         <path d="M15 5.83331V6.66665C15 7.12688 15.3731 7.49998 15.8333 7.49998H16.6667" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
                                         <path d="M3.33334 9.16667H11.6667" stroke="#0F0F0F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
-                                    <p>Electrics</p>
+                                    <p>{listCars?.carEngine}</p>
                                 </div>
                             </div>
                         </Card>
@@ -179,7 +179,6 @@ export default function List() {
                         <Link to={'/product-details'}><Button className='w-full'>Details</Button></Link>
                     </div>
                 </Card>
-
 
                 <Card>
                     <img src={Image1} alt="" className='w-[300px] rounded' />
