@@ -1,7 +1,7 @@
 import { ChangeInfoDTO, ChangePasswordDTO, CustomerCreateDTO, CustomerLoginDTO } from '@share/dtos/service-proxies-dtos';
 import axios from 'axios';
 
-const baseURL = 'http://localhost:5205';
+const baseURL = 'https://ctqmapi.azurewebsites.net';
 
 const api = axios.create({
     baseURL,

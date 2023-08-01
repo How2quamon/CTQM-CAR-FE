@@ -1,7 +1,7 @@
 import { CarDTO } from '@share/dtos/service-proxies-dtos';
 import axios from 'axios';
 
-const baseURL = 'http://localhost:5205';
+const baseURL = 'https://ctqmapi.azurewebsites.net';
 
 const api = axios.create({
     baseURL,
@@ -9,13 +9,13 @@ const api = axios.create({
 
 
 // Hàm này sẽ thêm JWT token vào header trước mỗi lần gọi API
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('jwtToken'); // Thay đổi thành cách lấy JWT token trong ứng dụng của bạn
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-});
+// api.interceptors.request.use((config) => {
+//     const token = localStorage.getItem('jwtToken'); // Thay đổi thành cách lấy JWT token trong ứng dụng của bạn
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
+//     return config;
+// });
   
 const getAllCar = async () => {
     const response = await api.get('/api/Car');
