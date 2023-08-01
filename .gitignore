@@ -1,1 +1,11 @@
-node_modules
+# Bỏ qua các tệp cache
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Bỏ qua tệp build của React
+/build
+
+# Bỏ qua các tệp log
+*.log
+.log.
