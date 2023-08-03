@@ -6,12 +6,16 @@ import { Button, Form, Input, InputNumber } from 'antd';
 import useTitle from '../../hooks/useTitle';
 import { ctqmService } from '../../services/ctqm.services';
 import layout from 'antd/es/layout';
-import { CartDTO } from '@share/dtos/service-proxies-dtos';
+import { CarDTO, CartDTO } from '@share/dtos/service-proxies-dtos';
 
 export default function Payment() {
     useTitle("Payment");
     const [isLoginForm, setIsLoginForm] = useState(true);
     const [customerCartList, setCustomerCartList] = useState<CartDTO[]>([]);
+    const [subTotal, setSubTotal] = useState(0);
+    const [taxTotal, setTaxTotal] = useState(19.09);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [carList, setCarList] = useState<CarDTO[]>([]);
     const [loading, setIsLoading] = useState<boolean>(false);
 
     const handleToggleForm = () => {
@@ -42,17 +46,47 @@ export default function Payment() {
             .getCustomerCart("cbbf1eb6-ddb4-4577-82c4-56dd9e9fc7fd")
             .then((response) => {
                 setCustomerCartList(response);
-                console.log(response);
+                console.log("CART", response);
+                initValue();
+                getCarData(response);
             })
             .finally(() => {
                 setIsLoading(false);
             });
     };
 
-    const getCarData = (id: string) => {
-        
+    const initValue = () => {
+        setSubTotal(0);
+        setTaxTotal(19.09);
+        setTotalPrice(0);
+        setCarList([]);
+        console.log("DITMEt");
     }
 
+    const getCarData = (listCart: CartDTO[]) => {
+        setIsLoading(true);
+        listCart.forEach(cart => {
+            let price = cart.price! * cart.amount!;
+            console.log("PRICE", price);
+            
+            setSubTotal(subTotal + price);
+            setTotalPrice(taxTotal + subTotal + price);
+            ctqmService.carApi
+                .getCarWithId(cart.carId!)
+                .then((rs) => {
+                     // Sao chép mảng hiện tại
+                    const newCarList = [...carList];
+                    // Thêm giá trị mới vào cuối mảng sao chép
+                    newCarList.push(rs);
+                    // Cập nhật state bằng mảng mới
+                    setCarList(newCarList);
+                    console.log("ASDASDQWEASD ", rs);
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
+        });
+    };
 
     function onFinish(values: any): void {
         throw new Error('Function not implemented.');
@@ -65,34 +99,25 @@ export default function Payment() {
                 <div className="w-full">
                     <div className="-mx-3 md:flex items-start">
                         <div className="px-3 md:w-7/12 lg:pr-10">
-                            <div className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6">
-                                <div className="w-full flex items-center">
-                                    <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
-                                        <img src="Homepage.png" alt="" />
-                                    </div>
-                                    <div className="flex-grow pl-3">
-                                        <h6 className="font-semibold uppercase ">Cao Anh Tri</h6>
-                                        <p className="">x 1</p>
-                                    </div>
-                                    <div>
-                                        <span className="font-semibold  text-xl">$210</span><span className="font-semibold text-gray-600 text-sm">.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6">
-                                <div className="w-full flex items-center">
-                                    <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
-                                        <img src="Homepage2.jpeg" alt="" />
-                                    </div>
-                                    <div className="flex-grow pl-3">
-                                        <h6 className="font-semibold uppercase">Cao Viet Thang</h6>
-                                        <p >x 1</p>
-                                    </div>
-                                    <div>
-                                        <span className="font-semibold  text-xl">$210</span><span className="font-semibold  text-sm">.00</span>
+                        {carList.length > 0 ? (
+                            carList.map((car) => (
+                                <div className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6" key={car.carId}>
+                                    <div className="w-full flex items-center">
+                                        <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
+                                            <img src="Homepage.png" alt="" />
+                                        </div>
+                                        <div className="flex-grow pl-3">
+                                            <h6 className="font-semibold uppercase ">{car.carName}</h6>
+                                            <p className="">x 1</p>
+                                        </div>
+                                        <div>
+                                            <span className="font-semibold  text-xl">${car.carPrice}</span><span className="font-semibold text-gray-600 text-sm">.00</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            ))):(
+                                <p className='text-[15px] font-semibold mt-2'>Nothing in your Cart</p>
+                            )}
                             <div className="mb-6 pb-6 border-b border-gray-200">
                                 <div className="-mx-2 flex items-end justify-end">
                                     <div className="flex-grow px-2 lg:max-w-xs">
@@ -112,7 +137,7 @@ export default function Payment() {
                                         <span className="">Subtotal</span>
                                     </div>
                                     <div className="pl-3">
-                                        <span className="font-semibold">$190.91</span>
+                                        <span className="font-semibold">${subTotal}</span>
                                     </div>
                                 </div>
                                 <div className="w-full flex items-center">
@@ -120,7 +145,7 @@ export default function Payment() {
                                         <span className="">Taxes (GST)</span>
                                     </div>
                                     <div className="pl-3">
-                                        <span className="font-semibold">$19.09</span>
+                                        <span className="font-semibold">${taxTotal}</span>
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +155,7 @@ export default function Payment() {
                                         <span className="">Total</span>
                                     </div>
                                     <div className="pl-3">
-                                        <span className="font-semibold  text-sm">AUD</span> <span className="font-semibold">$210.00</span>
+                                        <span className="font-semibold  text-sm">AUD</span> <span className="font-semibold">${totalPrice}</span>
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +169,7 @@ export default function Payment() {
                                     style={{ maxWidth: 600 }}
                                     validateMessages={validateMessages}
                                 >
-                                    <Form.Item name={['user', 'Name']} label="Name" rules={[{ required: true }]}
+                                    {/* <Form.Item name={['user', 'Name']} label="Name" rules={[{ required: true }]}
                                         className="mr-[100px]">
                                         <Input />
                                     </Form.Item>
@@ -170,10 +195,6 @@ export default function Payment() {
 
                                     <div className="w-full p-3 border-b border-gray-200">
                                         <div className="mb-5">
-                                            <label htmlFor="type1" className="flex items-center cursor-pointer mb-[20px]">
-                                                <input type="radio" className="form-radio h-5 w-5 text-indigo-500" name="type" id="type1"/>
-                                                <img src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png" className="h-6 ml-3" alt='' />
-                                            </label>
                                             <div >
                                                 <Form.Item name={['user', 'Name on card']} label="Name on card" rules={[{ required: true }]}
                                                     className="mb-8 mr-[80px]">
@@ -224,14 +245,18 @@ export default function Payment() {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
+                                    {/* </div> */}
                                         <div className="w-full p-3">
-                                            <label htmlFor="type2" className="flex items-center cursor-pointer">
-                                                <input type="radio" className="form-radio h-5 w-5 text-indigo-500" name="type" id="type2" />
+                                            <label htmlFor="type1" className="flex items-center cursor-pointer">
+                                                <input type="radio" className="form-radio h-5 w-5 text-indigo-500" name="type" id="type1" />
                                                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" width="80" className="ml-3" alt='' />
                                             </label>
+                                            <label htmlFor="type2" className="flex items-center cursor-pointer mt-3">
+                                                <input type="radio" className="form-radio h-5 w-5 text-indigo-500" name="type" id="type2" />
+                                                <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-VNPAY-QR-1.png" width="80" className="ml-3" alt='' />
+                                            </label>
                                         </div>
-                                    </div>
                                     <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }} className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-2 font-semibold">
                                         <Button type="primary" htmlType="submit">
                                             PAY NOW
