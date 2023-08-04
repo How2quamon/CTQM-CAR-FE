@@ -1,35 +1,29 @@
-import React, { useEffect, useState } from "react";
-import logo from "../../logo/ctqm-logo-2.png";
-import { Link } from "react-router-dom";
-import { Button, Checkbox, Form, Input } from "antd";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Input } from "antd";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import logo from "../../logo/ctqm-logo-2.png";
 import { ctqmService } from "../../services/ctqm.services";
 import { CustomerLoginDTO } from "@share/dtos/service-proxies-dtos";
 
-const Login = () => {
+export default function Login() {
   const [login, setLogin] = useState<any>();
   const [loading, setIsLoading] = useState<boolean>(false);
-  useEffect(() => {
-    postLogin(login);
-  }, []);
-
-  const postLogin = async (body: CustomerLoginDTO) => {
+  useEffect(() => {}, []);
+  const onFinish = (values: any) => {
+    // Xử lý dữ liệu đăng nhập khi form submit thành công
     setIsLoading(true);
-
+    console.log(values);
     ctqmService.customerApi
-      .loginAction(body)
+      .loginAction(values)
       .then((response) => {
         setLogin(response);
+        console.log(response);
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
-
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-  };
-
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
@@ -75,7 +69,10 @@ const Login = () => {
                   className="w-[260px] mb-2"
                   name="password"
                   rules={[
-                    { required: true, message: "Please input your password!" },
+                    {
+                      required: true,
+                      message: "Please input your password!",
+                    },
                   ]}
                 >
                   <Input.Password
@@ -96,6 +93,8 @@ const Login = () => {
                       className="border-2 border-slate-900  text-black-500 !rounded-full h-10 !px-10 !py-2 font-semibold 
                         hover:bg-slate-900 hover:text-white flex items-center"
                       htmlType="submit"
+                      // onClick={postLogin}
+                      loading={loading}
                     >
                       Sign In
                     </Button>
@@ -129,5 +128,4 @@ const Login = () => {
       </main>
     </div>
   );
-};
-export default Login;
+}
