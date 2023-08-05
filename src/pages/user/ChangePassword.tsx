@@ -5,6 +5,9 @@ import NavBar from 'src/layout/navigationBar';
 import SideMenu from './SideMenu';
 import Footer from "src/layout/Footer";
 import useTitle from 'src/hooks/useTitle';
+import { ctqmService } from '../../services/ctqm.services';
+import { ChangePasswordDTO } from '@share/dtos/service-proxies-dtos';
+
 
 const onFinish = (values: any) => {
     console.log('Success:', values);

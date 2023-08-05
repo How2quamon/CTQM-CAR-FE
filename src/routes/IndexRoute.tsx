@@ -27,7 +27,7 @@ export default function IndexRoute() {
           <Route path="register" element={<Register/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="product-details" element={<ProductDetails/>}></Route>
+          <Route path="products/:carId" element={<ProductDetails/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="payment" element={<Payment/>}></Route>

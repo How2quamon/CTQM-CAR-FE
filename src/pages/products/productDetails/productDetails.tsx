@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { CarDetailDTO } from '@share/dtos/service-proxies-dtos';
+// import { CarDetailDTO } from '@share/dtos/service-proxies-dtos';
+import { CarDTO } from '@share/dtos/service-proxies-dtos';
 import { ctqmService } from '../../../services/ctqm.services';
 import useTitle from "src/hooks/useTitle";
 import NavBar from "src/layout/navigationBar";
@@ -21,24 +22,23 @@ const ProductDetails: React.FC = () => {
 
   const [amount, setAmount] = useState(1);
 
-  const handleChange = (value: { value: string; label: React.ReactNode }) => {
-    console.log(value);
-  };
+  // const handleChange = (value: { value: string; label: React.ReactNode }) => {
+  //   console.log(value);
+  // };
 
-  const [carDetails, setCarDetails] = useState<CarDetailDTO[]>([]);
-  useTitle("Danh sách sản phẩm");
+  const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
-      // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
       getCarDetail();
   }, []);
 
-  const getCarDetail = async () => {
+  const getCarDetail = () => {
     setIsLoading(true);
-    await ctqmService.carDetailApi
-      .getCarDetailWithId('string')
-      .then(({ response }) => {
-        setCarDetails(response);
+    ctqmService.carApi
+      .getCarWithId('cbb2bab8-09b5-4fce-a2d7-6b9335caf907')
+      .then(( response ) => {
+        console.log(response)
+        setCars(response);
       })
       .finally(() => {
         setIsLoading(false);
@@ -50,7 +50,9 @@ const ProductDetails: React.FC = () => {
       <NavBar />
       <main>
         <div className="flex flex-col justify-center min-h-screen">
-          <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10  items-start lg:py-14">
+        {cars?.length > 0 ? (
+          cars.map((car) => (
+            <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10  items-start lg:py-14" key={car.carId}>
             <article>
               <img
                 src={activeImg}
@@ -88,42 +90,16 @@ const ProductDetails: React.FC = () => {
             <article className="space-x-4 flex flex-col">
               <div className="space-x-4 mb-3">
                 <span className="mx-4 mb-2 text-sky-600 font-semibold">
-                  Mercedes
+                  {car.carModel}
                 </span>
-                <h1 className="text-3xl font-bold">Mercedes-AMG G63 2019</h1>
+                <h1 className="text-3xl font-bold">{car.carName}</h1>
               </div>
               <p className="my-2 text-gray-700 leading-7">
-                With 577 handcrafted horses, the AMG G-63 is a legend raised to
-                a higher power for a new era. Advanced luxury, unwavering
-                confidence, and extensive individualization let you create a G
-                that's at ease in any corner of the world.
+                {car.moTa}
               </p>
               <h6 className="my-2 text-2xl font-semibold">
-                12.000.000.000 VND
-              </h6>
-              <div className="my-3 w-72">
-                <h6 className="mb-2">Color(s)</h6>
-                <Select
-                  labelInValue
-                  defaultValue={{
-                    value: "Emerald Green metallic",
-                    label: "Emerald Green metallic",
-                  }}
-                  style={{ height: "150%" }}
-                  onChange={handleChange}
-                  options={[
-                    {
-                      value: "Emerald Green metallic",
-                      label: "Emerald Green metallic",
-                    },
-                    {
-                      value: "Magnetite Black metallic",
-                      label: "Magnetite Black metallic",
-                    },
-                  ]}
-                />
-              </div>
-
+                {car.carPrice}
+              </h6>              
               <div className="items-center my-3">
                 <h6 className="mb-2">Quantity</h6>
                 <div className="my-4 w-1/4 flex justify-between items-center border border-gray-200 rounded">
@@ -157,6 +133,9 @@ const ProductDetails: React.FC = () => {
               </div>
             </article>
           </section>
+          ))): (
+            <p className='text-[15px] font-semibold mt-2'>Item not found.</p>
+          )}
           <section className="mx-20">
             <h1 className="text-[30px] font-bold text-center">
               Related Products
