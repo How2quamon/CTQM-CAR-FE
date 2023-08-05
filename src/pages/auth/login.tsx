@@ -7,18 +7,30 @@ import { ctqmService } from "../../services/ctqm.services";
 import { CustomerLoginDTO } from "@share/dtos/service-proxies-dtos";
 
 export default function Login() {
-  const [login, setLogin] = useState<any>();
   const [loading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {}, []);
-  const onFinish = (values: any) => {
+  const onFinish = (values: CustomerLoginDTO) => {
     // Xử lý dữ liệu đăng nhập khi form submit thành công
     setIsLoading(true);
+    const currentToken = localStorage.getItem("CustomerName") != null ? localStorage.getItem("Token") : "";
+    const loginValue: CustomerLoginDTO = {
+      email: values.email,
+      password: values.password,
+      token: currentToken!
+    };
+    
     console.log(values);
+    
     ctqmService.customerApi
-      .loginAction(values)
+      .loginAction(loginValue)
       .then((response) => {
-        setLogin(response);
         console.log(response);
+        if (response.customerName != null && response.tokenPass != null) {
+          localStorage.setItem("Token", response.tokenPass);
+          localStorage.setItem("CustomerName", response.customerName);
+          localStorage.setItem("CustomerId", response.customerId);
+          console.log("SAVE TOKEN");
+        }
       })
       .finally(() => {
         setIsLoading(false);
@@ -46,7 +58,7 @@ export default function Login() {
               <Form
                 name="basic"
                 className="max-w-[600px]"
-                initialValues={{ remember: true }}
+                initialValues={{ remember: false }}
                 onFinish={onFinish}
                 size="large"
                 onFinishFailed={onFinishFailed}
