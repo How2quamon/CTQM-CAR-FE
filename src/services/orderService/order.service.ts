@@ -1,4 +1,4 @@
-import { OrderDTO } from '@share/dtos/service-proxies-dtos';
+import { CustomerPaymentDTO, OrderDTO } from '@share/dtos/service-proxies-dtos';
 import axios from 'axios';
 
 const baseURL = 'https://ctqmapi.azurewebsites.net';
@@ -22,8 +22,18 @@ const getOrderWithId = async (id: string) => {
     return response.data;
 }
 
+const getCustomerOrder = async (customerId: string) => {
+    const response = await api.get(`/api/Order/CustomerOrder/${customerId}`);
+    return response.data;
+}
+
 const createNewOrder = async (body: OrderDTO) => {
     const response = await api.post('/api/Order/NewOrder', body);
+    return response.data;
+}
+
+const customerPayment = async (body: CustomerPaymentDTO) => {
+    const response = await api.post('/api/Order/CustomerPayment', body);
     return response.data;
 }
 
@@ -39,7 +49,9 @@ const deleteOrderWithId = async (id: string) => {
 
 export const orderService = {
     getOrderWithId,
+    getCustomerOrder,
     createNewOrder,
+    customerPayment,
     updateOrder,
     deleteOrderWithId,
 }

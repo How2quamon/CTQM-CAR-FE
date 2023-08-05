@@ -1,4 +1,4 @@
-import { CartDTO } from '@share/dtos/service-proxies-dtos';
+import { CartDTO, QuickAddCartDTO } from '@share/dtos/service-proxies-dtos';
 import axios from 'axios';
 
 const baseURL = 'https://ctqmapi.azurewebsites.net';
@@ -32,6 +32,11 @@ const addToCart = async (body: CartDTO) => {
     return response.data;
 }
 
+const quickAddToCart = async (body: QuickAddCartDTO) => {
+    const response = await api.post('/api/Cart/QuickAddToCart', body);
+    return response.data;
+}
+
 const updateCart = async (id: string, amount: number) => {
     const response = await api.put(`/api/Cart/UpdateCart/${id}`, amount);
     return response.data;
@@ -46,6 +51,7 @@ export const cartService ={
     getAllCart,
     getCustomerCart,
     addToCart,
+    quickAddToCart,
     updateCart,
     deleteCartWithId,
 }

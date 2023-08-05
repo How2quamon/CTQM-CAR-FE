@@ -27,6 +27,11 @@ const getCarWithId = async (id: string) => {
     return response.data;
 }
 
+const getCarWithModel = async (carModel: string) => {
+    const response = await api.get(`/api/Car/GetCarWithModel/${carModel}`);
+    return response.data;
+}
+
 const createNewCar = async (body: CarDTO) => {
     const response = await api.post('/api/Car/NewCar', body);
     return response.data;
@@ -45,6 +50,7 @@ const deleteCarWithId = async (id: string) => {
 export const  carService = {
     getAllCar,
     getCarWithId,
+    getCarWithModel,
     createNewCar,
     updateCar,
     deleteCarWithId,
