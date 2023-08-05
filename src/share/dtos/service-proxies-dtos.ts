@@ -8,70 +8,7 @@
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
-export class AddCarDTO implements IAddCarDTO {
-    carName?: string | undefined;
-    carModel?: string | undefined;
-    carClass?: string | undefined;
-    carEngine?: string | undefined;
-    carAmount?: number;
-    carPrice?: number;
-    moTa?: string | undefined;
-    head1?: string | undefined;
-    moTa2?: string | undefined;
-
-    constructor(data?: IAddCarDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.carName = _data["carName"];
-            this.carModel = _data["carModel"];
-            this.carClass = _data["carClass"];
-            this.carEngine = _data["carEngine"];
-            this.carAmount = _data["carAmount"];
-            this.carPrice = _data["carPrice"];
-            this.moTa = _data["moTa"];
-            this.head1 = _data["head1"];
-            this.moTa2 = _data["moTa2"];
-        }
-    }
-
-    static fromJS(data: any): AddCarDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new AddCarDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["carName"] = this.carName;
-        data["carModel"] = this.carModel;
-        data["carClass"] = this.carClass;
-        data["carEngine"] = this.carEngine;
-        data["carAmount"] = this.carAmount;
-        data["carPrice"] = this.carPrice;
-        data["moTa"] = this.moTa;
-        data["head1"] = this.head1;
-        data["moTa2"] = this.moTa2;
-        return data;
-    }
-
-    clone(): AddCarDTO {
-        const json = this.toJSON();
-        let result = new AddCarDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IAddCarDTO {
+export interface AddCarDTO {
     carName?: string | undefined;
     carModel?: string | undefined;
     carClass?: string | undefined;
@@ -83,64 +20,7 @@ export interface IAddCarDTO {
     moTa2?: string | undefined;
 }
 
-export class AddCarDetailDTO implements IAddCarDetailDTO {
-    carId?: string;
-    head1?: string | undefined;
-    title1?: string | undefined;
-    head2?: string | undefined;
-    title2?: string | undefined;
-    head3?: string | undefined;
-    title3?: string | undefined;
-
-    constructor(data?: IAddCarDetailDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.carId = _data["carId"];
-            this.head1 = _data["head1"];
-            this.title1 = _data["title1"];
-            this.head2 = _data["head2"];
-            this.title2 = _data["title2"];
-            this.head3 = _data["head3"];
-            this.title3 = _data["title3"];
-        }
-    }
-
-    static fromJS(data: any): AddCarDetailDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new AddCarDetailDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["carId"] = this.carId;
-        data["head1"] = this.head1;
-        data["title1"] = this.title1;
-        data["head2"] = this.head2;
-        data["title2"] = this.title2;
-        data["head3"] = this.head3;
-        data["title3"] = this.title3;
-        return data;
-    }
-
-    clone(): AddCarDetailDTO {
-        const json = this.toJSON();
-        let result = new AddCarDetailDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IAddCarDetailDTO {
+export interface AddCarDetailDTO {
     carId?: string;
     head1?: string | undefined;
     title1?: string | undefined;
@@ -150,116 +30,14 @@ export interface IAddCarDetailDTO {
     title3?: string | undefined;
 }
 
-export class AddCartDTO implements IAddCartDTO {
-    customerId?: string;
-    carId?: string;
-    amount?: number | undefined;
-    price?: number | undefined;
-
-    constructor(data?: IAddCartDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.customerId = _data["customerId"];
-            this.carId = _data["carId"];
-            this.amount = _data["amount"];
-            this.price = _data["price"];
-        }
-    }
-
-    static fromJS(data: any): AddCartDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new AddCartDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["customerId"] = this.customerId;
-        data["carId"] = this.carId;
-        data["amount"] = this.amount;
-        data["price"] = this.price;
-        return data;
-    }
-
-    clone(): AddCartDTO {
-        const json = this.toJSON();
-        let result = new AddCartDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IAddCartDTO {
+export interface AddCartDTO {
     customerId?: string;
     carId?: string;
     amount?: number | undefined;
     price?: number | undefined;
 }
 
-export class AddOrderDTO implements IAddOrderDTO {
-    carId?: string;
-    customerId?: string;
-    orderDate?: Date;
-    orderStatus?: string | undefined;
-    amount?: number;
-    totalPrice?: number;
-
-    constructor(data?: IAddOrderDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.carId = _data["carId"];
-            this.customerId = _data["customerId"];
-            this.orderDate = _data["orderDate"] ? new Date(_data["orderDate"].toString()) : <any>undefined;
-            this.orderStatus = _data["orderStatus"];
-            this.amount = _data["amount"];
-            this.totalPrice = _data["totalPrice"];
-        }
-    }
-
-    static fromJS(data: any): AddOrderDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new AddOrderDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["carId"] = this.carId;
-        data["customerId"] = this.customerId;
-        data["orderDate"] = this.orderDate ? this.orderDate.toISOString() : <any>undefined;
-        data["orderStatus"] = this.orderStatus;
-        data["amount"] = this.amount;
-        data["totalPrice"] = this.totalPrice;
-        return data;
-    }
-
-    clone(): AddOrderDTO {
-        const json = this.toJSON();
-        let result = new AddOrderDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IAddOrderDTO {
+export interface AddOrderDTO {
     carId?: string;
     customerId?: string;
     orderDate?: Date;
@@ -268,73 +46,7 @@ export interface IAddOrderDTO {
     totalPrice?: number;
 }
 
-export class CarDTO implements ICarDTO {
-    carId?: string;
-    carName?: string | undefined;
-    carModel?: string | undefined;
-    carClass?: string | undefined;
-    carEngine?: string | undefined;
-    carAmount?: number;
-    carPrice?: number;
-    moTa?: string | undefined;
-    head1?: string | undefined;
-    moTa2?: string | undefined;
-
-    constructor(data?: ICarDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.carId = _data["carId"];
-            this.carName = _data["carName"];
-            this.carModel = _data["carModel"];
-            this.carClass = _data["carClass"];
-            this.carEngine = _data["carEngine"];
-            this.carAmount = _data["carAmount"];
-            this.carPrice = _data["carPrice"];
-            this.moTa = _data["moTa"];
-            this.head1 = _data["head1"];
-            this.moTa2 = _data["moTa2"];
-        }
-    }
-
-    static fromJS(data: any): CarDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new CarDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["carId"] = this.carId;
-        data["carName"] = this.carName;
-        data["carModel"] = this.carModel;
-        data["carClass"] = this.carClass;
-        data["carEngine"] = this.carEngine;
-        data["carAmount"] = this.carAmount;
-        data["carPrice"] = this.carPrice;
-        data["moTa"] = this.moTa;
-        data["head1"] = this.head1;
-        data["moTa2"] = this.moTa2;
-        return data;
-    }
-
-    clone(): CarDTO {
-        const json = this.toJSON();
-        let result = new CarDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICarDTO {
+export interface CarDTO {
     carId?: string;
     carName?: string | undefined;
     carModel?: string | undefined;
@@ -347,67 +59,7 @@ export interface ICarDTO {
     moTa2?: string | undefined;
 }
 
-export class CarDetailDTO implements ICarDetailDTO {
-    detailId?: string;
-    carId?: string;
-    head1?: string | undefined;
-    title1?: string | undefined;
-    head2?: string | undefined;
-    title2?: string | undefined;
-    head3?: string | undefined;
-    title3?: string | undefined;
-
-    constructor(data?: ICarDetailDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.detailId = _data["detailId"];
-            this.carId = _data["carId"];
-            this.head1 = _data["head1"];
-            this.title1 = _data["title1"];
-            this.head2 = _data["head2"];
-            this.title2 = _data["title2"];
-            this.head3 = _data["head3"];
-            this.title3 = _data["title3"];
-        }
-    }
-
-    static fromJS(data: any): CarDetailDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new CarDetailDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["detailId"] = this.detailId;
-        data["carId"] = this.carId;
-        data["head1"] = this.head1;
-        data["title1"] = this.title1;
-        data["head2"] = this.head2;
-        data["title2"] = this.title2;
-        data["head3"] = this.head3;
-        data["title3"] = this.title3;
-        return data;
-    }
-
-    clone(): CarDetailDTO {
-        const json = this.toJSON();
-        let result = new CarDetailDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICarDetailDTO {
+export interface CarDetailDTO {
     detailId?: string;
     carId?: string;
     head1?: string | undefined;
@@ -418,58 +70,7 @@ export interface ICarDetailDTO {
     title3?: string | undefined;
 }
 
-export class CartDTO implements ICartDTO {
-    cartId?: string;
-    customerId?: string;
-    carId?: string;
-    amount?: number | undefined;
-    price?: number | undefined;
-
-    constructor(data?: ICartDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.cartId = _data["cartId"];
-            this.customerId = _data["customerId"];
-            this.carId = _data["carId"];
-            this.amount = _data["amount"];
-            this.price = _data["price"];
-        }
-    }
-
-    static fromJS(data: any): CartDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new CartDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["cartId"] = this.cartId;
-        data["customerId"] = this.customerId;
-        data["carId"] = this.carId;
-        data["amount"] = this.amount;
-        data["price"] = this.price;
-        return data;
-    }
-
-    clone(): CartDTO {
-        const json = this.toJSON();
-        let result = new CartDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICartDTO {
+export interface CartDTO {
     cartId?: string;
     customerId?: string;
     carId?: string;
@@ -477,112 +78,13 @@ export interface ICartDTO {
     price?: number | undefined;
 }
 
-export class CartNotiDTO implements ICartNotiDTO {
-    carName?: string | undefined;
-    amount?: number;
-    price?: number;
-
-    constructor(data?: ICartNotiDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.carName = _data["carName"];
-            this.amount = _data["amount"];
-            this.price = _data["price"];
-        }
-    }
-
-    static fromJS(data: any): CartNotiDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new CartNotiDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["carName"] = this.carName;
-        data["amount"] = this.amount;
-        data["price"] = this.price;
-        return data;
-    }
-
-    clone(): CartNotiDTO {
-        const json = this.toJSON();
-        let result = new CartNotiDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICartNotiDTO {
+export interface CartNotiDTO {
     carName?: string | undefined;
     amount?: number;
     price?: number;
 }
 
-export class ChangeInfoDTO implements IChangeInfoDTO {
-    customerName?: string | undefined;
-    customerPhone?: string | undefined;
-    customerAddress?: string | undefined;
-    customerDate?: Date;
-    customerLicense?: string | undefined;
-    customerEmail?: string | undefined;
-
-    constructor(data?: IChangeInfoDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.customerName = _data["customerName"];
-            this.customerPhone = _data["customerPhone"];
-            this.customerAddress = _data["customerAddress"];
-            this.customerDate = _data["customerDate"] ? new Date(_data["customerDate"].toString()) : <any>undefined;
-            this.customerLicense = _data["customerLicense"];
-            this.customerEmail = _data["customerEmail"];
-        }
-    }
-
-    static fromJS(data: any): ChangeInfoDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new ChangeInfoDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["customerName"] = this.customerName;
-        data["customerPhone"] = this.customerPhone;
-        data["customerAddress"] = this.customerAddress;
-        data["customerDate"] = this.customerDate ? this.customerDate.toISOString() : <any>undefined;
-        data["customerLicense"] = this.customerLicense;
-        data["customerEmail"] = this.customerEmail;
-        return data;
-    }
-
-    clone(): ChangeInfoDTO {
-        const json = this.toJSON();
-        let result = new ChangeInfoDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IChangeInfoDTO {
+export interface ChangeInfoDTO {
     customerName?: string | undefined;
     customerPhone?: string | undefined;
     customerAddress?: string | undefined;
@@ -591,212 +93,23 @@ export interface IChangeInfoDTO {
     customerEmail?: string | undefined;
 }
 
-export class ChangePasswordDTO implements IChangePasswordDTO {
-    oldPassword?: string | undefined;
-    newPassword?: string | undefined;
-
-    constructor(data?: IChangePasswordDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.oldPassword = _data["oldPassword"];
-            this.newPassword = _data["newPassword"];
-        }
-    }
-
-    static fromJS(data: any): ChangePasswordDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new ChangePasswordDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["oldPassword"] = this.oldPassword;
-        data["newPassword"] = this.newPassword;
-        return data;
-    }
-
-    clone(): ChangePasswordDTO {
-        const json = this.toJSON();
-        let result = new ChangePasswordDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IChangePasswordDTO {
+export interface ChangePasswordDTO {
     oldPassword?: string | undefined;
     newPassword?: string | undefined;
 }
 
-export class CustomerCartDTO implements ICustomerCartDTO {
-    totalAmount?: number | undefined;
-    totalDiscount?: number | undefined;
-
-    constructor(data?: ICustomerCartDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.totalAmount = _data["totalAmount"];
-            this.totalDiscount = _data["totalDiscount"];
-        }
-    }
-
-    static fromJS(data: any): CustomerCartDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new CustomerCartDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["totalAmount"] = this.totalAmount;
-        data["totalDiscount"] = this.totalDiscount;
-        return data;
-    }
-
-    clone(): CustomerCartDTO {
-        const json = this.toJSON();
-        let result = new CustomerCartDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICustomerCartDTO {
+export interface CustomerCartDTO {
     totalAmount?: number | undefined;
     totalDiscount?: number | undefined;
 }
 
-export class CustomerCreateDTO implements ICustomerCreateDTO {
-    customerName?: string | undefined;
-    customerEmail?: string | undefined;
-    customerPassword?: string | undefined;
-
-    constructor(data?: ICustomerCreateDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.customerName = _data["customerName"];
-            this.customerEmail = _data["customerEmail"];
-            this.customerPassword = _data["customerPassword"];
-        }
-    }
-
-    static fromJS(data: any): CustomerCreateDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new CustomerCreateDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["customerName"] = this.customerName;
-        data["customerEmail"] = this.customerEmail;
-        data["customerPassword"] = this.customerPassword;
-        return data;
-    }
-
-    clone(): CustomerCreateDTO {
-        const json = this.toJSON();
-        let result = new CustomerCreateDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICustomerCreateDTO {
+export interface CustomerCreateDTO {
     customerName?: string | undefined;
     customerEmail?: string | undefined;
     customerPassword?: string | undefined;
 }
 
-export class CustomerDTO implements ICustomerDTO {
-    customerId?: string;
-    customerName?: string | undefined;
-    customerPhone?: string | undefined;
-    customerAddress?: string | undefined;
-    customerDate?: Date;
-    customerLicense?: string | undefined;
-    customerEmail?: string | undefined;
-    customerPassword?: string | undefined;
-
-    constructor(data?: ICustomerDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.customerId = _data["customerId"];
-            this.customerName = _data["customerName"];
-            this.customerPhone = _data["customerPhone"];
-            this.customerAddress = _data["customerAddress"];
-            this.customerDate = _data["customerDate"] ? new Date(_data["customerDate"].toString()) : <any>undefined;
-            this.customerLicense = _data["customerLicense"];
-            this.customerEmail = _data["customerEmail"];
-            this.customerPassword = _data["customerPassword"];
-        }
-    }
-
-    static fromJS(data: any): CustomerDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new CustomerDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["customerId"] = this.customerId;
-        data["customerName"] = this.customerName;
-        data["customerPhone"] = this.customerPhone;
-        data["customerAddress"] = this.customerAddress;
-        data["customerDate"] = this.customerDate ? this.customerDate.toISOString() : <any>undefined;
-        data["customerLicense"] = this.customerLicense;
-        data["customerEmail"] = this.customerEmail;
-        data["customerPassword"] = this.customerPassword;
-        return data;
-    }
-
-    clone(): CustomerDTO {
-        const json = this.toJSON();
-        let result = new CustomerDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICustomerDTO {
+export interface CustomerDTO {
     customerId?: string;
     customerName?: string | undefined;
     customerPhone?: string | undefined;
@@ -807,131 +120,14 @@ export interface ICustomerDTO {
     customerPassword?: string | undefined;
 }
 
-export class CustomerLoginDTO implements ICustomerLoginDTO {
-    email?: string | undefined;
-    password?: string | undefined;
-    token?: string = "";
-    admin?: boolean = false;
-
-    constructor(data?: ICustomerLoginDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.email = _data["email"];
-            this.password = _data["password"];
-            this.token = _data["token"];
-            this.admin = _data["admin"];
-        }
-    }
-
-    static fromJS(data: any): CustomerLoginDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new CustomerLoginDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["email"] = this.email;
-        data["password"] = this.password;
-        data["token"] = this.token;
-        data["admin"] = this.admin;
-        return data;
-    }
-
-    clone(): CustomerLoginDTO {
-        const json = this.toJSON();
-        let result = new CustomerLoginDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICustomerLoginDTO {
+export interface CustomerLoginDTO {
     email?: string | undefined;
     password?: string | undefined;
     token?: string | undefined;
     admin?: boolean | undefined;
 }
 
-export class CustomerOrderDTO implements ICustomerOrderDTO {
-    orderId?: string;
-    carId?: string;
-    carName?: string | undefined;
-    carModel?: string | undefined;
-    carClass?: string | undefined;
-    carEngine?: string | undefined;
-    customerId?: string;
-    orderDate?: Date;
-    orderStatus?: string | undefined;
-    amount?: number;
-    totalPrice?: number;
-
-    constructor(data?: ICustomerOrderDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.orderId = _data["orderId"];
-            this.carId = _data["carId"];
-            this.carName = _data["carName"];
-            this.carModel = _data["carModel"];
-            this.carClass = _data["carClass"];
-            this.carEngine = _data["carEngine"];
-            this.customerId = _data["customerId"];
-            this.orderDate = _data["orderDate"] ? new Date(_data["orderDate"].toString()) : <any>undefined;
-            this.orderStatus = _data["orderStatus"];
-            this.amount = _data["amount"];
-            this.totalPrice = _data["totalPrice"];
-        }
-    }
-
-    static fromJS(data: any): CustomerOrderDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new CustomerOrderDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["orderId"] = this.orderId;
-        data["carId"] = this.carId;
-        data["carName"] = this.carName;
-        data["carModel"] = this.carModel;
-        data["carClass"] = this.carClass;
-        data["carEngine"] = this.carEngine;
-        data["customerId"] = this.customerId;
-        data["orderDate"] = this.orderDate ? this.orderDate.toISOString() : <any>undefined;
-        data["orderStatus"] = this.orderStatus;
-        data["amount"] = this.amount;
-        data["totalPrice"] = this.totalPrice;
-        return data;
-    }
-
-    clone(): CustomerOrderDTO {
-        const json = this.toJSON();
-        let result = new CustomerOrderDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICustomerOrderDTO {
+export interface CustomerOrderDTO {
     orderId?: string;
     carId?: string;
     carName?: string | undefined;
@@ -945,108 +141,12 @@ export interface ICustomerOrderDTO {
     totalPrice?: number;
 }
 
-export class CustomerPaymentDTO implements ICustomerPaymentDTO {
-    customerId?: string;
-    orderStatus?: string | undefined;
-
-    constructor(data?: ICustomerPaymentDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.customerId = _data["customerId"];
-            this.orderStatus = _data["orderStatus"];
-        }
-    }
-
-    static fromJS(data: any): CustomerPaymentDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new CustomerPaymentDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["customerId"] = this.customerId;
-        data["orderStatus"] = this.orderStatus;
-        return data;
-    }
-
-    clone(): CustomerPaymentDTO {
-        const json = this.toJSON();
-        let result = new CustomerPaymentDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICustomerPaymentDTO {
+export interface CustomerPaymentDTO {
     customerId?: string;
     orderStatus?: string | undefined;
 }
 
-export class CustomerTokenDTO implements ICustomerTokenDTO {
-    token?: string | undefined;
-    id?: string;
-    email?: string | undefined;
-    name?: string | undefined;
-    password?: string | undefined;
-    admin?: boolean | undefined;
-
-    constructor(data?: ICustomerTokenDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.token = _data["token"];
-            this.id = _data["id"];
-            this.email = _data["email"];
-            this.name = _data["name"];
-            this.password = _data["password"];
-            this.admin = _data["admin"];
-        }
-    }
-
-    static fromJS(data: any): CustomerTokenDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new CustomerTokenDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["token"] = this.token;
-        data["id"] = this.id;
-        data["email"] = this.email;
-        data["name"] = this.name;
-        data["password"] = this.password;
-        data["admin"] = this.admin;
-        return data;
-    }
-
-    clone(): CustomerTokenDTO {
-        const json = this.toJSON();
-        let result = new CustomerTokenDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ICustomerTokenDTO {
+export interface CustomerTokenDTO {
     token?: string | undefined;
     id?: string;
     email?: string | undefined;
@@ -1055,64 +155,7 @@ export interface ICustomerTokenDTO {
     admin?: boolean | undefined;
 }
 
-export class OrderDTO implements IOrderDTO {
-    orderId?: string;
-    carId?: string;
-    customerId?: string;
-    orderDate?: Date;
-    orderStatus?: string | undefined;
-    amount?: number;
-    totalPrice?: number;
-
-    constructor(data?: IOrderDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.orderId = _data["orderId"];
-            this.carId = _data["carId"];
-            this.customerId = _data["customerId"];
-            this.orderDate = _data["orderDate"] ? new Date(_data["orderDate"].toString()) : <any>undefined;
-            this.orderStatus = _data["orderStatus"];
-            this.amount = _data["amount"];
-            this.totalPrice = _data["totalPrice"];
-        }
-    }
-
-    static fromJS(data: any): OrderDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new OrderDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["orderId"] = this.orderId;
-        data["carId"] = this.carId;
-        data["customerId"] = this.customerId;
-        data["orderDate"] = this.orderDate ? this.orderDate.toISOString() : <any>undefined;
-        data["orderStatus"] = this.orderStatus;
-        data["amount"] = this.amount;
-        data["totalPrice"] = this.totalPrice;
-        return data;
-    }
-
-    clone(): OrderDTO {
-        const json = this.toJSON();
-        let result = new OrderDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IOrderDTO {
+export interface OrderDTO {
     orderId?: string;
     carId?: string;
     customerId?: string;
@@ -1122,108 +165,12 @@ export interface IOrderDTO {
     totalPrice?: number;
 }
 
-export class QuickAddCartDTO implements IQuickAddCartDTO {
-    customerId?: string;
-    carId?: string;
-
-    constructor(data?: IQuickAddCartDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.customerId = _data["customerId"];
-            this.carId = _data["carId"];
-        }
-    }
-
-    static fromJS(data: any): QuickAddCartDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new QuickAddCartDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["customerId"] = this.customerId;
-        data["carId"] = this.carId;
-        return data;
-    }
-
-    clone(): QuickAddCartDTO {
-        const json = this.toJSON();
-        let result = new QuickAddCartDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IQuickAddCartDTO {
+export interface QuickAddCartDTO {
     customerId?: string;
     carId?: string;
 }
 
-export class UpdateCarDetailDTO implements IUpdateCarDetailDTO {
-    head1?: string | undefined;
-    title1?: string | undefined;
-    head2?: string | undefined;
-    title2?: string | undefined;
-    head3?: string | undefined;
-    title3?: string | undefined;
-
-    constructor(data?: IUpdateCarDetailDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.head1 = _data["head1"];
-            this.title1 = _data["title1"];
-            this.head2 = _data["head2"];
-            this.title2 = _data["title2"];
-            this.head3 = _data["head3"];
-            this.title3 = _data["title3"];
-        }
-    }
-
-    static fromJS(data: any): UpdateCarDetailDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new UpdateCarDetailDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["head1"] = this.head1;
-        data["title1"] = this.title1;
-        data["head2"] = this.head2;
-        data["title2"] = this.title2;
-        data["head3"] = this.head3;
-        data["title3"] = this.title3;
-        return data;
-    }
-
-    clone(): UpdateCarDetailDTO {
-        const json = this.toJSON();
-        let result = new UpdateCarDetailDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IUpdateCarDetailDTO {
+export interface UpdateCarDetailDTO {
     head1?: string | undefined;
     title1?: string | undefined;
     head2?: string | undefined;
@@ -1232,55 +179,7 @@ export interface IUpdateCarDetailDTO {
     title3?: string | undefined;
 }
 
-export class UpdateOrderDTO implements IUpdateOrderDTO {
-    orderDate?: Date;
-    orderStatus?: string | undefined;
-    amount?: number;
-    totalPrice?: number;
-
-    constructor(data?: IUpdateOrderDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.orderDate = _data["orderDate"] ? new Date(_data["orderDate"].toString()) : <any>undefined;
-            this.orderStatus = _data["orderStatus"];
-            this.amount = _data["amount"];
-            this.totalPrice = _data["totalPrice"];
-        }
-    }
-
-    static fromJS(data: any): UpdateOrderDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new UpdateOrderDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["orderDate"] = this.orderDate ? this.orderDate.toISOString() : <any>undefined;
-        data["orderStatus"] = this.orderStatus;
-        data["amount"] = this.amount;
-        data["totalPrice"] = this.totalPrice;
-        return data;
-    }
-
-    clone(): UpdateOrderDTO {
-        const json = this.toJSON();
-        let result = new UpdateOrderDTO();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IUpdateOrderDTO {
+export interface UpdateOrderDTO {
     orderDate?: Date;
     orderStatus?: string | undefined;
     amount?: number;
