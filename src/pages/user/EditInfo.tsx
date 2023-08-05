@@ -5,11 +5,15 @@ import {
   Input,
   Select,
 } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { message, Upload } from 'antd';
 import type { UploadChangeParam } from 'antd/es/upload';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ctqmService } from '../../services/ctqm.services';
+import { ChangeInfoDTO } from '@share/dtos/service-proxies-dtos';
+import axios from 'axios';
 
 const { Option } = Select;
 
@@ -35,8 +39,10 @@ const EditInfo: React.FC = () => {
   //functions for form
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+  const onFinish = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    await axios.put(`/api/Customer/ChangeCustomerInfo/${id}`, customers);
+    navigate("/");
   };
 
   const prefixSelector = (
@@ -48,7 +54,7 @@ const EditInfo: React.FC = () => {
     </Form.Item>
   );
 
-//avatar function
+  //avatar function
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
   const handleChange: UploadProps['onChange'] = (info: UploadChangeParam<UploadFile>) => {
@@ -71,103 +77,136 @@ const EditInfo: React.FC = () => {
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
-  
+
+  let navigate = useNavigate();
+  const { id } = useParams();
+
+  const [customers, setCustomers] = useState<ChangeInfoDTO[]>([]);
+
+  const onInputChange = (e: { target: { fullname: any; value: any; }; }) => {
+    setCustomers({ ...customers, [e.target.fullname]: e.target.value });
+  };
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  const getUserInfo = () => {
+    setLoading(true);
+    ctqmService.customerApi
+      .getCustomerWithId('6259971b-4e36-413a-acdd-17a4e4ad7135')
+      .then(({ response }) => {
+        console.log(response)
+        setCustomers(response);
+        
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
   return (
-    <div className='px-0 md:px-10 md:my-20 content-center transition-all flex flex-col'>
-      <h1 className='mt-15 mb-7 text-3xl font-bold'>My Profile</h1>
-      <div className='grid grid-cols-1 lg:grid-cols-5 gap-7'>
-        <section className="col-span-3">
-          <Form
-        layout="vertical"
-        form={form}
-        onFinish={onFinish}
-        initialValues={{ prefix: '84' }}
-        size='large'
-        style={{ maxWidth: 600 }}
-        scrollToFirstError
-          >
-            <Form.Item
-              name="email"
-              label="E-mail"
-              rules={[
-                {
-                  type: 'email',
-                  message: 'The input is not valid E-mail!',
-                },
-                {
-                  required: true,
-                  message: 'Please input your E-mail!',
-                },
-              ]}
-            >
-              <Input defaultValue="tramnn.0702@gmail.com"/>
-            </Form.Item>
+    <>
+      <div className='px-0 md:px-10 md:my-20 content-center transition-all flex flex-col'>
+        <h1 className='mt-15 mb-7 text-3xl font-bold'>My Profile</h1>
+        <div className='grid grid-cols-1 lg:grid-cols-5 gap-7'>
+          {
+            customers?.map((customer) => (
+              <>
+                <section className="col-span-3">
+                  <Form
+                    layout="vertical"
+                    form={form}
+                    onFinish={onFinish}
+                    initialValues={{ prefix: '84' }}
+                    size='large'
+                    style={{ maxWidth: 600 }}
+                    scrollToFirstError
+                  >
+                    <Form.Item
+                      name="email"
+                      label="E-mail"
+                      rules={[
+                        {
+                          type: 'email',
+                          message: 'The input is not valid E-mail!',
+                        },
+                        {
+                          required: true,
+                          message: 'Please input your E-mail!',
+                        },
+                      ]}
+                    >
+                      <Input defaultValue={customer.customerEmail} />
+                    </Form.Item>
 
-            <Form.Item
-              name="fullname"
-              label="Full name"
-              tooltip="Real name recommended!"
-              rules={[{ required: true, message: 'Please input your full name!', whitespace: true }]}
-            >
-              <Input defaultValue="Nguyen Ngoc Tram"/>
-            </Form.Item>
+                    <Form.Item
+                      name="fullname"
+                      label="Full name"
+                      tooltip="Real name recommended!"
+                      rules={[{ required: true, message: 'Please input your full name!', whitespace: true }]}
+                    >
+                      <Input defaultValue={customer.customerName} />
+                    </Form.Item>
 
-            <Form.Item
-              name="phone"
-              label="Phone Number"
-              rules={[{ required: true, message: 'Please input your phone number!' }]}
-            >
-              <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-            </Form.Item>
+                    <Form.Item
+                      name="phone"
+                      label="Phone Number"
+                      rules={[{ required: true, message: 'Please input your phone number!' }]}
+                    >
+                      <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+                    </Form.Item>
 
-            <Form.Item
-              name="gender"
-              label="Gender"
-              rules={[{ required: true, message: 'Please select gender!' }]}
-            >
-              <Select placeholder="select your gender">
-                <Option value="male">Male</Option>
-                <Option value="female">Female</Option>
-                <Option value="other">Other</Option>
-              </Select>
-            </Form.Item>
+                    <Form.Item
+                      name="gender"
+                      label="Gender"
+                      rules={[{ required: true, message: 'Please select gender!' }]}
+                    >
+                      <Select placeholder="select your gender">
+                        <Option value="male">Male</Option>
+                        <Option value="female">Female</Option>
+                        <Option value="other">Other</Option>
+                      </Select>
+                    </Form.Item>
 
-            <Form.Item 
-              name="dob"
-              label="Date of Birth"
-              style={{ maxWidth: 600 }}
-            >
-              <DatePicker />
-            </Form.Item>
-            
-            <Form.Item>
-              <div className='flex justify-end'>
-                <Button className='items-center w-44 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold rounded-xl transition ease-in-out duration-300 hover:ease-in' htmlType="submit">
-                    Save
-                </Button>
-              </div>
-            </Form.Item>
-          </Form>
-        </section>
-        <section className='flex flex-col justify-center items-center col-span-2'>
-          <div>
-          <Upload
-            name="avatar"
-            listType="picture-circle"
-            className="avatar-uploader"
-            showUploadList={false}
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            beforeUpload={beforeUpload}
-            onChange={handleChange}
-          >
-            {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-          </Upload>
-          </div>
-          <h6 className='mt-3 text-slate-600 text-sm leading-relaxed'>You can only upload JPG/PNG file</h6>
-          <h6 className='text-slate-600 text-sm leading-relaxed'>Image must be smaller than 2MB!</h6>
-        </section>
+                    <Form.Item
+                      name="dob"
+                      label="Date of Birth"
+                      style={{ maxWidth: 600 }}
+                    >
+                      <DatePicker />
+                    </Form.Item>
+
+                    <Form.Item>
+                      <div className='flex justify-end'>
+                        <Button className='items-center w-44 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold rounded-xl transition ease-in-out duration-300 hover:ease-in' htmlType="submit">
+                          Save
+                        </Button>
+                      </div>
+                    </Form.Item>
+                  </Form>
+                </section>
+                </>
+                ))}
+                <section className='flex flex-col justify-center items-center col-span-2'>
+                  <div>
+                    <Upload
+                      name="avatar"
+                      listType="picture-circle"
+                      className="avatar-uploader"
+                      showUploadList={false}
+                      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                      beforeUpload={beforeUpload}
+                      onChange={handleChange}
+                    >
+                      {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                    </Upload>
+                  </div>
+                  <h6 className='mt-3 text-slate-600 text-sm leading-relaxed'>You can only upload JPG/PNG file</h6>
+                  <h6 className='text-slate-600 text-sm leading-relaxed'>Image must be smaller than 2MB!</h6>
+                </section>
+              </div >
+          
       </div>
-    </div>
+    </>
   );
 };
 
