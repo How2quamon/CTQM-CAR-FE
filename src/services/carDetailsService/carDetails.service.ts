@@ -17,6 +17,27 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
+api.interceptors.response.use((response) => {
+    // Xử lý response ở đây nếu cần
+    return response;
+  },
+  (error) => { 
+    if (error.response.status === 401) {
+      // Xử lý status code "Unauthorized" (401)
+      // Ví dụ: chuyển hướng về trang đăng nhập, gửi pop-up thông báo
+      // history.push('/login');
+      console.log("CHƯA LOGIN, Unauthorized");
+    }
+    if (error.response.status === 403) {
+      // Xử lý status code "Forbidden" (403)
+      // Ví dụ: chuyển hướng về trang đăng nhập, gửi pop-up thông báo
+      // history.push('/login');
+      console.log("CHƯA LOGIN, Forbidden");
+    }
+    return Promise.reject(error);
+  }
+);
+
 const getCarDetailWithId = async (id: string) => {
     const response = await api.get(`/api/CarDetail/${id}`);
     return response.data;

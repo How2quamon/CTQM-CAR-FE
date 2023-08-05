@@ -1,6 +1,6 @@
 import React from 'react';
 import useTitle from "src/hooks/useTitle";
-import { Avatar, Card, Col, Row } from 'antd';
+import { Avatar, Card } from 'antd';
 
 import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";

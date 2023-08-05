@@ -1,4 +1,4 @@
-import { OrderDTO } from '@share/dtos/service-proxies-dtos';
+import { CustomerPaymentDTO, OrderDTO } from '@share/dtos/service-proxies-dtos';
 import axios from 'axios';
 
 const baseURL = 'https://ctqmapi.azurewebsites.net';
@@ -17,13 +17,44 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
+api.interceptors.response.use((response) => {
+    // Xử lý response ở đây nếu cần
+    return response;
+  },
+  (error) => { 
+    if (error.response.status === 401) {
+      // Xử lý status code "Unauthorized" (401)
+      // Ví dụ: chuyển hướng về trang đăng nhập, gửi pop-up thông báo
+      // history.push('/login');
+      console.log("CHƯA LOGIN, Unauthorized");
+    }
+    if (error.response.status === 403) {
+      // Xử lý status code "Forbidden" (403)
+      // Ví dụ: chuyển hướng về trang đăng nhập, gửi pop-up thông báo
+      // history.push('/login');
+      console.log("CHƯA LOGIN, Forbidden");
+    }
+    return Promise.reject(error);
+  }
+);
+
 const getOrderWithId = async (id: string) => {
     const response = await api.get(`/api/Order/${id}`);
     return response.data;
 }
 
+const getCustomerOrder = async (customerId: string) => {
+    const response = await api.get(`/api/Order/CustomerOrder/${customerId}`);
+    return response.data;
+}
+
 const createNewOrder = async (body: OrderDTO) => {
     const response = await api.post('/api/Order/NewOrder', body);
+    return response.data;
+}
+
+const customerPayment = async (body: CustomerPaymentDTO) => {
+    const response = await api.post('/api/Order/CustomerPayment', body);
     return response.data;
 }
 
@@ -39,7 +70,9 @@ const deleteOrderWithId = async (id: string) => {
 
 export const orderService = {
     getOrderWithId,
+    getCustomerOrder,
     createNewOrder,
+    customerPayment,
     updateOrder,
     deleteOrderWithId,
 }
