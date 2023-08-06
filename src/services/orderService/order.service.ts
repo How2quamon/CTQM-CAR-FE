@@ -60,6 +60,16 @@ const customerPayment = async (body: CustomerPaymentDTO) => {
     return response.data;
 }
 
+const paypalPayment = async (cartId: string) => {
+  const response = await api.post(`/api/Paypal/CreatedPayment/${cartId}`);
+  return response.data;
+}
+
+const vnPayPayment = async (cartId: string) => {
+  const response = await api.post(`/api/VNPay/CreatedPaymentVNPay/${cartId}`);
+  return response.data;
+}
+
 const updateOrder = async (id: string, body: OrderDTO) => {
     const response = await api.put(`/api/Order/UpdateOrder/${id}`, body);
     return response.data;
@@ -75,6 +85,8 @@ export const orderService = {
     getCustomerOrder,
     createNewOrder,
     customerPayment,
+    paypalPayment,
+    vnPayPayment,
     updateOrder,
     deleteOrderWithId,
 }
