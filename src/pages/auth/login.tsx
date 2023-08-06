@@ -1,10 +1,11 @@
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, notification } from "antd";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../logo/ctqm-logo-2.png";
 import { ctqmService } from "../../services/ctqm.services";
 import { CustomerLoginDTO } from "@share/dtos/service-proxies-dtos";
+import handleHttpStatusCode from "src/utils/handleHttpStatusCode";
 
 export default function Login() {
   const [loading, setIsLoading] = useState<boolean>(false);
@@ -23,14 +24,21 @@ export default function Login() {
     
     ctqmService.customerApi
       .loginAction(loginValue)
-      .then((response) => {
-        console.log(response);
+      .then(({ response, message, statusCode, error }) => {
+        handleHttpStatusCode(statusCode, error?.message);
+        // console.log(response);
         if (response.customerName != null && response.tokenPass != null) {
           localStorage.setItem("Token", response.tokenPass);
           localStorage.setItem("CustomerName", response.customerName);
           localStorage.setItem("CustomerId", response.customerId);
           console.log("SAVE TOKEN");
         }
+      }).catch(({ error }) => {
+        notification.error({
+          message: "Có lỗi xảy ra",
+          description: error?.message ?? "Tài khoản hoặc mật khẩu chưa đúng!  ",
+          placement: "bottomRight",
+        });
       })
       .finally(() => {
         setIsLoading(false);

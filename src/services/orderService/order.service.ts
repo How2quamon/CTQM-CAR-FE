@@ -1,4 +1,5 @@
 import { CustomerPaymentDTO, OrderDTO } from '@share/dtos/service-proxies-dtos';
+import { message } from 'antd';
 import axios from 'axios';
 
 // const baseURL = 'https://ctqmapi.azurewebsites.net';
@@ -27,7 +28,8 @@ api.interceptors.response.use((response) => {
       // Xử lý status code "Unauthorized" (401)
       // Ví dụ: chuyển hướng về trang đăng nhập, gửi pop-up thông báo
       // history.push('/login');
-      console.log("CHƯA LOGIN, Unauthorized");
+      throw new Error("Bạn chưa login");
+      // console.log("CHƯA LOGIN, Unauthorized");
     }
     if (error.response.status === 403) {
       // Xử lý status code "Forbidden" (403)
