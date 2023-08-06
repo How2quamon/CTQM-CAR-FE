@@ -39,7 +39,7 @@ api.interceptors.response.use((response) => {
 );
 
 const getCarDetailWithId = async (id: string) => {
-    const response = await api.get(`/api/CarDetail/${id}`);
+    const response = await api.get(`/api/CarDetail/GetByCarId/${id}`);
     return response.data;
 }
 
