@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Footer from 'src/layout/Footer';
 import NavBar from 'src/layout/navigationBar';
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, InputNumber } from 'antd';
+import { Button, Checkbox, Form, Input, InputNumber, Radio, RadioChangeEvent, Space } from 'antd';
 import useTitle from '../../hooks/useTitle';
 import { ctqmService } from '../../services/ctqm.services';
 import layout from 'antd/es/layout';
@@ -15,6 +15,7 @@ export default function Payment() {
     const [subTotal, setSubTotal] = useState(0);
     const [taxTotal, setTaxTotal] = useState(19.09);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [paymentMethods, setPaymentMethods] = useState("paypal");
     const [carList, setCarList] = useState<CarDTO[]>([]);
     const [loading, setIsLoading] = useState<boolean>(false);
 
@@ -37,6 +38,7 @@ export default function Payment() {
     };
     useEffect(() => {
         // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
+        initValue();
         getListCart();
     }, []);
 
@@ -68,13 +70,13 @@ export default function Payment() {
         listCart.forEach(cart => {
             let price = cart.price! * cart.amount!;
             console.log("PRICE", price);
-            
+
             setSubTotal(subTotal + price);
             setTotalPrice(taxTotal + subTotal + price);
             ctqmService.carApi
                 .getCarWithId(cart.carId!)
                 .then((rs) => {
-                     // Sao chép mảng hiện tại
+                    // Sao chép mảng hiện tại
                     const newCarList = [...carList];
                     // Thêm giá trị mới vào cuối mảng sao chép
                     newCarList.push(rs);
@@ -88,8 +90,39 @@ export default function Payment() {
         });
     };
 
-    function onFinish(values: any): void {
-        throw new Error('Function not implemented.');
+    const onChange = (e: RadioChangeEvent) => {
+        console.log(`radio checked:${e.target.value}`);
+        setPaymentMethods(e.target.value);
+    };
+
+    const onFinish = (values: any) => {
+        console.log(paymentMethods);
+        console.log(customerCartList);
+        setIsLoading(true);
+        customerCartList.forEach(payment => {
+            if (paymentMethods == "paypal") {
+                console.log("paypal", payment.cartId);
+                ctqmService.orderApi
+                    .paypalPayment(payment.cartId!)
+                    .then((rs) => {
+                        console.log("Paypal ", rs);
+                    })
+                    .finally(() => {
+                        setIsLoading(false);
+                    });
+            }
+            if (paymentMethods == "vnpay") {
+                ctqmService.orderApi
+                    .vnPayPayment(payment.cartId!)
+                    .then((rs) => {
+                        console.log("VNPay ", rs);
+                    })
+                    .finally(() => {
+                        setIsLoading(false);
+                    });
+            }
+        })
+        setIsLoading(false);
     }
 
     return (
@@ -99,23 +132,23 @@ export default function Payment() {
                 <div className="w-full">
                     <div className="-mx-3 md:flex items-start">
                         <div className="px-3 md:w-7/12 lg:pr-10">
-                        {carList.length > 0 ? (
-                            carList.map((car) => (
-                                <div className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6" key={car.carId}>
-                                    <div className="w-full flex items-center">
-                                        <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
-                                            <img src="Homepage.png" alt="" />
-                                        </div>
-                                        <div className="flex-grow pl-3">
-                                            <h6 className="font-semibold uppercase ">{car.carName}</h6>
-                                            <p className="">x 1</p>
-                                        </div>
-                                        <div>
-                                            <span className="font-semibold  text-xl">${car.carPrice}</span><span className="font-semibold text-gray-600 text-sm">.00</span>
+                            {carList.length > 0 ? (
+                                carList.map((car) => (
+                                    <div className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6" key={car.carId}>
+                                        <div className="w-full flex items-center">
+                                            <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
+                                                <img src="Homepage.png" alt="" />
+                                            </div>
+                                            <div className="flex-grow pl-3">
+                                                <h6 className="font-semibold uppercase ">{car.carName}</h6>
+                                                <p className="">x 1</p>
+                                            </div>
+                                            <div>
+                                                <span className="font-semibold  text-xl">${car.carPrice}</span><span className="font-semibold text-gray-600 text-sm">.00</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))):(
+                                ))) : (
                                 <p className='text-[15px] font-semibold mt-2'>Nothing in your Cart</p>
                             )}
                             <div className="mb-6 pb-6 border-b border-gray-200">
@@ -166,97 +199,18 @@ export default function Payment() {
                                     layout="vertical"
                                     name="nest-messages"
                                     onFinish={onFinish}
-                                    style={{ maxWidth: 600 }}
                                     validateMessages={validateMessages}
                                 >
-                                    {/* <Form.Item name={['user', 'Name']} label="Name" rules={[{ required: true }]}
-                                        className="mr-[100px]">
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item name={['user', 'Email']} label="Email" rules={[{ required: true }]}
-                                        className=" mr-[100px]">
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item name={['user', 'CCCD/CMND']} label="CCCD/CMND" rules={[{ required: true }]}
-                                        className=" mr-[100px]">
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item name={['user', 'Address']} label="Address" rules={[{ required: true }]}
-                                        className=" mr-[100px]">
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item name={['user', 'Phone Number']} label="Phone Number" rules={[{ required: true }]}
-                                        className=" mr-[100px]">
-                                        <Input />
-                                    </Form.Item>
-                                    <Form.Item name={['user', 'Note']} label="Note" className='mr-[100px]'>
-                                        <Input.TextArea />
-                                    </Form.Item>
-
-                                    <div className="w-full p-3 border-b border-gray-200">
-                                        <div className="mb-5">
-                                            <div >
-                                                <Form.Item name={['user', 'Name on card']} label="Name on card" rules={[{ required: true }]}
-                                                    className="mb-8 mr-[80px]">
-                                                    <Input />
-                                                </Form.Item>
-                                                <Form.Item name={['user', 'Card number']} label="Card number" rules={[{ required: true }]} className="mr-[80px]">
-                                                    <Input />
-                                                </Form.Item>
-                                                <div className="mb-3 -mx-2 flex items-end">
-                                                    <div className="px-2 w-1/4">
-                                                        <label className="text-gray-600 font-semibold text-sm mb-2 ml-1 ">Expiration date</label>
-                                                        <div>
-                                                            <select className="form-select w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer">
-                                                                <option value="01">01 - January</option>
-                                                                <option value="02">02 - February</option>
-                                                                <option value="03">03 - March</option>
-                                                                <option value="04">04 - April</option>
-                                                                <option value="05">05 - May</option>
-                                                                <option value="06">06 - June</option>
-                                                                <option value="07">07 - July</option>
-                                                                <option value="08">08 - August</option>
-                                                                <option value="09">09 - September</option>
-                                                                <option value="10">10 - October</option>
-                                                                <option value="11">11 - November</option>
-                                                                <option value="12">12 - December</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div className="px-2 w-1/4">
-                                                        <select className="form-select w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer">
-                                                            <option value="2020">2020</option>
-                                                            <option value="2021">2021</option>
-                                                            <option value="2022">2022</option>
-                                                            <option value="2023">2023</option>
-                                                            <option value="2024">2024</option>
-                                                            <option value="2025">2025</option>
-                                                            <option value="2026">2026</option>
-                                                            <option value="2027">2027</option>
-                                                            <option value="2028">2028</option>
-                                                            <option value="2029">2029</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className="px-2 w-1/4">
-                                                        <label className="text-gray-600 font-semibold text-sm mb-2 ml-1">Security code</label>
-                                                        <div>
-                                                            <input className="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="000" type="text" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> */}
-                                    {/* </div> */}
-                                        <div className="w-full p-3">
-                                            <label htmlFor="type1" className="flex items-center cursor-pointer">
-                                                <input type="radio" className="form-radio h-5 w-5 text-indigo-500" name="type" id="type1" />
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" width="80" className="ml-3" alt='' />
-                                            </label>
-                                            <label htmlFor="type2" className="flex items-center cursor-pointer mt-3">
-                                                <input type="radio" className="form-radio h-5 w-5 text-indigo-500" name="type" id="type2" />
-                                                <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-VNPAY-QR-1.png" width="80" className="ml-3" alt='' />
-                                            </label>
-                                        </div>
+                                    <div className="w-full p-3 text-center">
+                                        <Radio.Group onChange={onChange} defaultValue="paypal">
+                                            <Radio.Button value="paypal" className="h-auto p-3 rounded">
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" height="160" alt='paypal payment' />
+                                            </Radio.Button>
+                                            <Radio.Button value="vnpay" className="h-auto p-3 rounded mt-5">
+                                                <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-VNPAY-QR-1.png" height="160" alt='vnpay payment' />
+                                            </Radio.Button>
+                                        </Radio.Group>
+                                    </div>
                                     <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }} className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-2 font-semibold">
                                         <Button type="primary" htmlType="submit">
                                             PAY NOW
