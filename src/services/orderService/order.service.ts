@@ -1,4 +1,5 @@
 import { CustomerPaymentDTO, OrderDTO } from '@share/dtos/service-proxies-dtos';
+import { message } from 'antd';
 import axios from 'axios';
 
 const baseURL = 'https://ctqmapi.azurewebsites.net';
@@ -26,7 +27,8 @@ api.interceptors.response.use((response) => {
       // Xử lý status code "Unauthorized" (401)
       // Ví dụ: chuyển hướng về trang đăng nhập, gửi pop-up thông báo
       // history.push('/login');
-      console.log("CHƯA LOGIN, Unauthorized");
+      throw new Error("Bạn chưa login");
+      // console.log("CHƯA LOGIN, Unauthorized");
     }
     if (error.response.status === 403) {
       // Xử lý status code "Forbidden" (403)
@@ -58,6 +60,16 @@ const customerPayment = async (body: CustomerPaymentDTO) => {
     return response.data;
 }
 
+const paypalPayment = async (cartId: string) => {
+  const response = await api.post(`/api/Paypal/CreatedPayment/${cartId}`);
+  return response.data;
+}
+
+const vnPayPayment = async (cartId: string) => {
+  const response = await api.post(`/api/VNPay/CreatedPaymentVNPay/${cartId}`);
+  return response.data;
+}
+
 const updateOrder = async (id: string, body: OrderDTO) => {
     const response = await api.put(`/api/Order/UpdateOrder/${id}`, body);
     return response.data;
@@ -73,6 +85,8 @@ export const orderService = {
     getCustomerOrder,
     createNewOrder,
     customerPayment,
+    paypalPayment,
+    vnPayPayment,
     updateOrder,
     deleteOrderWithId,
 }
