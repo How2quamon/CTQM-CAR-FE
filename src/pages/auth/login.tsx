@@ -1,16 +1,29 @@
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import logo from "../../logo/ctqm-logo-2.png";
 import { ctqmService } from "../../services/ctqm.services";
-import { CustomerLoginDTO } from "@share/dtos/service-proxies-dtos";
+import { CustomerLoginDTO, CustomerDTO } from "@share/dtos/service-proxies-dtos";
 
-export default function Login() {
+const Login = () => {
+  const navigate = useNavigate();
   const [loading, setIsLoading] = useState<boolean>(false);
-  useEffect(() => {}, []);
+  const [loggedInUser, setLoggedInUser] = useState<CustomerDTO | null>(null);
+
+  useEffect(() => {
+    // Kiểm tra xem liệu có thông tin đăng nhập trước đó trong localStorage hay không
+    const customerName = localStorage.getItem("CustomerName");
+    const customerId = localStorage.getItem("CustomerId");
+    if (customerName && customerId) {
+      setLoggedInUser({
+        customerName: customerName,
+        customerId: customerId
+      });
+    }
+  }, []);
+
   const onFinish = (values: CustomerLoginDTO) => {
-    // Xử lý dữ liệu đăng nhập khi form submit thành công
     setIsLoading(true);
     const currentToken = localStorage.getItem("CustomerName") != null ? localStorage.getItem("Token") : "";
     const loginValue: CustomerLoginDTO = {
@@ -18,31 +31,36 @@ export default function Login() {
       password: values.password,
       token: currentToken!
     };
-    
-    console.log(values);
-    
+
     ctqmService.customerApi
       .loginAction(loginValue)
       .then((response) => {
         console.log(response);
-        if (response.customerName != null && response.tokenPass != null) {
-          localStorage.setItem("Token", response.tokenPass);
-          localStorage.setItem("CustomerName", response.customerName);
-          localStorage.setItem("CustomerId", response.customerId);
-          console.log("SAVE TOKEN");
+        if (response.customerName && response.tokenPass && response.customerId) {
+          localStorage.setItem("Token", response.tokenPass.toString());
+          localStorage.setItem("CustomerName", response.customerName.toString());
+          localStorage.setItem("CustomerId", response.customerId.toString());
+          // Chuyển hướng về trang chủ sau khi đăng nhập thành công
+          navigate('/');
+          // Lưu thông tin người dùng vào state để hiển thị trên thanh điều hướng (nav bar)
+          setLoggedInUser({
+            customerName: response.customerName.toString(),
+            customerId: response.customerId.toString()
+          });
         }
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
+
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
-      <main className=" flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
         <div className="bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl">
           <div className="w-3/5 p-[50px]">
             <div className="mt-5">
@@ -69,6 +87,7 @@ export default function Login() {
                   name="email"
                   rules={[
                     { required: true, message: "Please input your email!" },
+                    { type: 'email', message: 'Please enter a valid email address!' }, // Xác thực định dạng email
                   ]}
                 >
                   <Input
@@ -121,7 +140,7 @@ export default function Login() {
               <img src={logo} className="mb-5" alt=""></img>
               <div className="border-2 w-10 border-white inline-block mb-2"></div>
               <p className="my-5">
-                Fill up your information and start shopping which us.
+                Fill up your information and start shopping with us.
               </p>
               <Link to={"/register"}>
                 <div className="flex justify-center">
@@ -141,3 +160,4 @@ export default function Login() {
     </div>
   );
 }
+export default Login;
