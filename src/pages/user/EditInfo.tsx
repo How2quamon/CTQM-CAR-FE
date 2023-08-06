@@ -41,7 +41,7 @@ const EditInfo: React.FC = () => {
 
   const onFinish = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    await axios.put(`/api/Customer/ChangeCustomerInfo/${id}`, customers);
+    await axios.put(`/api/Customer/ChangeCustomerInfo/${id}`, customer);
     navigate("/");
   };
 
@@ -81,10 +81,16 @@ const EditInfo: React.FC = () => {
   let navigate = useNavigate();
   const { id } = useParams();
 
-  const [customers, setCustomers] = useState<ChangeInfoDTO[]>([]);
+  const [customer, setCustomer] = useState({
+    customerName: "",
+    customerPhone: "",
+    customerEmail: "",
+  });
+
+  const { customerName, customerPhone, customerEmail } = customer;
 
   const onInputChange = (e: { target: { fullname: any; value: any; }; }) => {
-    setCustomers({ ...customers, [e.target.fullname]: e.target.value });
+    setCustomer({ ...customer, [e.target.fullname]: e.target.value });
   };
   useEffect(() => {
     getUserInfo();
@@ -94,9 +100,9 @@ const EditInfo: React.FC = () => {
     setLoading(true);
     ctqmService.customerApi
       .getCustomerWithId('6259971b-4e36-413a-acdd-17a4e4ad7135')
-      .then(({ response }) => {
+      .then((response) => {
         console.log(response)
-        setCustomers(response);
+        setCustomer(response);
         
       })
       .finally(() => {
@@ -108,9 +114,6 @@ const EditInfo: React.FC = () => {
       <div className='px-0 md:px-10 md:my-20 content-center transition-all flex flex-col'>
         <h1 className='mt-15 mb-7 text-3xl font-bold'>My Profile</h1>
         <div className='grid grid-cols-1 lg:grid-cols-5 gap-7'>
-          {
-            customers?.map((customer) => (
-              <>
                 <section className="col-span-3">
                   <Form
                     layout="vertical"
@@ -135,7 +138,7 @@ const EditInfo: React.FC = () => {
                         },
                       ]}
                     >
-                      <Input defaultValue={customer.customerEmail} />
+                      <Input defaultValue={customerEmail} />
                     </Form.Item>
 
                     <Form.Item
@@ -144,7 +147,7 @@ const EditInfo: React.FC = () => {
                       tooltip="Real name recommended!"
                       rules={[{ required: true, message: 'Please input your full name!', whitespace: true }]}
                     >
-                      <Input defaultValue={customer.customerName} />
+                      <Input defaultValue={customerName} />
                     </Form.Item>
 
                     <Form.Item
@@ -184,8 +187,6 @@ const EditInfo: React.FC = () => {
                     </Form.Item>
                   </Form>
                 </section>
-                </>
-                ))}
                 <section className='flex flex-col justify-center items-center col-span-2'>
                   <div>
                     <Upload
