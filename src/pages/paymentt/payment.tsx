@@ -106,6 +106,9 @@ export default function Payment() {
                     .paypalPayment(payment.cartId!)
                     .then((rs) => {
                         console.log("Paypal ", rs);
+                        if (rs != null) {
+                            window.open(rs);
+                        }
                     })
                     .finally(() => {
                         setIsLoading(false);
