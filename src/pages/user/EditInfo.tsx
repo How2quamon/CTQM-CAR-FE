@@ -4,6 +4,7 @@ import {
   Form,
   Input,
   Select,
+  Spin,
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { message, Upload } from 'antd';
@@ -12,7 +13,7 @@ import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ctqmService } from '../../services/ctqm.services';
-import { ChangeInfoDTO } from '@share/dtos/service-proxies-dtos';
+import { ChangeInfoDTO, CustomerDTO } from '@share/dtos/service-proxies-dtos';
 import axios from 'axios';
 
 const { Option } = Select;
@@ -41,7 +42,7 @@ const EditInfo: React.FC = () => {
 
   const onFinish = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    await axios.put(`/api/Customer/ChangeCustomerInfo/${id}`, customer);
+    await axios.put(`/api/Customer/ChangeCustomerInfo/${customerId}`, customers);
     navigate("/");
   };
 
@@ -79,40 +80,40 @@ const EditInfo: React.FC = () => {
   );
 
   let navigate = useNavigate();
-  const { id } = useParams();
+  const { customerId } = useParams();
 
-  const [customer, setCustomer] = useState({
-    customerName: "",
-    customerPhone: "",
-    customerEmail: "",
-  });
+  const [customers, setCustomers] = useState<CustomerDTO[]>([])
 
-  const { customerName, customerPhone, customerEmail } = customer;
-
-  const onInputChange = (e: { target: { fullname: any; value: any; }; }) => {
-    setCustomer({ ...customer, [e.target.fullname]: e.target.value });
-  };
+  // const onInputChange = (e: { target: { fullname: any; value: any; }; }) => {
+  //   setCustomers({ ...customers, [e.target.customerName]: e.target.value });
+  // };
   useEffect(() => {
     getUserInfo();
-  }, []);
+  }, [customers]);
 
   const getUserInfo = () => {
     setLoading(true);
     ctqmService.customerApi
-      .getCustomerWithId('6259971b-4e36-413a-acdd-17a4e4ad7135')
+      .getCustomerWithId(customerId as string)
       .then((response) => {
         console.log(response)
-        setCustomer(response);
+        setCustomers(response);
         
       })
       .finally(() => {
         setLoading(false);
       });
   };
+
+  // if (!customers) {
+  //   return <Spin size="large" className="flex justify-center items-center" />;
+  // }
+
   return (
     <>
       <div className='px-0 md:px-10 md:my-20 content-center transition-all flex flex-col'>
         <h1 className='mt-15 mb-7 text-3xl font-bold'>My Profile</h1>
+        {customers !== undefined ? (
         <div className='grid grid-cols-1 lg:grid-cols-5 gap-7'>
                 <section className="col-span-3">
                   <Form
@@ -138,16 +139,16 @@ const EditInfo: React.FC = () => {
                         },
                       ]}
                     >
-                      <Input defaultValue={customerEmail} />
+                      <Input defaultValue={customers.customerEmail} />
                     </Form.Item>
 
                     <Form.Item
                       name="fullname"
                       label="Full name"
-                      tooltip="Real name recommended!"
+                      tooltip="You should use the name included in your payment card!"
                       rules={[{ required: true, message: 'Please input your full name!', whitespace: true }]}
                     >
-                      <Input defaultValue={customerName} />
+                      <Input defaultValue={customers.customerName} />
                     </Form.Item>
 
                     <Form.Item
@@ -155,7 +156,7 @@ const EditInfo: React.FC = () => {
                       label="Phone Number"
                       rules={[{ required: true, message: 'Please input your phone number!' }]}
                     >
-                      <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+                      <Input addonBefore={prefixSelector} style={{ width: '100%' }} defaultValue={customers.customerPhone}/>
                     </Form.Item>
 
                     <Form.Item
@@ -205,7 +206,11 @@ const EditInfo: React.FC = () => {
                   <h6 className='text-slate-600 text-sm leading-relaxed'>Image must be smaller than 2MB!</h6>
                 </section>
               </div >
-          
+        ) : (
+          <div className="flex justify-center items-center ">
+            <Spin size="large"  />
+          </div>
+        )}  
       </div>
     </>
   );
