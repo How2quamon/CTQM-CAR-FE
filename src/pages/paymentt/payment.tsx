@@ -1,12 +1,10 @@
-import { Link } from 'react-router-dom';
+import { CarDTO, CartDTO } from '@share/dtos/service-proxies-dtos';
+import { Button, Form, Radio, RadioChangeEvent } from 'antd';
+import React, { useEffect, useState } from 'react';
 import Footer from 'src/layout/Footer';
 import NavBar from 'src/layout/navigationBar';
-import React, { useEffect, useState } from 'react';
-import { Button, Checkbox, Form, Input, InputNumber, Radio, RadioChangeEvent, Space } from 'antd';
 import useTitle from '../../hooks/useTitle';
 import { ctqmService } from '../../services/ctqm.services';
-import layout from 'antd/es/layout';
-import { CarDTO, CartDTO } from '@share/dtos/service-proxies-dtos';
 
 export default function Payment() {
     useTitle("Payment");
@@ -27,13 +25,13 @@ export default function Payment() {
         wrapperCol: { span: 16 },
     };
     const validateMessages = {
-        required: '${label} is required!',
+        required: '{label} is required!',
         types: {
-            email: '${label} is not a valid email!',
-            number: '${label} is not a valid number!',
+            email: '{label} is not a valid email!',
+            number: '{label} is not a valid number!',
         },
         number: {
-            range: '${label} must be between ${min} and ${max}',
+            range: '{label} must be between {min} and {max}',
         },
     };
     useEffect(() => {
@@ -111,7 +109,7 @@ export default function Payment() {
                         setIsLoading(false);
                     });
             }
-            if (paymentMethods == "vnpay") {
+            if (paymentMethods === "vnpay") {
                 ctqmService.orderApi
                     .vnPayPayment(payment.cartId!)
                     .then((rs) => {
