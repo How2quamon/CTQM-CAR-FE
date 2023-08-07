@@ -82,7 +82,7 @@ const EditInfo: React.FC = () => {
   let navigate = useNavigate();
   const { customerId } = useParams();
 
-  const [customers, setCustomers] = useState<CustomerDTO[]>([])
+  const [customers, setCustomers] = useState<CustomerDTO | null>(null)
 
   // const onInputChange = (e: { target: { fullname: any; value: any; }; }) => {
   //   setCustomers({ ...customers, [e.target.customerName]: e.target.value });
@@ -105,9 +105,9 @@ const EditInfo: React.FC = () => {
       });
   };
 
-  // if (!customers) {
-  //   return <Spin size="large" className="flex justify-center items-center" />;
-  // }
+  if (!customers) {
+    return <Spin size="large" className="flex justify-center items-center" />;
+  }
 
   return (
     <>
