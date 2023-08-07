@@ -58,13 +58,13 @@ const customerPayment = async (body: CustomerPaymentDTO) => {
   return response.data;
 };
 
-const paypalPayment = async (cartId: string) => {
-  const response = await api.post(`/api/Paypal/CreatedPayment/${cartId}`);
+const paypalPayment = async (customerId: string) => {
+  const response = await api.get(`/api/Paypal/CreatedPayment/${customerId}`);
   return response.data;
 };
 
-const vnPayPayment = async (cartId: string) => {
-  const response = await api.post(`/api/VNPay/CreatedPaymentVNPay/${cartId}`);
+const vnPayPayment = async (customerId: string) => {
+  const response = await api.get(`/api/VNPay/CreatedPaymentVNPay/${customerId}`);
   return response.data;
 };
 
