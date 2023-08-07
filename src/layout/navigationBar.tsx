@@ -1,10 +1,19 @@
 //import {Navbar, MobileNav, Typography, Button, IconButton } from "@material-tailwind/react";
 import logo from "../logo/ctqm-logo-2.png";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CaretDownOutlined, CustomerServiceOutlined, EditOutlined, InboxOutlined, LogoutOutlined, UserOutlined, CloseOutlined, SearchOutlined } from "@ant-design/icons";
 import { Input, Space } from 'antd';
 
 const NavBar = () => {
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [customer, setCustomer] = useState<string>("");
+  useEffect(() => {
+    const customerName = localStorage.getItem("CustomerName");
+    if (customerName != null) {
+      setCustomer(customerName);
+      setIsLogin(true);
+    }
+  }, []);
   const [showSideBar, setSideBar] = useState(false);
   const handleNav = () => {
     setSideBar(!showSideBar);
@@ -45,7 +54,11 @@ const NavBar = () => {
             </div>
             <div className="flex items-center py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
                 <UserOutlined style={{ fontSize: '18px', paddingRight: '4px' }} rev={undefined} />
-                <a href="/login">Account</a>
+                {isLogin ? (
+                  <a href="/user">{customer}</a>
+                ):(
+                  <a href="/login">Account</a>
+                )}
             </div>
               <div onClick={handleNav} className="py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
                 Menu

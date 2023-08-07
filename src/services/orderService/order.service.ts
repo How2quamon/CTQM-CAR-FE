@@ -2,8 +2,7 @@ import { CustomerPaymentDTO, OrderDTO } from '@share/dtos/service-proxies-dtos';
 import { message } from 'antd';
 import axios from 'axios';
 
-// const baseURL = 'https://ctqmapi.azurewebsites.net';
-const baseURL = 'https://localhost:7147';
+const baseURL = 'https://ctqmapi.azurewebsites.net';
 
 const api = axios.create({
     baseURL,
@@ -61,13 +60,13 @@ const customerPayment = async (body: CustomerPaymentDTO) => {
     return response.data;
 }
 
-const paypalPayment = async (cartId: string) => {
-  const response = await api.get(`/api/Paypal/CreatedPayment/${cartId}`);
+const paypalPayment = async (customerId: string) => {
+  const response = await api.get(`/api/Paypal/CreatedPayment/${customerId}`);
   return response.data;
 }
 
-const vnPayPayment = async (cartId: string) => {
-  const response = await api.get(`/api/VNPay/CreatedPaymentVNPay/${cartId}`);
+const vnPayPayment = async (customerId: string) => {
+  const response = await api.get(`/api/VNPay/CreatedPaymentVNPay/${customerId}`);
   return response.data;
 }
 
