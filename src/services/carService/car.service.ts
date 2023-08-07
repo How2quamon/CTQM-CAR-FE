@@ -1,4 +1,5 @@
 import { CarDTO } from '@share/dtos/service-proxies-dtos';
+import { notification } from 'antd';
 import axios from 'axios';
 
 const baseURL = 'https://ctqmapi.azurewebsites.net';
@@ -17,26 +18,27 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
-api.interceptors.response.use((response) => {
+api.interceptors.response.use(
+    (response) => {
       // Xử lý response ở đây nếu cần
       return response;
     },
-    (error) => { 
+    (error) => {
       if (error.response.status === 401) {
-        // Xử lý status code "Unauthorized" (401)
-        // Ví dụ: chuyển hướng về trang đăng nhập, gửi pop-up thông báo
-        // history.push('/login');
-        console.log("CHƯA LOGIN, Unauthorized");
+        notification.error({
+          message: 'Unauthorized',
+          description: 'You are not logged in, Unauthorized!',
+        });
       }
       if (error.response.status === 403) {
-        // Xử lý status code "Forbidden" (403)
-        // Ví dụ: chuyển hướng về trang đăng nhập, gửi pop-up thông báo
-        // history.push('/login');
-        console.log("CHƯA LOGIN, Forbidden");
+        notification.error({
+          message: 'Forbidden',
+          description: 'You are not logged in, Forbidden!',
+        });
       }
       return Promise.reject(error);
     }
-);
+  );
   
 const getAllCar = async () => {
     const response = await api.get('/api/Car');

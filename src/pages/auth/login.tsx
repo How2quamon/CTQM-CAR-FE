@@ -37,7 +37,7 @@ export default function Login() {
       }).catch(({ error }) => {
         notification.error({
           message: "Có lỗi xảy ra",
-          description: error?.message ?? "Tài khoản hoặc mật khẩu chưa đúng!  ",
+          description: error?.message ?? "Account or password is not correct!  ",
           placement: "bottomRight",
         });
       })
