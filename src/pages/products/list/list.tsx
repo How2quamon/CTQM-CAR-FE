@@ -28,9 +28,9 @@ export default function List() {
       })
       .catch(({ error }) => {
         notification.error({
-          message: "Có lỗi xảy ra",
+          message: "An error occurred",
           description:
-            error?.message ?? "Lỗi trong quá trình xử lý, vui lòng thử lại!",
+            error?.message ?? "Error in processing, please try again!",
           placement: "bottomRight",
         });
       })
