@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import useTitle from "src/hooks/useTitle";
 import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
@@ -7,7 +7,7 @@ import SideMenu from "./SideMenu";
 
   const UserPage: React.FC = () => {
     useTitle("Hồ sơ người dùng");
-  
+
     return (
         <React.Fragment>
             <NavBar/>

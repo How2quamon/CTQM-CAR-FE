@@ -91,6 +91,7 @@ export interface ChangeInfoDTO {
     customerDate?: Date;
     customerLicense?: string | undefined;
     customerEmail?: string | undefined;
+    customerVaild?: boolean;
 }
 
 export interface ChangePasswordDTO {
