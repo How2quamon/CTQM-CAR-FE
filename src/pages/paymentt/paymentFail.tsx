@@ -1,8 +1,11 @@
 import { Button, Result } from "antd";
 import React from "react";
+import { useParams } from "react-router-dom";
 import NavBar from "src/layout/navigationBar";
 
 export default function PaymentFail() {
+  const { customerId } = useParams();
+  
   return (
     <React.Fragment>
       <NavBar />
