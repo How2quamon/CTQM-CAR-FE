@@ -11,7 +11,9 @@ import Payment from "../pages/paymentt/payment";
 import Cart from "../pages/cart/cart";
 import PurchaseHistory from "../pages/user/PurchaseHistory";
 import ChangePassword from "../pages/user/ChangePassword";
-import PaymentResult from "../pages/paymentt/paymentResult";
+import PaymentSuccess from "../pages/paymentt/paymentSuccess";
+import PaymentFail from "../pages/paymentt/paymentFail";
+
 export default function IndexRoute() {
   return (
     <BrowserRouter>
@@ -32,7 +34,8 @@ export default function IndexRoute() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="payment" element={<Payment/>}></Route>
-          <Route path="paymentResult/:result" element={<PaymentResult/>}></Route>
+          <Route path="paymentsuccess/:result" element={<PaymentSuccess/>}></Route>
+          <Route path="paymentfail/:result" element={<PaymentFail/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="cart" element={<Cart/>}></Route>

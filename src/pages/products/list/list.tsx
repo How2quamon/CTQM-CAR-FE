@@ -1,6 +1,6 @@
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { CarDTO } from "@share/dtos/service-proxies-dtos";
-import { Button, Card, Select, Spin, notification } from "antd";
+import { Button, Card, Spin, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "src/layout/Footer";
