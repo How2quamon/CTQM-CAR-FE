@@ -33,19 +33,19 @@ export default function IndexRoute() {
           <Route path="products-details/:carName" element={<ProductDetails/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="payment" element={<Payment/>}></Route>
+          <Route path="payment/:customerId" element={<Payment/>}></Route>
           <Route path="paymentsuccess/:result" element={<PaymentSuccess/>}></Route>
           <Route path="paymentfail/:result" element={<PaymentFail/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="cart" element={<Cart/>}></Route>
-          <Route path="user" element={<UserPage/>}></Route>
+          <Route path="profile/:customerId" element={<UserPage/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="purchase-history" element={<PurchaseHistory/>}></Route>
+          <Route path="profile/purchase-history/:customerId" element={<PurchaseHistory/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="change-password" element={<ChangePassword/>}></Route>
+          <Route path="profile/change-password/:customerId" element={<ChangePassword/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

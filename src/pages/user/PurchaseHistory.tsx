@@ -5,7 +5,7 @@ import { Avatar, Card, notification, Spin } from 'antd';
 import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
 import SideMenu from './SideMenu';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ctqmService } from '../../services/ctqm.services';
 import { CustomerOrderDTO } from '@share/dtos/service-proxies-dtos';
 
@@ -66,7 +66,7 @@ const PurchaseHistory: React.FC = () => {
                                                 key={index} loading={loading}
                                                 hoverable
                                                 style={{ width: '100%' }}
-                                                extra={<a href="#">View</a>}
+                                                extra={<Link to={`/products-details/${order.carName}`} target="_blank">View</Link>}
                                             >
                                                 <Meta
                                                     avatar={<Avatar size={100} shape="square" src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" />}

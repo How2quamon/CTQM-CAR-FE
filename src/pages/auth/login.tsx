@@ -1,7 +1,7 @@
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, notification } from "antd";
 import { useEffect, useState } from "react";
-import { Link, redirect } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import logo from "../../logo/ctqm-logo-2.png";
 import { ctqmService } from "../../services/ctqm.services";
 import { CustomerLoginDTO } from "@share/dtos/service-proxies-dtos";
@@ -9,6 +9,8 @@ import handleHttpStatusCode from "src/utils/handleHttpStatusCode";
 
 export default function Login() {
   const [loading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+  
   useEffect(() => {}, []);
   const onFinish = (values: CustomerLoginDTO) => {
     // Xử lý dữ liệu đăng nhập khi form submit thành công
@@ -31,8 +33,8 @@ export default function Login() {
           localStorage.setItem("Token", response.tokenPass);
           localStorage.setItem("CustomerName", response.customerName);
           localStorage.setItem("CustomerId", response.customerId);
-          console.log("SAVE TOKEN");
-          redirect("http://localhost:3000");
+          console.log("SAVE TOKEN");    
+          navigate("/");
         }
       }).catch(({ error }) => {
         notification.error({
@@ -78,6 +80,10 @@ export default function Login() {
                   name="email"
                   rules={[
                     { required: true, message: "Please input your email!" },
+                    {
+                      type: "email",
+                      message: "Please enter a valid email address!",
+                    },
                   ]}
                 >
                   <Input
