@@ -34,8 +34,8 @@ export default function IndexRoute() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="payment/:customerId" element={<Payment/>}></Route>
-          <Route path="paymentsuccess/:result" element={<PaymentSuccess/>}></Route>
-          <Route path="paymentfail/:result" element={<PaymentFail/>}></Route>
+          <Route path="paymentsuccess/:customerId" element={<PaymentSuccess/>}></Route>
+          <Route path="paymentfail/:customerId" element={<PaymentFail/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="cart" element={<Cart/>}></Route>
