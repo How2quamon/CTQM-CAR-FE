@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 // import { CarDetailDTO } from '@share/dtos/service-proxies-dtos';
-import { ShoppingCartOutlined } from "@ant-design/icons";
+import {
+  CheckCircleOutlined,
+  LinkOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
 import { CarDTO } from "@share/dtos/service-proxies-dtos";
-import { Button, Card, Spin, notification } from "antd";
+import { Button, Card, Popover, Spin, notification } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useTitle from "src/hooks/useTitle";
 import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
 import { ctqmService } from "../../../services/ctqm.services";
+import copy from "copy-to-clipboard";
 
 const ProductDetails: React.FC = () => {
   useTitle("Chi tiết sản phẩm");
@@ -22,6 +27,13 @@ const ProductDetails: React.FC = () => {
   const { carName } = useParams();
   const [cars, setCars] = useState<CarDTO | null>(null);
   const [loading, setIsLoading] = useState<boolean>(false);
+  const [productLinkCopied, setProductLinkCopied] = useState(false);
+  const handleCopyLink = () => {
+    const productURL = window.location.href; // Lấy URL hiện tại của sản phẩm
+    copy(productURL); // Sao chép URL vào clipboard
+    setProductLinkCopied(true); // Đánh dấu rằng URL đã được sao chép
+  };
+
   useEffect(() => {
     getCarDetail();
   }, [cars]);
@@ -45,100 +57,121 @@ const ProductDetails: React.FC = () => {
         setIsLoading(false);
       });
   };
-  
+
   if (!cars) {
-    return <Spin size="large" className="flex justify-center items-center " />;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin size="large" />
+      </div>
+    );
   }
+  const popoverContent = (
+    <div className="flex gap-2">
+      <CheckCircleOutlined rev={undefined} className="text-[#73d13d]" />
+      Copied successfully!
+    </div>
+  );
   return (
     <React.Fragment>
       <NavBar />
       <main>
         <div className="flex flex-col justify-center min-h-screen">
-          {cars !== undefined ? (
-            <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10  items-start lg:py-14">
-              <article>
+          {/* {cars !== undefined ? ( */}
+          <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10  items-start lg:py-14">
+            <article>
+              <img
+                src={activeImg}
+                alt=""
+                className="w-11/12 h-11/12 aspect-square object-cover rounded-xl items-center justify-center"
+              />
+              <div className="hidden lg:flex justify-items-center gap-5 flex-wrap mt-5">
                 <img
-                  src={activeImg}
+                  src={images.img1}
                   alt=""
-                  className="w-11/12 h-11/12 aspect-square object-cover rounded-xl items-center justify-center"
+                  className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
+                  onClick={() => setActiveImage(images.img1)}
                 />
-                <div className="hidden lg:flex justify-items-center gap-5 flex-wrap mt-5">
-                  <img
-                    src={images.img1}
-                    alt=""
-                    className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
-                    onClick={() => setActiveImage(images.img1)}
-                  />
-                  <img
-                    src={images.img2}
-                    alt=""
-                    className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
-                    onClick={() => setActiveImage(images.img2)}
-                  />
-                  <img
-                    src={images.img3}
-                    alt=""
-                    className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
-                    onClick={() => setActiveImage(images.img3)}
-                  />
-                  <img
-                    src={images.img4}
-                    alt=""
-                    className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
-                    onClick={() => setActiveImage(images.img4)}
-                  />
-                </div>
-              </article>
-              {/* ABOUT */}
-              <article className="space-x-4 flex flex-col">
-                <div className="space-x-4 mb-3">
-                  <span className="mx-4 mb-2 text-sky-600 font-semibold">
-                    {cars.carModel}
-                  </span>
-                  <h1 className="text-3xl font-bold">{cars.carName}</h1>
-                </div>
-                <p className="my-2 text-gray-700 leading-7">{cars.moTa}</p>
-                <p className="my-2 text-gray-700 leading-7">{cars.moTa2}</p>
+                <img
+                  src={images.img2}
+                  alt=""
+                  className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
+                  onClick={() => setActiveImage(images.img2)}
+                />
+                <img
+                  src={images.img3}
+                  alt=""
+                  className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
+                  onClick={() => setActiveImage(images.img3)}
+                />
+                <img
+                  src={images.img4}
+                  alt=""
+                  className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
+                  onClick={() => setActiveImage(images.img4)}
+                />
+              </div>
+            </article>
+            {/* ABOUT */}
+            <article className="space-x-4 flex flex-col">
+              <div className="space-x-4 mb-3">
+                <span className="mx-4 mb-2 text-sky-600 font-semibold">
+                  {cars.carModel}
+                </span>
+                <h1 className="text-3xl font-bold">
+                  {cars.carName}
+                  {"  "}
+                  <Popover content={popoverContent} trigger="click">
+                    <LinkOutlined
+                      className="text-[17px]"
+                      title="Copy link"
+                      onClick={handleCopyLink}
+                      rev={undefined}
+                    />
+                  </Popover>
+                </h1>
+              </div>
+              <p className="my-2 text-gray-700 leading-7">{cars.moTa}</p>
+              <p className="my-2 text-gray-700 leading-7">{cars.moTa2}</p>
 
-                <h6 className="my-2 text-2xl font-semibold">
-                  {cars?.carPrice}
-                </h6>
-                <div className="items-center my-3">
-                  <h6 className="mb-2">Quantity</h6>
-                  <div className="my-4 w-1/4 flex justify-between items-center border border-gray-200 rounded">
-                    <button
-                      className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
-                      onClick={() => {
-                        if (amount > 0) {
-                          setAmount((prev) => prev - 1);
-                        }
-                      }}
-                    >
-                      -
-                    </button>
-                    <span className="text-center items-center">{amount}</span>
-                    <button
-                      type="button"
-                      className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
-                      onClick={() => setAmount((prev) => prev + 1)}
-                    >
-                      +
-                    </button>
-                  </div>
-                  <div className="items-center flex-col">
-                    <button className="my-2 w-3/5  border border-zinc-600 hover:bg-slate-50 text-black font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
-                      Add to cart
-                    </button>
-                    <button className="w-3/5 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
-                      Buy it now
-                    </button>
-                  </div>
+              <h6 className="my-2 text-2xl font-semibold">{cars?.carPrice}</h6>
+              <div className="items-center my-3">
+                <h6 className="mb-2">Quantity</h6>
+                <div className="my-4 w-1/4 flex justify-between items-center border border-gray-200 rounded">
+                  <button
+                    className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
+                    onClick={() => {
+                      if (amount > 0) {
+                        setAmount((prev) => prev - 1);
+                      }
+                    }}
+                  >
+                    -
+                  </button>
+                  <span className="text-center items-center">{amount}</span>
+                  <button
+                    type="button"
+                    className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
+                    onClick={() => setAmount((prev) => prev + 1)}
+                  >
+                    +
+                  </button>
                 </div>
-              </article>
-            </section>
-          ) : (
-            <Spin size="large" className="flex justify-center items-center " />
-          )}
+                <div className="items-center flex-col">
+                  <button className="my-2 w-3/5  border border-zinc-600 hover:bg-slate-50 text-black font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
+                    Add to cart
+                  </button>
+                  <button className="w-3/5 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
+                    Buy it now
+                  </button>
+                </div>
+              </div>
+            </article>
+          </section>
+          {/* ) : (
+            <div className="flex justify-center items-center h-screen">
+              <Spin size="large" />
+            </div>
+          )} */}
           <section className="mx-20">
             <h1 className="text-[30px] font-bold text-center">
               Related Products
