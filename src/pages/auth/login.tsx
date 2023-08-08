@@ -1,7 +1,7 @@
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, notification } from "antd";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import logo from "../../logo/ctqm-logo-2.png";
 import { ctqmService } from "../../services/ctqm.services";
 import { CustomerLoginDTO } from "@share/dtos/service-proxies-dtos";
@@ -32,11 +32,12 @@ export default function Login() {
           localStorage.setItem("CustomerName", response.customerName);
           localStorage.setItem("CustomerId", response.customerId);
           console.log("SAVE TOKEN");
+          redirect("http://localhost:3000");
         }
       }).catch(({ error }) => {
         notification.error({
           message: "Có lỗi xảy ra",
-          description: error?.message ?? "Tài khoản hoặc mật khẩu chưa đúng!  ",
+          description: error?.message ?? "Account or password is not correct!  ",
           placement: "bottomRight",
         });
       })

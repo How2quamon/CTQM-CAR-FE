@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, Select } from "antd";
+import { Button, Checkbox, Form, Input, Select, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../logo/ctqm-logo-2.png";
@@ -39,7 +39,14 @@ export default function Register() {
       .createNewCustomer(values)
       .then((response) => {
         setLogin(response);
-        console.log(response);
+      })
+      .catch(({ error }) => {
+        notification.error({
+          message: "An error occurred",
+          description:
+            error?.message ?? "Account or password is not correct!  ",
+          placement: "bottomRight",
+        });
       })
       .finally(() => {
         setIsLoading(false);
@@ -49,9 +56,9 @@ export default function Register() {
     console.log("Failed:", errorInfo);
   };
 
-//   const onFinish = (values: any) => {
-//     console.log("Received values of form: ", values);
-//   };
+  //   const onFinish = (values: any) => {
+  //     console.log("Received values of form: ", values);
+  //   };
 
   return (
     <React.Fragment>
@@ -203,7 +210,7 @@ export default function Register() {
             >
               <div className="flex justify-start">
                 <Checkbox>
-                  I have read the <a href="//#endregion" >agreement</a>
+                  I have read the <a href="//#endregion">agreement</a>
                 </Checkbox>
               </div>
             </Form.Item>

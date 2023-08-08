@@ -12,7 +12,7 @@ import { ctqmService } from "../../../services/ctqm.services";
 const ProductDetails: React.FC = () => {
   useTitle("Chi tiết sản phẩm");
   const [images] = useState({
-    img1: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+    img1: "https://cdn.wallpapersafari.com/25/59/5cwSa8.jpg",
     img2: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
     img3: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
     img4: "https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
@@ -32,13 +32,12 @@ const ProductDetails: React.FC = () => {
       .getCarByName(carName as string)
       .then((response) => {
         setCars(response);
-        // console.log((response));
       })
       .catch(({ error }) => {
         notification.error({
-          message: "Có lỗi xảy ra",
+          message: "An error occurred",
           description:
-            error?.message ?? "Lỗi trong quá trình xử lý, vui lòng thử lại!",
+            error?.message ?? "Error in processing, please try again!",
           placement: "bottomRight",
         });
       })
@@ -46,12 +45,10 @@ const ProductDetails: React.FC = () => {
         setIsLoading(false);
       });
   };
-
+  
   if (!cars) {
     return <Spin size="large" className="flex justify-center items-center " />;
   }
-  // console.log(cars?.carModel);
-
   return (
     <React.Fragment>
       <NavBar />
