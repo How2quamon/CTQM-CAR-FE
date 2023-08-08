@@ -129,7 +129,7 @@ const onFinish = (values: any) => {
                                 </section>
                             </div>
                             ) : (
-                            <Spin size="large" />
+                            <Spin size="large" className="flex justify-center items-center" />
                             )}
                             
                         </div>

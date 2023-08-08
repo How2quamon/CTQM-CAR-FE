@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
 import React, { useEffect, useState } from "react";
@@ -13,6 +13,7 @@ import {
   RadioChangeEvent,
   Row,
   Space,
+  Spin,
 } from "antd";
 import useTitle from "../../hooks/useTitle";
 import { ctqmService } from "../../services/ctqm.services";
@@ -30,6 +31,7 @@ export default function Payment() {
   const [carList, setCarList] = useState<CarDTO[]>([]);
   const [loading, setIsLoading] = useState<boolean>(false);
   const [iframeContent, setIframeContent] = useState("");
+  const { customerId } = useParams();
 
   const handleToggleForm = () => {
     setIsLoginForm(!isLoginForm);
@@ -56,7 +58,7 @@ export default function Payment() {
   const getListCart = () => {
     setIsLoading(true);
     ctqmService.cartApi
-      .getCustomerCart("cbbf1eb6-ddb4-4577-82c4-56dd9e9fc7fd")
+      .getCustomerCart(customerId as string)
       .then((response) => {
         setCustomerCartList(response);
         console.log("CART", response);
@@ -110,9 +112,9 @@ export default function Payment() {
     console.log(customerCartList);
     setIsLoading(true);
     if (paymentMethods == "paypal") {
-      console.log("paypal", "cbbf1eb6-ddb4-4577-82c4-56dd9e9fc7fd");
+      console.log("paypal", customerId as string);
       ctqmService.orderApi
-        .paypalPayment("cbbf1eb6-ddb4-4577-82c4-56dd9e9fc7fd")
+        .paypalPayment(customerId as string)
         .then((rs) => {
           console.log("Paypal ", rs);
           if (rs.message == "redirect") {
@@ -125,7 +127,7 @@ export default function Payment() {
     }
     if (paymentMethods == "vnpay") {
       ctqmService.orderApi
-        .vnPayPayment("cbbf1eb6-ddb4-4577-82c4-56dd9e9fc7fd")
+        .vnPayPayment(customerId as string)
         .then((rs) => {
           console.log("VNPay ", rs);
           if (rs.message == "redirect") {
@@ -150,7 +152,9 @@ export default function Payment() {
           <div className="w-full">
             <div className="-mx-3 md:flex items-start">
               <div className="px-3 md:w-7/12 lg:pr-10">
-                {carList.length > 0 ? (
+                {loading ? (
+                  <Spin size="large" className="flex justify-center items-center"/>
+                ) : carList.length > 0 ? (
                   carList.map((car) => (
                     <div
                       className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6"
@@ -164,7 +168,7 @@ export default function Payment() {
                           <h6 className="font-semibold uppercase ">
                             {car.carName}
                           </h6>
-                          <p className="">x 1</p>
+                          <p className="">x {car.carAmount}</p>
                         </div>
                         <div>
                           <span className="font-semibold  text-xl">
