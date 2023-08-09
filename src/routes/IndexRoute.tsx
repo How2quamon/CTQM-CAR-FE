@@ -11,8 +11,7 @@ import Payment from "../pages/paymentt/payment";
 import Cart from "../pages/cart/cart";
 import PurchaseHistory from "../pages/user/PurchaseHistory";
 import ChangePassword from "../pages/user/ChangePassword";
-import PaymentResult from "../pages/paymentt/paymentResult";
-import AboutUs from "../pages/home/aboutUs";
+import AboutUs from "../pages/home/aboutUs/aboutUs";
 import PaymentSuccess from "../pages/paymentt/paymentSuccess";
 import PaymentFail from "../pages/paymentt/paymentFail";
 

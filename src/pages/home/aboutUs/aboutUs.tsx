@@ -15,14 +15,15 @@ const AboutUs: React.FC = () => {
     const [form] = Form.useForm();
 
     const onFinish = (e: any) => {
-        e.preventDefault();
-        const url = 'https://gmail.us8.list-manage.com/subscribe/post-json?u=e0b08f64193468684ada6b111&amp;id=fa8f616500&amp;f_id=005d71e0f0&c=?';
-        jsonp(`${url}&EMAIL=${email}`, { param: 'c' }, (_, data) => {
-            const { msg, result } = data
-            
-            alert(msg);
+        console.log('sss', e);
+        
+        setIsLoading(true);
+        const url = 'https://gmail.us8.list-manage.com/subscribe/post-json?u=e0b08f64193468684ada6b111&amp;id=fa8f616500&amp;f_id=005d71e0f0c=?'; 
+        jsonp(`${url}&EMAIL=${email}`, { param: 'c' }, (_, { msg }) => {
+          alert(msg);
+          setIsLoading(false);
         });
-    };
+      };
 
     return (
         <React.Fragment>
@@ -50,7 +51,7 @@ const AboutUs: React.FC = () => {
                                     onFinish={onFinish}
                                 >
                                     <Form.Item className="w-[260px] mb-5"
-                                        name="EMAIL"
+                                        
                                         rules={[
                                             {
                                                 required: true,
@@ -63,8 +64,10 @@ const AboutUs: React.FC = () => {
                                         ]}
                                     >
                                         <Input
+                                            name="EMAIL"
+                                            value={email}
                                             placeholder="your@email.com"
-                                            onChange={(e) => setEmail(e.target.value)}
+                                            onChange={e => setEmail(e.target.value)}
                                         />
                                     </Form.Item>
 
