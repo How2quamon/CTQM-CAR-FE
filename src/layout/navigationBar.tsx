@@ -3,14 +3,18 @@ import logo from "../logo/ctqm-logo-2.png";
 import React, { useEffect, useState } from "react";
 import { CaretDownOutlined, CustomerServiceOutlined, EditOutlined, InboxOutlined, LogoutOutlined, UserOutlined, CloseOutlined, SearchOutlined } from "@ant-design/icons";
 import { Input, Space } from 'antd';
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [customer, setCustomer] = useState<string>("");
+  const [customerID, setCustomerID] = useState<string>("");
   useEffect(() => {
     const customerName = localStorage.getItem("CustomerName");
+    const customerId = localStorage.getItem("CustomerId");
     if (customerName != null) {
       setCustomer(customerName);
+      setCustomerID(customerId!);
       setIsLogin(true);
     }
   }, []);
@@ -55,7 +59,7 @@ const NavBar = () => {
             <div className="flex items-center py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
                 <UserOutlined style={{ fontSize: '18px', paddingRight: '4px' }} rev={undefined} />
                 {isLogin ? (
-                  <a href="/user">{customer}</a>
+                  <Link to={`/profile/${customerID}`}>{customer}</Link>
                 ):(
                   <a href="/login">Account</a>
                 )}

@@ -13,6 +13,9 @@ import PurchaseHistory from "../pages/user/PurchaseHistory";
 import ChangePassword from "../pages/user/ChangePassword";
 import PaymentResult from "../pages/paymentt/paymentResult";
 import AboutUs from "../pages/home/aboutUs";
+import PaymentSuccess from "../pages/paymentt/paymentSuccess";
+import PaymentFail from "../pages/paymentt/paymentFail";
+
 export default function IndexRoute() {
   return (
     <BrowserRouter>
@@ -32,18 +35,19 @@ export default function IndexRoute() {
           <Route path="products-details/:carName" element={<ProductDetails/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="payment" element={<Payment/>}></Route>
-          <Route path="paymentResult/:result" element={<PaymentResult/>}></Route>
+          <Route path="payment/:customerId" element={<Payment/>}></Route>
+          <Route path="paymentsuccess/:customerId" element={<PaymentSuccess/>}></Route>
+          <Route path="paymentfail/:customerId" element={<PaymentFail/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="cart" element={<Cart/>}></Route>
-          <Route path="user" element={<UserPage/>}></Route>
+          <Route path="profile/:customerId" element={<UserPage/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="purchase-history" element={<PurchaseHistory/>}></Route>
+          <Route path="profile/purchase-history/:customerId" element={<PurchaseHistory/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="change-password" element={<ChangePassword/>}></Route>
+          <Route path="profile/change-password/:customerId" element={<ChangePassword/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="about-us" element={<AboutUs/>}></Route>

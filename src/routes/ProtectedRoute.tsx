@@ -11,7 +11,7 @@ export default function ProtectedRoute({ permission, role }: ProtectedRouteProps
     const isLogin = useAppSelector((state) => state.session.isLogin);
 
 
-    console.log("Hi đây là protected route");
+    // console.log("Hi đây là protected route");
 
     if (!isLogin) console.log("Chưa login");
 

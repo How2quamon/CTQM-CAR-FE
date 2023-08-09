@@ -5,6 +5,7 @@ import {
   Input,
   Select,
   Spin,
+  notification,
 } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { message, Upload } from 'antd';
@@ -14,7 +15,7 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ctqmService } from '../../services/ctqm.services';
 import { ChangeInfoDTO, CustomerDTO } from '@share/dtos/service-proxies-dtos';
-import axios from 'axios';
+import dayjs from 'dayjs';
 
 const { Option } = Select;
 
@@ -39,12 +40,6 @@ const beforeUpload = (file: RcFile) => {
 const EditInfo: React.FC = () => {
   //functions for form
   const [form] = Form.useForm();
-
-  const onFinish = async (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-    await axios.put(`/api/Customer/ChangeCustomerInfo/${customerId}`, customers);
-    navigate("/");
-  };
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -81,24 +76,70 @@ const EditInfo: React.FC = () => {
 
   let navigate = useNavigate();
   const { customerId } = useParams();
-
+  const [getdata, setGetData] = useState(false);
   const [customers, setCustomers] = useState<CustomerDTO | null>(null)
 
-  // const onInputChange = (e: { target: { fullname: any; value: any; }; }) => {
-  //   setCustomers({ ...customers, [e.target.customerName]: e.target.value });
-  // };
   useEffect(() => {
     getUserInfo();
-  }, [customers]);
+  }, [getdata]);
+  
+  const onFinish = async (e:CustomerDTO) => {
+    console.log("OSIDJFOIWERJOWER: ", e);
+    const updateInfo: ChangeInfoDTO =
+    {
+      customerName: e.customerName,
+      customerPhone: e.customerPhone,
+      customerAddress: e.customerAddress,
+      customerDate: e.customerDate,
+      customerLicense: e.customerLicense,
+      customerEmail: e.customerEmail,
+      customerVaild: true
+    };
+    updateInfor(customerId as string, updateInfo);
+    // navigate("/");
+  };
+
+  const updateInfor = (customerId: string, body: ChangeInfoDTO) => {
+    setGetData(false);
+    setLoading(true);
+    console.log("UPDATE", customerId, body);
+    ctqmService.customerApi
+      .updateCustomerInfo(customerId, body)
+      .then((response) => {
+        console.log("Result: ", response);
+        setCustomers(response);
+        setGetData(true);
+        notification.success({
+          message: "Action Success",
+          description: "Update profile success!  ",
+          placement: "bottomRight",
+        });
+      }).catch(({ error }) => {
+        notification.error({
+          message: "Action Failed",
+          description: error?.message ?? "Update profile Failed!  ",
+          placement: "bottomRight",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const getUserInfo = () => {
     setLoading(true);
+    console.log("LẤY THÔNG TIN: ", customerId);
     ctqmService.customerApi
       .getCustomerWithId(customerId as string)
       .then((response) => {
-        console.log(response)
         setCustomers(response);
-        
+        setGetData(true);
+      }).catch(({ error }) => {
+        notification.error({
+          message: "Action Failed",
+          description: error?.message ?? "Cannot get your profile!  ",
+          placement: "bottomRight",
+        });
       })
       .finally(() => {
         setLoading(false);
@@ -120,13 +161,21 @@ const EditInfo: React.FC = () => {
                     layout="vertical"
                     form={form}
                     onFinish={onFinish}
-                    initialValues={{ prefix: '84' }}
+                    initialValues={{
+                      customerEmail: customers?.customerEmail,
+                      customerName: customers?.customerName,
+                      customerPhone: customers?.customerPhone,
+                      customerAddress: customers?.customerAddress,
+                      customerLicense: customers?.customerLicense,
+                      customerDate: dayjs(customers?.customerDate),
+                      prefix: '84' 
+                    }}
                     size='large'
                     style={{ maxWidth: 600 }}
                     scrollToFirstError
                   >
                     <Form.Item
-                      name="email"
+                      name="customerEmail"
                       label="E-mail"
                       rules={[
                         {
@@ -139,44 +188,61 @@ const EditInfo: React.FC = () => {
                         },
                       ]}
                     >
-                      <Input defaultValue={customers.customerEmail} />
+                      <Input defaultValue={customers?.customerEmail} />
                     </Form.Item>
 
                     <Form.Item
-                      name="fullname"
+                      name="customerName"
                       label="Full name"
                       tooltip="You should use the name included in your payment card!"
                       rules={[{ required: true, message: 'Please input your full name!', whitespace: true }]}
                     >
-                      <Input defaultValue={customers.customerName} />
+                      <Input defaultValue={customers?.customerName}/>
                     </Form.Item>
 
                     <Form.Item
-                      name="phone"
+                      name="customerPhone"
                       label="Phone Number"
                       rules={[{ required: true, message: 'Please input your phone number!' }]}
                     >
-                      <Input addonBefore={prefixSelector} style={{ width: '100%' }} defaultValue={customers.customerPhone}/>
+                      <Input addonBefore={prefixSelector} style={{ width: '100%' }} defaultValue={customers?.customerPhone}/>
                     </Form.Item>
 
                     <Form.Item
-                      name="gender"
-                      label="Gender"
-                      rules={[{ required: true, message: 'Please select gender!' }]}
+                      name="customerAddress"
+                      label="Address"
+                      rules={[{ required: true, message: 'Please input your address!', whitespace: false }]}
                     >
-                      <Select placeholder="select your gender">
-                        <Option value="male">Male</Option>
-                        <Option value="female">Female</Option>
-                        <Option value="other">Other</Option>
+                      <Input defaultValue={customers?.customerAddress} />
+                    </Form.Item>
+
+                    <Form.Item
+                      name="customerLicense"
+                      label="License"
+                      rules={[{ required: true, message: 'Please select license!' }]}
+                    >
+                      <Select placeholder="Select your license"
+                      defaultValue={customers?.customerLicense}>
+                        <Option value="B1">B1</Option>
+                        <Option value="B2">B2</Option>
+                        <Option value="C">C</Option>
+                        <Option value="D">D</Option>
+                        <Option value="E">E</Option>
+                        <Option value="F">F</Option>
+                        <Option value="FB2">FB2</Option>
+                        <Option value="FC">FC</Option>
+                        <Option value="FD">FD</Option>
+                        <Option value="FE">FE</Option>
                       </Select>
                     </Form.Item>
 
                     <Form.Item
-                      name="dob"
+                      name="customerDate"
                       label="Date of Birth"
                       style={{ maxWidth: 600 }}
+                      rules={[{ required: true, message: 'What is your bithday?!' }]}
                     >
-                      <DatePicker />
+                      <DatePicker defaultValue={dayjs(customers?.customerDate)}/>
                     </Form.Item>
 
                     <Form.Item>
