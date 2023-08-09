@@ -12,6 +12,7 @@ import Cart from "../pages/cart/cart";
 import PurchaseHistory from "../pages/user/PurchaseHistory";
 import ChangePassword from "../pages/user/ChangePassword";
 import PaymentResult from "../pages/paymentt/paymentResult";
+import AboutUs from "../pages/home/aboutUs";
 export default function IndexRoute() {
   return (
     <BrowserRouter>
@@ -43,6 +44,9 @@ export default function IndexRoute() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="change-password" element={<ChangePassword/>}></Route>
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="about-us" element={<AboutUs/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
