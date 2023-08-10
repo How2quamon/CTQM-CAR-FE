@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select, notification } from "antd";
 import Footer from "src/layout/Footer";
 import React from "react";
 import { useState } from "react";
@@ -12,27 +12,21 @@ const Subscribe: React.FC = () => {
   useTitle("Subscribe to our website");
 
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [aliasName, setAliasName] = useState("");
   const [loading, setIsLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
 
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
 
   const onFinish = (e: any) => {
     console.log("sss", email);
 
     setIsLoading(true);
     const url = `https://gmail.us8.list-manage.com/subscribe/post?u=e0b08f64193468684ada6b111&amp;id=fa8f616500&amp;f_id=005d71e0f0`;
-    jsonp(`${url}&EMAIL=${email}&PHONE=${phone}&MMERGE6=${aliasName}`, { param: "c" }, (_, _ref) => {
-        alert("Đăng ký thành công!");
+    jsonp(`${url}&EMAIL=${email}`, { param: "c" }, (_, _ref) => {
+      notification.success({
+        message: "You have successfully subscribed",
+        description: "Confirmed! You’re in!",
+        placement: "bottomRight",
+    });
         setIsLoading(false);
       });
   };
@@ -90,32 +84,6 @@ const Subscribe: React.FC = () => {
                       value={email}
                       placeholder="Your@email.com"
                       onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    className="w-[260px] mb-5"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your phone number!",
-                      },
-                    ]}
-                  >
-                    <Input
-                      name="PHONE"
-                      value={phone}
-                      placeholder="Your Pone number"
-                      addonBefore={prefixSelector}
-                      onChange={(e) => setPhone(e.target.value)}
-                    />
-                  </Form.Item>
-
-                  <Form.Item className="w-[260px] mb-5">
-                    <Input
-                      name="MMERGE6"
-                      value={aliasName}
-                      placeholder="Alias Name"
-                      onChange={(e) => setAliasName(e.target.value)}
                     />
                   </Form.Item>
 
