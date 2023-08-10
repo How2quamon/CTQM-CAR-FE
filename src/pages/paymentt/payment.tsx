@@ -30,7 +30,6 @@ export default function Payment() {
   const [paymentMethods, setPaymentMethods] = useState("paypal");
   const [carList, setCarList] = useState<CarDTO[]>([]);
   const [loading, setIsLoading] = useState<boolean>(false);
-  const [iframeContent, setIframeContent] = useState("");
   const { customerId } = useParams();
 
   const handleToggleForm = () => {
@@ -62,7 +61,6 @@ export default function Payment() {
       .then((response) => {
         setCustomerCartList(response);
         console.log("CART", response);
-        initValue();
         getCarData(response);
       })
       .finally(() => {
@@ -70,34 +68,29 @@ export default function Payment() {
       });
   };
 
-  const initValue = () => {
-    setSubTotal(0);
-    setTaxTotal(19.09);
-    setTotalPrice(0);
-    setCarList([]);
-    console.log("DITMEt");
-  };
-
   const getCarData = (listCart: CartDTO[]) => {
     setIsLoading(true);
+    let newCarList: CarDTO[] = [];
+    let subtotal = 0;
+    let totalPrice = 0;
     listCart.forEach((cart) => {
       let price = cart.price! * cart.amount!;
       console.log("PRICE", price);
-      setSubTotal(subTotal + price);
-      setTotalPrice(taxTotal + subTotal + price);
+      subtotal += price;
       ctqmService.carApi
         .getCarWithId(cart.carId!)
         .then((rs) => {
           // Sao chép mảng hiện tại
-          const newCarList = [...carList];
-          // Thêm giá trị mới vào cuối mảng sao chép
-          newCarList.push(rs);
-          // Cập nhật state bằng mảng mới
-          setCarList(newCarList);
+          const newCar = rs;
+          newCarList.push(newCar);
           console.log("ASDASDQWEASD ", rs);
         })
         .finally(() => {
           setIsLoading(false);
+          totalPrice = subtotal + 19.09;
+          setSubTotal(subtotal);
+          setTotalPrice(totalPrice);
+          setCarList(newCarList);
         });
     });
   };

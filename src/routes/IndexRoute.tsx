@@ -11,7 +11,7 @@ import Payment from "../pages/paymentt/payment";
 import Cart from "../pages/cart/cart";
 import PurchaseHistory from "../pages/user/PurchaseHistory";
 import ChangePassword from "../pages/user/ChangePassword";
-import AboutUs from "../pages/home/aboutUs/aboutUs";
+import Subscribe from "../pages/home/subscribe/subscribe";
 import PaymentSuccess from "../pages/paymentt/paymentSuccess";
 import PaymentFail from "../pages/paymentt/paymentFail";
 
@@ -39,7 +39,7 @@ export default function IndexRoute() {
           <Route path="paymentfail/:customerId" element={<PaymentFail/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="cart" element={<Cart/>}></Route>
+          <Route path="cart/:customerId" element={<Cart/>}></Route>
           <Route path="profile/:customerId" element={<UserPage/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
@@ -49,7 +49,7 @@ export default function IndexRoute() {
           <Route path="profile/change-password/:customerId" element={<ChangePassword/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="about-us" element={<AboutUs/>}></Route>
+          <Route path="subscribe" element={<Subscribe/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
