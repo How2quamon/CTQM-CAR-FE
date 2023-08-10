@@ -26,9 +26,8 @@ export default function Login() {
     
     ctqmService.customerApi
       .loginAction(loginValue)
-      .then(({ response, message, statusCode, error }) => {
-        handleHttpStatusCode(statusCode, error?.message);
-        // console.log(response);
+      .then((response) => {
+        console.log(response);
         if (response.customerName != null && response.tokenPass != null) {
           localStorage.setItem("Token", response.tokenPass);
           localStorage.setItem("CustomerName", response.customerName);
