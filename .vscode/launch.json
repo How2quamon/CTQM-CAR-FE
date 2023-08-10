@@ -8,6 +8,7 @@
             "name": "Launch Chrome",
             "request": "launch",
             "type": "chrome",
+            // "url": "https://ctqmmec.azurewebsites.net",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}"
         }
