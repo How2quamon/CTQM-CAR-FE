@@ -34,14 +34,14 @@ const NavBar = () => {
   return (
     <div className="sticky top-0 z-10 bg-stone-950 text-slate-50">
       <div className="max-w-7xl- mx-auto px-4 sm:px-6 lg:px-8 py-1 md:py-4">
-        <div className="flex justify-between items-center font-bold text-sm md:justify-start"> 
-            <a href="/">
+        <div className="flex justify-between items-center font-bold text-sm md:justify-start">
+            <Link to="/">
               <img className="h-5" src={logo} alt="CTQM logo" />
-            </a>
+            </Link>
           <div className="hidden lg:inline md:flex space-x-3 flex-1 lg:ml-8">
             <ul className="flex justify-start ">
               <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
-                <a href="/list">Catalogs</a>
+                <Link to="/list">Catalogs</Link>
               </li>
               <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
                 <Link to={`/cart/${customerID}`}>Inventory</Link>
@@ -60,7 +60,7 @@ const NavBar = () => {
                 {isLogin ? (
                   <Link to={`/profile/${customerID}`}>{customer}</Link>
                 ):(
-                  <a href="/login">Account</a>
+                  <Link to="/login">Account</Link>
                 )}
             </div>
               {/* <div onClick={handleNav} className="py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
