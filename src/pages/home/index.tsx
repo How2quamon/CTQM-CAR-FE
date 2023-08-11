@@ -8,7 +8,7 @@ import homepage1 from 'src/videos/mercedes-amg-car-png-image-pngpix-9.png';
 import Howworks from 'src/videos/mercedes-benz-g-63-amg-mercedes-car-suv-white-front-view-115698742139qrfpozcbr.jpeg';
 
 export default function List() {
-    useTitle("CTQM");
+    useTitle("CTQM - Shop Cars");
     return (
         <React.Fragment>
             <NavBar />

@@ -11,7 +11,7 @@ import { ctqmService } from "../../../services/ctqm.services";
 import Filter from "./Filter";
 
 export default function List() {
-  useTitle("Danh sách sản phẩm");
+  useTitle("Catalogs");
   const [filter, setFilter] = useState<any>();
   const [listCars, setListCars] = useState<CarDTO[]>([]);
   const [loading, setIsLoading] = useState<boolean>(false);

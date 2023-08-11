@@ -5,7 +5,7 @@ import {
   LinkOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
-import { CarDTO } from "@share/dtos/service-proxies-dtos";
+import { CarDTO, CartDTO } from "../../../share/dtos/service-proxies-dtos";
 import { Button, Card, Popover, Spin, notification } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useTitle from "src/hooks/useTitle";
@@ -26,6 +26,7 @@ const ProductDetails: React.FC = () => {
   const [amount, setAmount] = useState(1);
   const { carName } = useParams();
   const [cars, setCars] = useState<CarDTO | null>(null);
+  const [addCart, setaddCart] = useState<CartDTO| null>(null);
   const [loading, setIsLoading] = useState<boolean>(false);
   const [productLinkCopied, setProductLinkCopied] = useState(false);
   const handleCopyLink = () => {
@@ -57,6 +58,32 @@ const ProductDetails: React.FC = () => {
         setIsLoading(false);
       });
   };
+  const addToCard = ( ) => {
+    setIsLoading(true);
+    
+    const cartData = {
+      carId: addCart?.carId,
+      quantity: addCart?.amount,
+    };
+  
+    ctqmService.cartApi
+      .addToCart(cartData)
+      .then((response) => {
+        setaddCart(response);
+        // You might want to show a success notification here
+      })
+      .catch(({ error }) => {
+        notification.error({
+          message: "An error occurred",
+          description: error?.message ?? "Error in processing, please try again!",
+          placement: "bottomRight",
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+  
 
   if (!cars) {
     return (
@@ -157,12 +184,12 @@ const ProductDetails: React.FC = () => {
                   </button>
                 </div>
                 <div className="items-center flex-col">
-                  <button className="my-2 w-3/5  border border-zinc-600 hover:bg-slate-50 text-black font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
+                  <Button className="my-2 w-3/5  border border-zinc-600 hover:bg-slate-50 text-black font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in" onClick={addToCard}>
                     Add to cart
-                  </button>
-                  <button className="w-3/5 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
+                  </Button>
+                  <Button className="w-3/5 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
                     Buy it now
-                  </button>
+                  </Button>
                 </div>
               </div>
             </article>
