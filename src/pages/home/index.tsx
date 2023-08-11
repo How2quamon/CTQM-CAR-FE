@@ -15,8 +15,7 @@ export default function List() {
             <main>
                 <div className=" ">
                     <video autoPlay muted loop className='w-full z-0 relative'>
-                        <source src="../Videos/Mercedes-Maybach S-Class Haute Voiture Limited Edition 2022.mp4" type="video/mp4" />
-                        Your browser does not support the video tag.
+                        <source src="https://drive.google.com/file/d/1Qgob_OY7TIAFDBsYSpCaw2v_Adbh_9b5/view?usp=sharing" type="video/mp4" />
                     </video>
                     <h1 className='font-semibold text-[35px] absolute top-[100px] text-gray-200 flex items-center text-center left-[37%] justify-center '>Mercedes-Benz</h1>
                     <div className="flex absolute bottom-[150px] text-gray-200 gap-10 justify-center left-[30%] text-center">

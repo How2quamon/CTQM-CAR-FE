@@ -10,7 +10,7 @@
 }
 @font-face {
     font-family: "Gotham Book";
-    src: url("../src/fonts/GothamSSm-Book_Web.woff2");
+    src: url("../public/fonts/GothamSSm-Book_Web.woff2");
   }
   
   * {

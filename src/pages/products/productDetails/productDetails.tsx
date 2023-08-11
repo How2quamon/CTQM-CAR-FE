@@ -13,6 +13,8 @@ import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
 import { ctqmService } from "../../../services/ctqm.services";
 import copy from "copy-to-clipboard";
+import { Helmet } from "react-helmet";
+
 
 const ProductDetails: React.FC = () => {
   useTitle("Chi tiết sản phẩm");
@@ -29,8 +31,10 @@ const ProductDetails: React.FC = () => {
   const [addCart, setaddCart] = useState<CartDTO| null>(null);
   const [loading, setIsLoading] = useState<boolean>(false);
   const [productLinkCopied, setProductLinkCopied] = useState(false);
-  const handleCopyLink = () => {
-    const productURL = window.location.href; // Lấy URL hiện tại của sản phẩm
+  const baseAppURL = "https://ctqmmec.azurewebsites.net/"; 
+  const handleCopyLink = (carName: string) => {
+    const modifiedString = carName.replace(/ /g, "%20");
+    const productURL = `${baseAppURL}products-details/${modifiedString}`; // Lấy URL hiện tại của sản phẩm
     copy(productURL); // Sao chép URL vào clipboard
     setProductLinkCopied(true); // Đánh dấu rằng URL đã được sao chép
   };
@@ -139,6 +143,13 @@ const ProductDetails: React.FC = () => {
               </div>
             </article>
             {/* ABOUT */}
+            <Helmet>
+              <meta property="og:type" content="website" />
+              <meta property="og:title" content={carName} />
+              <meta property="og:description" content={cars.head1}/>
+              <meta property="og:image" content={images.img1} /> 
+              {/* Đường dẫn đến hình ảnh sản phẩm */}
+            </Helmet>
             <article className="space-x-4 flex flex-col">
               <div className="space-x-4 mb-3">
                 <span className="mx-4 mb-2 text-sky-600 font-semibold">
@@ -151,7 +162,7 @@ const ProductDetails: React.FC = () => {
                     <LinkOutlined
                       className="text-[17px]"
                       title="Copy link"
-                      onClick={handleCopyLink}
+                      onClick={() => handleCopyLink(cars.carName as string)}
                       rev={undefined}
                     />
                   </Popover>
