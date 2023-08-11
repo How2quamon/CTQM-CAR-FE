@@ -34,9 +34,8 @@ const NavBar = () => {
   return (
     <div className="sticky top-0 z-10 bg-stone-950 text-slate-50">
       <div className="max-w-7xl- mx-auto px-4 sm:px-6 lg:px-8 py-1 md:py-4">
-        <div className="flex justify-between items-center font-bold text-sm md:justify-start">
-          
-            <a href="#">
+        <div className="flex justify-between items-center font-bold text-sm md:justify-start"> 
+            <a href="/">
               <img className="h-5" src={logo} alt="CTQM logo" />
             </a>
           <div className="hidden lg:inline md:flex space-x-3 flex-1 lg:ml-8">
@@ -64,11 +63,12 @@ const NavBar = () => {
                   <a href="/login">Account</a>
                 )}
             </div>
-              <div onClick={handleNav} className="py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
+              {/* <div onClick={handleNav} className="py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
                 Menu
-              </div>
+              </div> */}
           </div>
-          <div
+          {/* Responsive menu for later dev */}
+          {/* <div
             className={
               showSideBar
                 ? "bg-stone-950 absolute right-0 top-0 w-80 max-h-screen z-1001 ease-in-out duration-300 backdrop-blur-sm"
@@ -100,7 +100,7 @@ const NavBar = () => {
                 <a href="https://www.tesla.com/insurance">Insurance</a>
               </li>            
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
