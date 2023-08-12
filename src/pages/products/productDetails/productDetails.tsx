@@ -115,10 +115,10 @@ const ProductDetails: React.FC = () => {
       <NavBar />
       <Helmet
         meta={[
-          { property:'og:type', content: "article"},
-          { property:'og:title', content: "CÁC THÔNG TIN XE"},
-          { property:'og:description', content: "THÔNG TIN CHI THIẾT CỦA XE"},
-          { property:'og:image', content: images.img1},
+          // { property:'og:type', content: "article"},
+          // { property:'og:title', content: "CÁC THÔNG TIN XE"},
+          // { property:'og:description', content: "THÔNG TIN CHI THIẾT CỦA XE"},
+          // { property:'og:image', content: images.img1},
         ]}
       >
         {/* <meta property="og:type" content="article" />
@@ -126,6 +126,13 @@ const ProductDetails: React.FC = () => {
         <meta property="og:description" content="THÔNG TIN CHI THIẾT CỦA XE" />
         <meta property="og:image" content={images.img1} /> */}
       </Helmet>
+      <head>
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="CÁC THÔNG TIN XE" />
+        <meta property="og:description" content="THÔNG TIN CHI THIẾT CỦA XE" />
+        <meta property="og:image" content={images.img1} />
+      </head>
+      <main>
         <div className="flex flex-col justify-center min-h-screen">
           {/* {cars !== undefined ? ( */}
           <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10  items-start lg:py-14">
@@ -416,6 +423,7 @@ const ProductDetails: React.FC = () => {
             </div>
           </section>
         </div>
+      </main>
       <Footer />
     </React.Fragment>
   );
