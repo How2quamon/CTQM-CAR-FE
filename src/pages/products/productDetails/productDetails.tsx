@@ -5,7 +5,7 @@ import {
   LinkOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
-import { CarDTO, CartDTO } from "../../../share/dtos/service-proxies-dtos";
+import { CarDTO, CartDTO, CartNotiDTO } from "../../../share/dtos/service-proxies-dtos";
 import { Button, Card, Popover, Spin, notification } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useTitle from "src/hooks/useTitle";
@@ -42,7 +42,13 @@ const ProductDetails: React.FC = () => {
     copy(productURL); // Sao chép URL vào clipboard
     setProductLinkCopied(true); // Đánh dấu rằng URL đã được sao chép
   };
-
+  const [addToCartDto, setAddToCartDto] = useState<CartDTO>({
+    customerId: '',
+    carId: '',
+    amount: 0,
+    price: 0
+  });
+  
   useEffect(() => {
     getCarDetail();
   }, [getData]);
@@ -70,24 +76,36 @@ const ProductDetails: React.FC = () => {
         console.log("URL: ", carUrl);
       });
   };
-  const addToCard = ( ) => {
+  const addToCart = (carDTO: CarDTO) => {
+    const customerId = localStorage.getItem("CustomerId");
+    if (customerId == null) {
+      notification.error({
+        message: "You're not login!",
+        description: "Please login to contiune!",
+        placement: "bottomRight",
+      });
+      return;
+    }
     setIsLoading(true);
-    
-    const cartData = {
-      carId: addCart?.carId,
-      quantity: addCart?.amount,
-    };
-  
+    addToCartDto.customerId = customerId;
+    addToCartDto.carId = carDTO.carId;
+    addToCartDto.amount = amount;
+    addToCartDto.price = carDTO.carPrice;
+    console.log("AIOAJFOIWER", addToCartDto);
     ctqmService.cartApi
-      .addToCart(cartData)
-      .then((response) => {
-        setaddCart(response);
-        // You might want to show a success notification here
+      .addToCart(addToCartDto)
+      .then((response: CartNotiDTO) => {
+        notification.success({
+          message: "Add to cart Success!",
+          description: response.amount + " " + response.carName + " with $" + response.price + " are in your cart.",
+          placement: "bottomRight", 
+        })
       })
       .catch(({ error }) => {
         notification.error({
           message: "An error occurred",
-          description: error?.message ?? "Error in processing, please try again!",
+          description:
+            error?.message ?? "Error in processing, please try again!",
           placement: "bottomRight",
         });
       })
@@ -223,7 +241,7 @@ const ProductDetails: React.FC = () => {
                   </button>
                 </div>
                 <div className="items-center flex-col">
-                  <Button className="my-2 w-3/5  border border-zinc-600 hover:bg-slate-50 text-black font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in" onClick={addToCard}>
+                  <Button className="my-2 w-3/5  border border-zinc-600 hover:bg-slate-50 text-black font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in" onClick={() => addToCart(cars)}>
                     Add to cart
                   </Button>
                   <Button className="w-3/5 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">

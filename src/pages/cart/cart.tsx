@@ -26,6 +26,7 @@ export default function Cart() {
     cartId: string
   ) => {
     if (newAmount >= 1) {
+      setGetData(false);
       console.log(cartId as string, newAmount as number);
       setIsLoading(true);
       ctqmService.cartApi
@@ -45,6 +46,7 @@ export default function Cart() {
         })
         .finally(() => {
           setIsLoading(false);
+          setGetData(true);
         });
     }
   };
@@ -76,7 +78,13 @@ export default function Cart() {
       .then((response) => {
         customerCartList.splice(index, 1);
         console.log(customerCartList);
-        getCarData(customerCartList);
+        if (customerCartList.length == 0) {
+          setCarList([]);
+          setSubTotal(0);
+          setTotalPrice(0);
+        }
+        else 
+          getCarData(customerCartList);
         console.log("DELETE CART", response);
       })
       .catch(({ error }) => {
@@ -97,44 +105,40 @@ export default function Cart() {
   };
 
   const getCarData = (listCart: CartDTO[]) => {
+    console.log(listCart);
     setGetData(false);
     setIsLoading(true);
-    if (listCart.length == 0) {
-      setCarList([]);
-      setSubTotal(0);
-      setTotalPrice(0);
-      setGetData(true);
-      setIsLoading(false);
-    } else {
-      let newCarList: CarDTO[] = [];
-      let subtotal = 0;
-      let totalPrice = 0;
-      listCart.forEach((cart, index) => {
-        let price = cart.price! * cart.amount!;
-        subtotal += price;
-        ctqmService.carApi
-          .getCarWithId(cart.carId!)
-          .then((rs) => {
-            // Sao chép mảng hiện tại
-            const newCar = rs;
-            newCarList.push(newCar);
-          })
-          .catch(() => {
+    let newCarList: CarDTO[] = [];
+    let subtotal = 0;
+    let totalPrice = 0;
+    listCart.forEach((cart, index) => {
+      let price = cart.price! * cart.amount!;
+      subtotal += price;
+      ctqmService.carApi
+        .getCarWithId(cart.carId!)
+        .then((rs) => {
+          // Sao chép mảng hiện tại
+          const newCar = rs;
+          newCarList.push(newCar);    
+        })
+        .catch(() => {
+          setIsLoading(false);
+          setGetData(true);
+        })
+        .finally(() => {
+          console.log("BEORE", index, listCart.length);
+          if (index == listCart.length - 1) {
             setIsLoading(false);
+            console.log(index, listCart.length);
+            totalPrice = subtotal + 19.09;
+            setSubTotal(subtotal);
+            setTotalPrice(totalPrice);
+            setCarList(newCarList);
             setGetData(true);
-          })
-          .finally(() => {
-            if (index == listCart.length - 1) {
-              setIsLoading(false);
-              totalPrice = subtotal + 19.09;
-              setSubTotal(subtotal);
-              setTotalPrice(totalPrice);
-              setCarList(newCarList);
-              setGetData(true);
-            }
-          });
-      });
-    }
+          }
+        });
+    });
+    
   };
 
   return (
