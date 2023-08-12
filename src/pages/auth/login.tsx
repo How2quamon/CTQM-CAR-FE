@@ -6,8 +6,11 @@ import logo from "../../logo/ctqm-logo-2.png";
 import { ctqmService } from "../../services/ctqm.services";
 import { CustomerLoginDTO } from "@share/dtos/service-proxies-dtos";
 import handleHttpStatusCode from "src/utils/handleHttpStatusCode";
+import useTitle from "src/hooks/useTitle";
 
 export default function Login() {
+  useTitle("Login");
+
   const [loading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   
@@ -130,9 +133,9 @@ export default function Login() {
             </div>
           </div>
           <div className="w-2/5 bg-slate-900 text-white rounded-tr-2xl round-br-2xl py-36 px-12 flex flex-col justify-start">
-            <Link to={""}>
+            <Link to={"/"}>
               {/* <h2 className="text-3xl font-bold mb-2">Hello, Friend!</h2> */}
-              <img src={logo} className="mb-5" alt=""></img>
+              <img src={logo} className="mb-5" alt=""></img></Link>
               <div className="border-2 w-10 border-white inline-block mb-2"></div>
               <p className="my-5">
                 Fill up your information and start shopping which us.
@@ -148,7 +151,6 @@ export default function Login() {
                   </Button>
                 </div>
               </Link>
-            </Link>
           </div>
         </div>
       </main>

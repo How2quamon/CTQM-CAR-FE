@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../logo/ctqm-logo-2.png";
 import { ctqmService } from "../../services/ctqm.services";
+import useTitle from "src/hooks/useTitle";
 
 export default function Register() {
+  useTitle("Register");
   const { Option } = Select;
   const tailFormItemLayout = {
     wrapperCol: {
@@ -65,7 +67,7 @@ export default function Register() {
       <div className="flex justify-center  bg-slate-200 ">
         <div className="w-2/5 bg-slate-900 text-white flex justify-center rounded-l-lg py-36 px-12 flex-col">
           <div className="w-[100px] ">
-            <img src={logo} className="mt-[-270px]" alt="" />
+            <Link to={'/'}><img src={logo} className="mt-[-270px]" alt="" /></Link>
           </div>
           <div className="mt-[-60px]">
             <h2 className="text-3xl font-bold mb-2">Hello, New Friend!</h2>
