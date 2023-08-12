@@ -14,7 +14,8 @@ import NavBar from "src/layout/navigationBar";
 import { ctqmService } from "../../../services/ctqm.services";
 import copy from "copy-to-clipboard";
 import { Helmet } from "react-helmet";
-
+import { FacebookShareButton, FacebookIcon } from "react-share";
+import { Segment, Container } from "semantic-ui-react";
 
 const ProductDetails: React.FC = () => {
   useTitle("Chi tiết sản phẩm");
@@ -27,21 +28,24 @@ const ProductDetails: React.FC = () => {
   const [activeImg, setActiveImage] = useState(images.img1);
   const [amount, setAmount] = useState(1);
   const { carName } = useParams();
+  const [carTrim, setCarTrim] = useState("");
+  const [carUrl, setCarUrl] = useState("");
   const [cars, setCars] = useState<CarDTO | null>(null);
   const [addCart, setaddCart] = useState<CartDTO| null>(null);
   const [loading, setIsLoading] = useState<boolean>(false);
   const [productLinkCopied, setProductLinkCopied] = useState(false);
-  const baseAppURL = "https://ctqmmec.azurewebsites.net/"; 
+  const [getData, setGetData] = useState(false);
+  const baseAppURL = "https://ctqmmec.azurewebsites.net/products-details/"; 
   const handleCopyLink = (carName: string) => {
-    const modifiedString = carName.replace(/ /g, "%20");
-    const productURL = `${baseAppURL}products-details/${modifiedString}`; // Lấy URL hiện tại của sản phẩm
+    const modifiedString = carName?.replace(/ /g, "%20");
+    const productURL = `${baseAppURL}${modifiedString}`; // Lấy URL hiện tại của sản phẩm
     copy(productURL); // Sao chép URL vào clipboard
     setProductLinkCopied(true); // Đánh dấu rằng URL đã được sao chép
   };
 
   useEffect(() => {
     getCarDetail();
-  }, [cars]);
+  }, [getData]);
 
   const getCarDetail = () => {
     setIsLoading(true);
@@ -59,7 +63,11 @@ const ProductDetails: React.FC = () => {
         });
       })
       .finally(() => {
-        setIsLoading(false);
+        setGetData(true);
+        setIsLoading(false);    
+        const modifiedString = carName?.replace(/ /g, "%20");
+        setCarUrl(baseAppURL+modifiedString);
+        console.log("URL: ", carUrl);
       });
   };
   const addToCard = ( ) => {
@@ -105,6 +113,25 @@ const ProductDetails: React.FC = () => {
   return (
     <React.Fragment>
       <NavBar />
+      <Helmet
+        meta={[
+          // { property:'og:type', content: "article"},
+          // { property:'og:title', content: "CÁC THÔNG TIN XE"},
+          // { property:'og:description', content: "THÔNG TIN CHI THIẾT CỦA XE"},
+          // { property:'og:image', content: images.img1},
+        ]}
+      >
+        {/* <meta property="og:type" content="article" />
+        <meta property="og:title" content="CÁC THÔNG TIN XE" />
+        <meta property="og:description" content="THÔNG TIN CHI THIẾT CỦA XE" />
+        <meta property="og:image" content={images.img1} /> */}
+      </Helmet>
+      <head>
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="CÁC THÔNG TIN XE" />
+        <meta property="og:description" content="THÔNG TIN CHI THIẾT CỦA XE" />
+        <meta property="og:image" content={images.img1} />
+      </head>
       <main>
         <div className="flex flex-col justify-center min-h-screen">
           {/* {cars !== undefined ? ( */}
@@ -143,13 +170,6 @@ const ProductDetails: React.FC = () => {
               </div>
             </article>
             {/* ABOUT */}
-            <Helmet>
-              <meta property="og:type" content="website" />
-              <meta property="og:title" content={carName} />
-              <meta property="og:description" content={cars.head1}/>
-              <meta property="og:image" content={images.img1} /> 
-              {/* Đường dẫn đến hình ảnh sản phẩm */}
-            </Helmet>
             <article className="space-x-4 flex flex-col">
               <div className="space-x-4 mb-3">
                 <span className="mx-4 mb-2 text-sky-600 font-semibold">
@@ -166,6 +186,14 @@ const ProductDetails: React.FC = () => {
                       rev={undefined}
                     />
                   </Popover>
+                  <Segment>
+                    <FacebookShareButton 
+                      url={(carUrl)}
+                      quote="Born Pink"
+                      >
+                      <FacebookIcon iconFillColor="white" round={true}></FacebookIcon>
+                    </FacebookShareButton>
+                  </Segment>
                 </h1>
               </div>
               <p className="my-2 text-gray-700 leading-7">{cars.moTa}</p>

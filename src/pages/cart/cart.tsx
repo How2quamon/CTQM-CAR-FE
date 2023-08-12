@@ -17,30 +17,42 @@ export default function Cart() {
   const [carList, setCarList] = useState<CarDTO[]>([]);
   const [loading, setIsLoading] = useState<boolean>(false);
   const { customerId } = useParams();
+  const [getData, setGetData] = useState(false);
 
   // Hàm thay đổi số lượng cho một item cụ thể
-    const handleChangeAmount = (index: number, newAmount: number, cartId: string) => {
-        if (newAmount >= 1) {
-            console.log(cartId as string, newAmount as number);
-            setIsLoading(true);
-            ctqmService.cartApi
-            .updateCart(cartId as string, newAmount as number)
-            .then((rs) => {
-                console.log("UPDATE", rs);
-            })
-            .finally(() => {
-                setIsLoading(false);
-                customerCartList[index].amount = newAmount;
-                console.log(customerCartList[index].amount);
-                getCarData(customerCartList);
-            });
-        }
-    };
-    
+  const handleChangeAmount = (
+    index: number,
+    newAmount: number,
+    cartId: string
+  ) => {
+    if (newAmount >= 1) {
+      console.log(cartId as string, newAmount as number);
+      setIsLoading(true);
+      ctqmService.cartApi
+        .updateCart(cartId as string, newAmount as number)
+        .then((rs) => {
+          customerCartList[index].amount = newAmount;
+          console.log(customerCartList[index].amount);
+          getCarData(customerCartList);
+          console.log("UPDATE", rs);
+        })
+        .catch(({ error }) => {
+          notification.error({
+            message: "Action Failed",
+            description: error?.message ?? "Add amounnt faild!  ",
+            placement: "bottomRight",
+          });
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  };
+
   useEffect(() => {
     // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
     getListCart();
-  }, []);
+  }, [getData]);
 
   const getListCart = () => {
     setIsLoading(true);
@@ -48,27 +60,26 @@ export default function Cart() {
       .getCustomerCart(customerId as string)
       .then((response) => {
         setCustomerCartList(response);
-        console.log("CART", response);
-        getCarData(response);
+        getCarData(customerCartList);
       })
       .finally(() => {
         setIsLoading(false);
+        setGetData(true);
       });
   };
 
-  const deleteCart = (cartId: string) => {
+  const deleteCart = (cartId: string, index: number) => {
     setIsLoading(true);
-    console.log("DELETE");    
+    console.log("DELETE");
     ctqmService.cartApi
       .deleteCartWithId(cartId as string)
       .then((response) => {
-        notification.success({
-            message: "Action Success",
-            description: "Delete car out of cart!",
-            placement: "bottomRight",
-          });
+        customerCartList.splice(index, 1);
+        console.log(customerCartList);
+        getCarData(customerCartList);
         console.log("DELETE CART", response);
-      }).catch(({ error }) => {
+      })
+      .catch(({ error }) => {
         notification.error({
           message: "Action Failed",
           description: error?.message ?? "Cannot delete car out of cart!  ",
@@ -77,33 +88,53 @@ export default function Cart() {
       })
       .finally(() => {
         setIsLoading(false);
+        notification.success({
+          message: "Action Success",
+          description: "Delete car out of cart!",
+          placement: "bottomRight",
+        });
       });
   };
 
   const getCarData = (listCart: CartDTO[]) => {
+    setGetData(false);
     setIsLoading(true);
-    let newCarList: CarDTO[] = [];
-    let subtotal = 0;
-    let totalPrice = 0;
-    listCart.forEach((cart) => {
-      let price = cart.price! * cart.amount!;
-      console.log("PRICE", price);
-      subtotal += price;
-      ctqmService.carApi
-        .getCarWithId(cart.carId!)
-        .then((rs) => {
-          // Sao chép mảng hiện tại
-          const newCar = rs;
-          newCarList.push(newCar);
-        })
-        .finally(() => {
-          setIsLoading(false);      
-            totalPrice = subtotal + 19.09;
-            setSubTotal(subtotal);
-            setTotalPrice(totalPrice);
-            setCarList(newCarList);
-        });
-    });
+    if (listCart.length == 0) {
+      setCarList([]);
+      setSubTotal(0);
+      setTotalPrice(0);
+      setGetData(true);
+      setIsLoading(false);
+    } else {
+      let newCarList: CarDTO[] = [];
+      let subtotal = 0;
+      let totalPrice = 0;
+      listCart.forEach((cart, index) => {
+        let price = cart.price! * cart.amount!;
+        subtotal += price;
+        ctqmService.carApi
+          .getCarWithId(cart.carId!)
+          .then((rs) => {
+            // Sao chép mảng hiện tại
+            const newCar = rs;
+            newCarList.push(newCar);
+          })
+          .catch(() => {
+            setIsLoading(false);
+            setGetData(true);
+          })
+          .finally(() => {
+            if (index == listCart.length - 1) {
+              setIsLoading(false);
+              totalPrice = subtotal + 19.09;
+              setSubTotal(subtotal);
+              setTotalPrice(totalPrice);
+              setCarList(newCarList);
+              setGetData(true);
+            }
+          });
+      });
+    }
   };
 
   return (
@@ -142,7 +173,11 @@ export default function Cart() {
                             <button
                               className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
                               onClick={() =>
-                                handleChangeAmount(cartIndex, cart.amount as number - 1, cart.cartId as string)
+                                handleChangeAmount(
+                                  cartIndex,
+                                  (cart.amount as number) - 1,
+                                  cart.cartId as string
+                                )
                               } // Xử lý cho item đầu tiên
                             >
                               -
@@ -153,7 +188,11 @@ export default function Cart() {
                             <button
                               className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
                               onClick={() =>
-                                handleChangeAmount(cartIndex, cart.amount as number + 1, cart.cartId as string)
+                                handleChangeAmount(
+                                  cartIndex,
+                                  (cart.amount as number) + 1,
+                                  cart.cartId as string
+                                )
                               } // Xử lý cho item đầu tiên
                             >
                               +
@@ -161,7 +200,9 @@ export default function Cart() {
                           </div>
                           <button
                             className="underline decoration-solid bg-white hover:bg-gray-200"
-                            onClick={() => deleteCart(cart.cartId as string)}
+                            onClick={() =>
+                              deleteCart(cart.cartId as string, cartIndex)
+                            }
                           >
                             Remove
                           </button>
