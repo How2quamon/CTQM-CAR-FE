@@ -44,6 +44,9 @@ const NavBar = () => {
                 <Link to="/list">Catalogs</Link>
               </li>
               <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
+                <Link to="/subscribe">Subscribe</Link>
+              </li>
+              <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
                 <Link to={`/cart/${customerID}`}>Inventory</Link>
               </li>
             </ul>
