@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import logo from "../../logo/ctqm-logo-2.png";
 import { ctqmService } from "../../services/ctqm.services";
 import useTitle from "src/hooks/useTitle";
+import NavBar from "src/layout/navigationBar";
+import Footer from "src/layout/Footer";
 
 export default function Register() {
   useTitle("Register");
@@ -64,22 +66,22 @@ export default function Register() {
 
   return (
     <React.Fragment>
-      <div className="flex justify-center  bg-slate-200 ">
+      <NavBar/>
+      <div className="flex justify-center py-5 bg-slate-200 ">
         <div className="w-2/5 bg-slate-900 text-white flex justify-center rounded-l-lg py-36 px-12 flex-col">
           <div className="w-[100px] ">
             <Link to={'/'}><img src={logo} className="mt-[-270px]" alt="" /></Link>
           </div>
           <div className="mt-[-60px]">
-            <h2 className="text-3xl font-bold mb-2">Hello, New Friend!</h2>
+            <h2 className="text-3xl font-bold mb-2">Greetings, new customer!</h2>
             <div className="border-2 w-10 border-white inline-block mb-2"></div>
-            <p className="mb-10">
+            <p className="mt-3 mb-10">
               If you already have an account, please login here!
             </p>
             <Link to={"/login"}>
               <div className="flex justify-center">
                 <Button
-                  className="border-2 border-white rounded-full px-10 py-2 flex items-center font-semibold hover:bg-white
-                        hover:text-slate-900 text-white"
+                  className="border-2 border-white rounded-full h-10 px-10 py-2 flex items-center font-semibold hover:bg-white hover:text-slate-900 text-white"
                   htmlType="submit"
                 >
                   Login
@@ -217,11 +219,10 @@ export default function Register() {
               </div>
             </Form.Item>
             <Form.Item {...tailFormItemLayout} className="ml-[60px]">
-              <Button
-                type="primary"
+              <Button                
                 htmlType="submit"
                 loading={loading}
-                className="bg-slate-900 h-10 text-white cursor-pointer rounded-md hover:bg-slate-900 hover:outline outline-2 outline-black outline-offset-2 text-sm"
+                className="border-2 border-slate-900  text-black-500 !rounded-full h-10 !px-10 !py-2 font-semibold hover:bg-slate-900 hover:text-white flex items-center"
               >
                 Register
               </Button>
@@ -229,6 +230,7 @@ export default function Register() {
           </Form>
         </div>
       </div>
+      <Footer/>
     </React.Fragment>
   );
 }

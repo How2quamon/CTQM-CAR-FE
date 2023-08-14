@@ -208,8 +208,9 @@ const ProductDetails: React.FC = () => {
                     <FacebookShareButton 
                       url={(carUrl)}
                       quote="Born Pink"
+                      
                       >
-                      <FacebookIcon iconFillColor="white" round={true}></FacebookIcon>
+                      <FacebookIcon iconFillColor="white" round={true} ></FacebookIcon>
                     </FacebookShareButton>
                   </Segment>
                 </h1>

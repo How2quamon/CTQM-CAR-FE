@@ -1,12 +1,14 @@
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, notification } from "antd";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import logo from "../../logo/ctqm-logo-2.png";
 import { ctqmService } from "../../services/ctqm.services";
 import { CustomerLoginDTO } from "@share/dtos/service-proxies-dtos";
 import handleHttpStatusCode from "src/utils/handleHttpStatusCode";
 import useTitle from "src/hooks/useTitle";
+import NavBar from "src/layout/navigationBar";
+import Footer from "src/layout/Footer";
 
 export default function Login() {
   useTitle("Login");
@@ -54,7 +56,9 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
+<React.Fragment>
+  <NavBar/>
+  <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
       <main className=" flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
         <div className="bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl">
           <div className="w-3/5 p-[50px]">
@@ -155,5 +159,7 @@ export default function Login() {
         </div>
       </main>
     </div>
+  <Footer/>
+</React.Fragment>
   );
 }
