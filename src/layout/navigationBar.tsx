@@ -44,11 +44,25 @@ const NavBar = () => {
                 <Link to="/list">Catalogs</Link>
               </li>
               <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
-                <Link to="/subscribe">Subscribe</Link>
+                <Link to={'/subscribe'}>Subscribe</Link>
               </li>
+              <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
+                <Link to={'/'}>Product Management</Link>
+              </li>
+              <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
+                <Link to={'/'}>Invoice Management</Link>
+              </li>
+              <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
+                <Link to={'/'}>Customer Management</Link>
+              </li>
+              {isLogin ? (
               <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
                 <Link to={`/cart/${customerID}`}>Inventory</Link>
               </li>
+              
+              ) : ( 
+                null
+              )}
             </ul>
           </div>
           <div className="flex justify-between items-center space-x-4">

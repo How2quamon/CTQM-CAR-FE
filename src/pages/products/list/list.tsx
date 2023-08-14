@@ -19,6 +19,7 @@ export default function List() {
     carId: '',
   });
   const [loading, setIsLoading] = useState<boolean>(false);
+  const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
   useEffect(() => {
     // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
     getListCar();
@@ -44,6 +45,7 @@ export default function List() {
   };
 
   const quickAddToCart = (carId: string) => {
+    setLoadingProcess(true);
     const customerId = localStorage.getItem("CustomerId");
     if (customerId == null) {
       notification.error({
@@ -66,12 +68,16 @@ export default function List() {
         })
       })
       .catch(({ error }) => {
+        setLoadingProcess(false);
         notification.error({
           message: "An error occurred",
           description:
             error?.message ?? "Error in processing, please try again!",
           placement: "bottomRight",
         });
+      })
+      .finally(() => {
+        setLoadingProcess(false);
       })
   }
 
@@ -92,7 +98,11 @@ export default function List() {
             <Card key={index} loading={loading}>
               <img src={Image1} alt="" className="w-[300px] rounded" />
               <Button onClick={() => quickAddToCart(car.carId as string)} className="absolute right-1 top-2">
-                <ShoppingCartOutlined rev={undefined} className="text-[17px]" />
+                {loadingProcess ? (
+                  <Spin size="large" />
+                ) : (
+                  <ShoppingCartOutlined rev={undefined} className="text-[17px]" />
+                )}
               </Button>
               <div className="flex flex-col gap-3">
                 <p className="text-[15px] font-semibold mt-2">{car.carName}</p>

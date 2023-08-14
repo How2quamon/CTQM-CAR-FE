@@ -27,6 +27,7 @@ export default function Cart() {
     type: boolean
   ) => {
     if (newAmount >= 1) {
+      setGetData(false);
       console.log(cartId as string, newAmount as number);
       setIsLoading(true);
       if (customerCartList[index].carAmount! < newAmount) {
@@ -68,6 +69,7 @@ export default function Cart() {
         })
         .finally(() => {
           setIsLoading(false);
+          setGetData(true);
         });
     }
   };
