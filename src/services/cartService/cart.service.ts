@@ -1,4 +1,4 @@
-import { CartDTO, QuickAddCartDTO } from "@share/dtos/service-proxies-dtos";
+import { CartDTO, QuickAddCartDTO, UpdateCartDTO } from "@share/dtos/service-proxies-dtos";
 import { notification } from "antd";
 import axios from "axios";
 
@@ -59,8 +59,8 @@ const quickAddToCart = async (body: QuickAddCartDTO) => {
   return response.data;
 };
 
-const updateCart = async (id: string, body: number) => {
-  const response = await api.put(`/api/Cart/UpdateCart/${id}`, body);
+const updateCart = async (body: UpdateCartDTO) => {
+  const response = await api.put('/api/Cart/UpdateCart', body);
   return response.data;
 };
 

@@ -3,18 +3,18 @@ import NavBar from "src/layout/navigationBar";
 import Footer from "src/layout/Footer";
 import { Link, useParams } from "react-router-dom";
 import useTitle from "src/hooks/useTitle";
-import { CarDTO, CartDTO } from "@share/dtos/service-proxies-dtos";
+import { CarDTO, CartDTO, CartDetailDTO, CustomerCartDTO, UpdateCartDTO } from "@share/dtos/service-proxies-dtos";
 import { ctqmService } from "../../services/ctqm.services";
 import { Button, Spin, notification } from "antd";
 
 export default function Cart() {
   useTitle("CART");
   const [amounts, setAmounts] = useState(1); // Mảng lưu trữ số lượng cho từng item
-  const [customerCartList, setCustomerCartList] = useState<CartDTO[]>([]);
+  const [customerCartList, setCustomerCartList] = useState<CartDetailDTO[]>([]);
+  const [amount, setAmount] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
   const [taxTotal, setTaxTotal] = useState(19.09);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [carList, setCarList] = useState<CarDTO[]>([]);
   const [loading, setIsLoading] = useState<boolean>(false);
   const { customerId } = useParams();
   const [getData, setGetData] = useState(false);
@@ -23,18 +23,41 @@ export default function Cart() {
   const handleChangeAmount = (
     index: number,
     newAmount: number,
-    cartId: string
+    cartId: string,
+    type: boolean
   ) => {
     if (newAmount >= 1) {
       setGetData(false);
       console.log(cartId as string, newAmount as number);
       setIsLoading(true);
+      if (customerCartList[index].carAmount! < newAmount) {
+        notification.warning({
+          message: "Action Failed",
+          description: "Car amount doesn't enough!  ",
+          placement: "bottomRight",
+        });
+        return;
+      }
+      let updateCartDto: UpdateCartDTO = {
+        cartId: cartId,
+        amount: newAmount,
+      };
       ctqmService.cartApi
-        .updateCart(cartId as string, newAmount as number)
+        .updateCart(updateCartDto) 
         .then((rs) => {
           customerCartList[index].amount = newAmount;
+          var tmpSubTotal = 0;
+          if (type) {
+            setAmount(amount + 1);
+            tmpSubTotal = subTotal + customerCartList[index].carPrice!;
+          }
+          if (!type) {
+            setAmount(amount - 1);
+            tmpSubTotal = subTotal - customerCartList[index].carPrice!;
+          }
+          setSubTotal(tmpSubTotal)
+          setTotalPrice(tmpSubTotal + taxTotal);
           console.log(customerCartList[index].amount);
-          getCarData(customerCartList);
           console.log("UPDATE", rs);
         })
         .catch(({ error }) => {
@@ -60,9 +83,18 @@ export default function Cart() {
     setIsLoading(true);
     ctqmService.cartApi
       .getCustomerCart(customerId as string)
-      .then((response) => {
-        setCustomerCartList(response);
-        getCarData(customerCartList);
+      .then((response: CustomerCartDTO) => {
+        setCustomerCartList(response.customerCarts!);
+        setAmount(response.totalAmount!);
+        setSubTotal(response.totalDiscount!);
+        setTotalPrice(response.totalDiscount! + taxTotal);
+      })
+      .catch(({ error }) => {
+        notification.error({
+          message: "Action Failed",
+          description: error?.message ?? "Cannot delete car out of cart!  ",
+          placement: "bottomRight",
+        })
       })
       .finally(() => {
         setIsLoading(false);
@@ -76,15 +108,16 @@ export default function Cart() {
     ctqmService.cartApi
       .deleteCartWithId(cartId as string)
       .then((response) => {
-        customerCartList.splice(index, 1);
+        setAmount(amount - 1);
+        setSubTotal(subTotal - customerCartList[index].carPrice!)
+        setTotalPrice(subTotal + taxTotal);
         console.log(customerCartList);
+        customerCartList.splice(index, 1);
         if (customerCartList.length == 0) {
-          setCarList([]);
           setSubTotal(0);
           setTotalPrice(0);
+          setIsLoading(false);
         }
-        else 
-          getCarData(customerCartList);
         console.log("DELETE CART", response);
       })
       .catch(({ error }) => {
@@ -104,43 +137,6 @@ export default function Cart() {
       });
   };
 
-  const getCarData = (listCart: CartDTO[]) => {
-    console.log(listCart);
-    setGetData(false);
-    setIsLoading(true);
-    let newCarList: CarDTO[] = [];
-    let subtotal = 0;
-    let totalPrice = 0;
-    listCart.forEach((cart, index) => {
-      let price = cart.price! * cart.amount!;
-      subtotal += price;
-      ctqmService.carApi
-        .getCarWithId(cart.carId!)
-        .then((rs) => {
-          // Sao chép mảng hiện tại
-          const newCar = rs;
-          newCarList.push(newCar);    
-        })
-        .catch(() => {
-          setIsLoading(false);
-          setGetData(true);
-        })
-        .finally(() => {
-          console.log("BEORE", index, listCart.length);
-          if (index == listCart.length - 1) {
-            setIsLoading(false);
-            console.log(index, listCart.length);
-            totalPrice = subtotal + 19.09;
-            setSubTotal(subtotal);
-            setTotalPrice(totalPrice);
-            setCarList(newCarList);
-            setGetData(true);
-          }
-        });
-    });
-    
-  };
-
   return (
     <React.Fragment>
       <NavBar />
@@ -150,12 +146,10 @@ export default function Cart() {
           <div className="rounded-lg md:w-2/3">
             {loading ? (
               <Spin size="large" className="flex justify-center items-center" />
-            ) : carList.length > 0 ? (
+            ) : customerCartList.length > 0 ? (
               customerCartList.map((cart, cartIndex) =>
-                carList.map((car) =>
-                  cart.carId === car.carId ? (
                     <div
-                      key={car.carId}
+                      key={cart.carId}
                       className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start"
                     >
                       <img
@@ -166,10 +160,10 @@ export default function Cart() {
                       <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                         <div className="mt-5 sm:mt-0">
                           <h2 className="text-lg font-bold text-gray-900">
-                            {car.carName}
+                            {cart.carName}
                           </h2>
                           <p className="mt-1 text-xs text-gray-700">
-                            {car.carModel}
+                            {cart.carModel}
                           </p>
                         </div>
                         <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
@@ -180,7 +174,8 @@ export default function Cart() {
                                 handleChangeAmount(
                                   cartIndex,
                                   (cart.amount as number) - 1,
-                                  cart.cartId as string
+                                  cart.cartId as string,
+                                  false
                                 )
                               } // Xử lý cho item đầu tiên
                             >
@@ -195,7 +190,8 @@ export default function Cart() {
                                 handleChangeAmount(
                                   cartIndex,
                                   (cart.amount as number) + 1,
-                                  cart.cartId as string
+                                  cart.cartId as string,
+                                  true
                                 )
                               } // Xử lý cho item đầu tiên
                             >
@@ -211,13 +207,11 @@ export default function Cart() {
                             Remove
                           </button>
                           <div className="flex items-center space-x-4">
-                            <p className="text-sm">{car.carPrice} $</p>
+                            <p className="text-sm">{cart.carPrice} $</p>
                           </div>
                         </div>
                       </div>
                     </div>
-                  ) : null
-                )
               )
             ) : (
               <p className="text-[15px] font-semibold mt-2">
@@ -226,6 +220,10 @@ export default function Cart() {
             )}
           </div>
           <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+            <div className="mb-2 flex justify-between">
+              <p className="text-gray-700">Amounts</p>
+              <p className="text-gray-700">${amount}</p>
+            </div>
             <div className="mb-2 flex justify-between">
               <p className="text-gray-700">Subtotal</p>
               <p className="text-gray-700">${subTotal}</p>
