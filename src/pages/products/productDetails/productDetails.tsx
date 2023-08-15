@@ -147,7 +147,7 @@ const ProductDetails: React.FC = () => {
       <head>
         <meta property="og:type" content="article" />
         <meta property="og:title" content="CÁC THÔNG TIN XE" />
-        <meta property="og:description" content="THÔNG TIN CHI THIẾT CỦA XE" />
+        <meta property="og:description" content="THÔNG TIN CHI TIẾT CỦA XE" />
         <meta property="og:image" content={images.img1} />
       </head>
       <main>
@@ -193,39 +193,40 @@ const ProductDetails: React.FC = () => {
                 <span className="mx-4 mb-2 text-sky-600 font-semibold">
                   {cars.carModel}
                 </span>
-                <h1 className="text-3xl font-bold">
-                  {cars.carName}
-                  {"  "}
+                <h1 className="text-3xl font-bold">{cars.carName}</h1>
+                <div className="flex flex-row mt-2">                
+                  <Segment>
+                    <FacebookShareButton 
+                      url={(carUrl)}
+                      quote="Born Pink"
+                      className="flex items-center"
+                      >
+                      <FacebookIcon iconFillColor="white" round={true} size={28}></FacebookIcon>                      
+                    </FacebookShareButton>
+                  </Segment>
                   <Popover content={popoverContent} trigger="click">
                     <LinkOutlined
-                      className="text-[17px]"
+                      className="pl-2 text-xl flex items-center"
                       title="Copy link"
                       onClick={() => handleCopyLink(cars.carName as string)}
                       rev={undefined}
                     />
                   </Popover>
-                  <Segment>
-                    <FacebookShareButton 
-                      url={(carUrl)}
-                      quote="Born Pink"
-                      
-                      >
-                      <FacebookIcon iconFillColor="white" round={true} ></FacebookIcon>
-                    </FacebookShareButton>
-                  </Segment>
-                </h1>
+                </div>
               </div>
-              <p className="my-2 text-gray-700 leading-7">{cars.moTa}</p>
-              <p className="my-2 text-gray-700 leading-7">{cars.moTa2}</p>
+              <p className="my-1 text-gray-700 leading-7">{cars.moTa}</p>
+              <p className="my-1 text-gray-700 leading-7">{cars.moTa2}</p>
+              <div className="my-1 px-2 py-4 bg-slate-50">
+                <h6 className="text-2xl font-semibold tracking-wider">{cars?.carPrice}</h6>
+              </div>
 
-              <h6 className="my-2 text-2xl font-semibold">{cars?.carPrice}</h6>
               <div className="items-center my-3">
                 <h6 className="mb-2">Quantity</h6>
                 <div className="my-4 w-1/4 flex justify-between items-center border border-gray-200 rounded">
                   <button
                     className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
                     onClick={() => {
-                      if (amount > 0) {
+                      if (amount > 1) {
                         setAmount((prev) => prev - 1);
                       }
                     }}
@@ -241,11 +242,11 @@ const ProductDetails: React.FC = () => {
                     +
                   </button>
                 </div>
-                <div className="items-center flex-col">
-                  <Button className="my-2 w-3/5  border border-zinc-600 hover:bg-slate-50 text-black font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in" onClick={() => addToCart(cars)}>
+                <div className="flex flex-col">
+                  <Button className="flex justify-center items-center my-2 w-3/5 h-10 border border-zinc-600 hover:bg-slate-50 text-black font-semibold !py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in" onClick={() => addToCart(cars)}>
                     Add to cart
                   </Button>
-                  <Button className="w-3/5 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
+                  <Button className="flex justify-center items-center w-3/5 h-10 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
                     Buy it now
                   </Button>
                 </div>
