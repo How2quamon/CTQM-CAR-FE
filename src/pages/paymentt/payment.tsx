@@ -4,33 +4,30 @@ import NavBar from "src/layout/navigationBar";
 import React, { useEffect, useState } from "react";
 import {
   Button,
-  Checkbox,
   Col,
   Form,
-  Input,
-  InputNumber,
   Radio,
   RadioChangeEvent,
   Row,
-  Space,
   Spin,
+  notification,
 } from "antd";
 import useTitle from "../../hooks/useTitle";
 import { ctqmService } from "../../services/ctqm.services";
-import layout from "antd/es/layout";
-import { CarDTO, CartDTO } from "@share/dtos/service-proxies-dtos";
+import { CartDetailDTO, CustomerCartDTO } from "@share/dtos/service-proxies-dtos";
 
 export default function Payment() {
   useTitle("Payment");
   const [isLoginForm, setIsLoginForm] = useState(true);
-  const [customerCartList, setCustomerCartList] = useState<CartDTO[]>([]);
+  const [customerCartList, setCustomerCartList] = useState<CartDetailDTO[]>([]);
+  const [amount, setAmount] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
   const [taxTotal, setTaxTotal] = useState(19.09);
   const [totalPrice, setTotalPrice] = useState(0);
   const [paymentMethods, setPaymentMethods] = useState("paypal");
-  const [carList, setCarList] = useState<CarDTO[]>([]);
   const [loading, setIsLoading] = useState<boolean>(false);
   const { customerId } = useParams();
+  const [getData, setGetData] = useState(false);
 
   const handleToggleForm = () => {
     setIsLoginForm(!isLoginForm);
@@ -52,47 +49,29 @@ export default function Payment() {
   useEffect(() => {
     // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
     getListCart();
-  }, []);
+  }, [getData]);
 
   const getListCart = () => {
     setIsLoading(true);
     ctqmService.cartApi
       .getCustomerCart(customerId as string)
-      .then((response) => {
-        setCustomerCartList(response);
-        console.log("CART", response);
-        getCarData(response);
+      .then((response: CustomerCartDTO) => {
+        setCustomerCartList(response.customerCarts!);
+        setAmount(response.totalAmount!);
+        setSubTotal(response.totalDiscount!);
+        setTotalPrice(response.totalDiscount! + taxTotal);
+      })
+      .catch(({ error }) => {
+        notification.error({
+          message: "Action Failed",
+          description: error?.message ?? "Can't get your cart!",
+          placement: "bottomRight",
+        })
       })
       .finally(() => {
         setIsLoading(false);
+        setGetData(true);
       });
-  };
-
-  const getCarData = (listCart: CartDTO[]) => {
-    setIsLoading(true);
-    let newCarList: CarDTO[] = [];
-    let subtotal = 0;
-    let totalPrice = 0;
-    listCart.forEach((cart) => {
-      let price = cart.price! * cart.amount!;
-      console.log("PRICE", price);
-      subtotal += price;
-      ctqmService.carApi
-        .getCarWithId(cart.carId!)
-        .then((rs) => {
-          // Sao chép mảng hiện tại
-          const newCar = rs;
-          newCarList.push(newCar);
-          console.log("ASDASDQWEASD ", rs);
-        })
-        .finally(() => {
-          setIsLoading(false);
-          totalPrice = subtotal + 19.09;
-          setSubTotal(subtotal);
-          setTotalPrice(totalPrice);
-          setCarList(newCarList);
-        });
-    });
   };
 
   const onChange = (e: RadioChangeEvent) => {
@@ -139,19 +118,22 @@ export default function Payment() {
       <NavBar />
       <main>
         <div className="w-full bg-white border-t border-b border-gray-200 px-5 py-10 text-gray-800">
-          <h1 className="text-3xl md:text-4xl font-bold mb-[35px]">
-            Check out
-          </h1>
+          <div className="flex mb-8">
+            <Link to={`/cart/${customerId}`} className="w-auto text-3xl font-bold text-black hover:underline hover:cursor-pointer">
+              Back to cart
+            </Link>
+            <h1 className="text-3xl md:text-4xl font-bold">/Check out</h1>
+          </div>
           <div className="w-full">
             <div className="-mx-3 md:flex items-start">
               <div className="px-3 md:w-7/12 lg:pr-10">
                 {loading ? (
                   <Spin size="large" className="flex justify-center items-center"/>
-                ) : carList.length > 0 ? (
-                  carList.map((car) => (
+                ) : customerCartList.length > 0 ? (
+                  customerCartList.map((cart) => (
                     <div
                       className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6"
-                      key={car.carId}
+                      key={cart.carId}
                     >
                       <div className="w-full flex items-center">
                         <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
@@ -159,13 +141,13 @@ export default function Payment() {
                         </div>
                         <div className="flex-grow pl-3">
                           <h6 className="font-semibold uppercase ">
-                            {car.carName}
+                            {cart.carName}
                           </h6>
-                          <p className="">x {car.carAmount}</p>
+                          <p className="">x {cart.amount}</p>
                         </div>
                         <div>
                           <span className="font-semibold  text-xl">
-                            ${car.carPrice}
+                            ${cart.price}
                           </span>
                           <span className="font-semibold text-gray-600 text-sm">
                             .00
@@ -201,6 +183,14 @@ export default function Payment() {
                   </div>
                 </div>
                 <div className="mb-6 pb-6 border-b border-gray-200 ">
+                <div className="w-full flex mb-3 items-center">
+                    <div className="flex-grow">
+                      <span className="">Amounts</span>
+                    </div>
+                    <div className="pl-3">
+                      <span className="font-semibold">{amount}</span>
+                    </div>
+                  </div>
                   <div className="w-full flex mb-3 items-center">
                     <div className="flex-grow">
                       <span className="">Subtotal</span>
@@ -265,7 +255,7 @@ export default function Payment() {
                     <Row justify="center">
                       <Col>
                         <Button
-                          className="bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg font-semibold"
+                          className="px-20 py-3 rounded bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 text-white font-semibold h-auto"
                           type="primary"
                           htmlType="submit"
                         >
