@@ -24,12 +24,23 @@ const NavBar = () => {
   };
 
   const [changeSearchColor, setSearchColor] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const handleSearchBar = () => {
     setSearchColor(!changeSearchColor);
   };
-  // const { Search } = Input;
-  // const onSearch = (value: string) => console.log(value);
+  
+  const handleInputChange = (e: any) => {
+    setSearchValue(e.target.value);
+  };
 
+  const handleInputKeyDown = (e: any) => {
+    if (e.key === 'Enter') {
+      console.log(searchValue);
+      // Call your function here, e.g., handleSearchBar()
+      // You might want to pass the searchValue as an argument
+      console.log('Enter key pressed');
+    }
+  };
 
   return (
     <div className="sticky top-0 z-10 bg-stone-950 text-slate-50">
@@ -46,15 +57,6 @@ const NavBar = () => {
               <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
                 <Link to={'/subscribe'}>Subscribe</Link>
               </li>
-              <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
-                <Link to={'/'}>Product Management</Link>
-              </li>
-              <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
-                <Link to={'/'}>Invoice Management</Link>
-              </li>
-              <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
-                <Link to={'/'}>Customer Management</Link>
-              </li>
               {isLogin ? (
               <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
                 <Link to={`/cart/${customerID}`}>Inventory</Link>
@@ -69,7 +71,14 @@ const NavBar = () => {
             <div className="relative hidden md:block">
                 <div onClick={handleSearchBar} className={changeSearchColor ? "flex items-center border-b border-b-gray-700 bg-slate-700 rounded-lg" : "flex items-center border-b border-b-gray-700"}>                
                   <SearchOutlined className="pl-2 pt-1 text-white text-lg block float-left cursor-pointer mr-2" rev={undefined} />
-                  <input type={"search"} placeholder="Search..." className="bg-transparent w-full text-white text-sm focus:outline-none focus:shadow-inner leading-none" />
+                  <input
+                    type={"search"}
+                    placeholder="Search..."
+                    className="bg-transparent w-full text-white text-sm focus:outline-none focus:shadow-inner leading-none"
+                    value={searchValue}
+                    onChange={handleInputChange}
+                    onKeyDown={handleInputKeyDown}
+                    />
                 </div> 
             </div>
             <div className="flex items-center py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
@@ -80,12 +89,12 @@ const NavBar = () => {
                   <Link to="/login">Account</Link>
                 )}
             </div>
-              {/* <div onClick={handleNav} className="py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
-                Menu
-              </div> */}
+              <div onClick={handleNav} className="py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
+                Management
+              </div>
           </div>
           {/* Responsive menu for later dev */}
-          {/* <div
+          <div
             className={
               showSideBar
                 ? "bg-stone-950 absolute right-0 top-0 w-80 max-h-screen z-1001 ease-in-out duration-300 backdrop-blur-sm"
@@ -96,28 +105,17 @@ const NavBar = () => {
               <CloseOutlined onClick={handleNav} className="rounded p-2 hover:bg-slate-700 transition duration-150 ease-out hover:ease-in" style={{ fontSize: '18px' }} rev={undefined} />
             </div>
             <ul className="h-screen pt-8 px-6 bg-stone-950 ">
-
-              <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in ">
-                <a href="https://www.tesla.com/inventory/new/m3">
-                  Existing Inventory
-                </a>
+            <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
+                <Link to={'/'}>Product Management</Link>
               </li>
               <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-                <a href="https://www.tesla.com/inventory/used/m3">
-                  Used Inventory
-                </a>
+                <Link to={'/'}>Invoice Management</Link>
               </li>
               <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-                <a href="https://www.tesla.com/tradein">Trade-In</a>
+                <Link to={'/'}>Customer Management</Link>
               </li>
-              <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-                <a href="https://www.tesla.com/drive">Test Drive</a>
-              </li>
-              <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-                <a href="https://www.tesla.com/insurance">Insurance</a>
-              </li>            
             </ul>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
