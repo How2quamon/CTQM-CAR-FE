@@ -216,12 +216,13 @@ const ProductDetails: React.FC = () => {
               </div>
               <p className="my-1 text-gray-700 leading-7">{cars.moTa}</p>
               <p className="my-1 text-gray-700 leading-7">{cars.moTa2}</p>
-              <div className="my-1 px-2 py-4 bg-slate-50">
+              <div className="my-1 py-4 flex flex-row items-center">
+                <h6 className="pr-4">Price:</h6>
                 <h6 className="text-2xl font-semibold tracking-wider">{cars?.carPrice}</h6>
               </div>
 
               <div className="items-center my-3">
-                <h6 className="mb-2">Quantity</h6>
+                <h6 className="mb-2">Quantity:</h6>
                 <div className="my-4 w-1/4 flex justify-between items-center border border-gray-200 rounded">
                   <button
                     className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
