@@ -3,9 +3,9 @@ import NavBar from "src/layout/navigationBar";
 import Footer from "src/layout/Footer";
 import { Link, useParams } from "react-router-dom";
 import useTitle from "src/hooks/useTitle";
-import { CarDTO, CartDTO, CartDetailDTO, CustomerCartDTO, UpdateCartDTO } from "@share/dtos/service-proxies-dtos";
+import { CartDetailDTO, CustomerCartDTO, UpdateCartDTO } from "@share/dtos/service-proxies-dtos";
 import { ctqmService } from "../../services/ctqm.services";
-import { Button, Spin, notification } from "antd";
+import { Spin, notification } from "antd";
 
 export default function Cart() {
   useTitle("CART");
@@ -92,7 +92,7 @@ export default function Cart() {
       .catch(({ error }) => {
         notification.error({
           message: "Action Failed",
-          description: error?.message ?? "Cannot delete car out of cart!  ",
+          description: error?.message ?? "Can't get your cart!",
           placement: "bottomRight",
         })
       })
@@ -236,9 +236,20 @@ export default function Cart() {
                 <p className="text-sm text-gray-700">including VAT</p>
               </div>
             </div>
-            <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
-              Check out
-            </button>
+            <hr className="my-4" />
+            <div className="text-center">
+              <Link to={`/payment/${customerId}`} className="px-20 py-3 rounded bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
+                Check out
+              </Link>
+            </div>
+            <hr className="my-4" />
+            <p className="text-sm text-gray-700 text-justify">
+              Shipping and discount codes are added at checkout.
+            </p>
+            <hr className="my-4" />
+            <p className="text-sm text-gray-700 text-justify">
+              By placing your order, you agree to our Privacy Notice and Terms of Use.
+            </p>
           </div>
         </div>
       </div>
