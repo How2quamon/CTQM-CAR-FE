@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
 // import { CarDetailDTO } from '@share/dtos/service-proxies-dtos';
-import { ShoppingCartOutlined } from "@ant-design/icons";
-import { CarDTO } from "@share/dtos/service-proxies-dtos";
-import { Button, Card, Spin, notification } from "antd";
+import {
+  CheckCircleOutlined,
+  LinkOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
+import { CarDTO, CartDTO, CartNotiDTO } from "../../../share/dtos/service-proxies-dtos";
+import { Button, Card, Popover, Spin, notification } from "antd";
 import { Link, useParams } from "react-router-dom";
 import useTitle from "src/hooks/useTitle";
 import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
 import { ctqmService } from "../../../services/ctqm.services";
+import copy from "copy-to-clipboard";
+import { Helmet } from "react-helmet";
+import { FacebookShareButton, FacebookIcon } from "react-share";
+import { Segment, Container } from "semantic-ui-react";
 
 const ProductDetails: React.FC = () => {
   useTitle("Chi tiết sản phẩm");
   const [images] = useState({
-    img1: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+    img1: "https://cdn.wallpapersafari.com/25/59/5cwSa8.jpg",
     img2: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
     img3: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
     img4: "https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
@@ -20,11 +28,30 @@ const ProductDetails: React.FC = () => {
   const [activeImg, setActiveImage] = useState(images.img1);
   const [amount, setAmount] = useState(1);
   const { carName } = useParams();
+  const [carTrim, setCarTrim] = useState("");
+  const [carUrl, setCarUrl] = useState("");
   const [cars, setCars] = useState<CarDTO | null>(null);
+  const [addCart, setaddCart] = useState<CartDTO| null>(null);
   const [loading, setIsLoading] = useState<boolean>(false);
+  const [productLinkCopied, setProductLinkCopied] = useState(false);
+  const [getData, setGetData] = useState(false);
+  const baseAppURL = "https://ctqmmec.azurewebsites.net/products-details/"; 
+  const handleCopyLink = (carName: string) => {
+    const modifiedString = carName?.replace(/ /g, "%20");
+    const productURL = `${baseAppURL}${modifiedString}`; // Lấy URL hiện tại của sản phẩm
+    copy(productURL); // Sao chép URL vào clipboard
+    setProductLinkCopied(true); // Đánh dấu rằng URL đã được sao chép
+  };
+  const [addToCartDto, setAddToCartDto] = useState<CartDTO>({
+    customerId: '',
+    carId: '',
+    amount: 0,
+    price: 0
+  });
+  
   useEffect(() => {
     getCarDetail();
-  }, [cars]);
+  }, [getData]);
 
   const getCarDetail = () => {
     setIsLoading(true);
@@ -32,13 +59,53 @@ const ProductDetails: React.FC = () => {
       .getCarByName(carName as string)
       .then((response) => {
         setCars(response);
-        // console.log((response));
       })
       .catch(({ error }) => {
         notification.error({
-          message: "Có lỗi xảy ra",
+          message: "An error occurred",
           description:
-            error?.message ?? "Lỗi trong quá trình xử lý, vui lòng thử lại!",
+            error?.message ?? "Error in processing, please try again!",
+          placement: "bottomRight",
+        });
+      })
+      .finally(() => {
+        setGetData(true);
+        setIsLoading(false);    
+        const modifiedString = carName?.replace(/ /g, "%20");
+        setCarUrl(baseAppURL+modifiedString);
+        console.log("URL: ", carUrl);
+      });
+  };
+  const addToCart = (carDTO: CarDTO) => {
+    const customerId = localStorage.getItem("CustomerId");
+    if (customerId == null) {
+      notification.error({
+        message: "You're not login!",
+        description: "Please login to contiune!",
+        placement: "bottomRight",
+      });
+      return;
+    }
+    setIsLoading(true);
+    addToCartDto.customerId = customerId;
+    addToCartDto.carId = carDTO.carId;
+    addToCartDto.amount = amount;
+    addToCartDto.price = carDTO.carPrice;
+    console.log("AIOAJFOIWER", addToCartDto);
+    ctqmService.cartApi
+      .addToCart(addToCartDto)
+      .then((response: CartNotiDTO) => {
+        notification.success({
+          message: "Add to cart Success!",
+          description: response.amount + " " + response.carName + " with $" + response.price + " are in your cart.",
+          placement: "bottomRight", 
+        })
+      })
+      .catch(({ error }) => {
+        notification.error({
+          message: "An error occurred",
+          description:
+            error?.message ?? "Error in processing, please try again!",
           placement: "bottomRight",
         });
       })
@@ -46,102 +113,149 @@ const ProductDetails: React.FC = () => {
         setIsLoading(false);
       });
   };
+  
 
   if (!cars) {
-    return <Spin size="large" className="flex justify-center items-center " />;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin size="large" />
+      </div>
+    );
   }
-  // console.log(cars?.carModel);
-
+  const popoverContent = (
+    <div className="flex gap-2">
+      <CheckCircleOutlined rev={undefined} className="text-[#73d13d]" />
+      Copied successfully!
+    </div>
+  );
   return (
     <React.Fragment>
       <NavBar />
+      <Helmet
+        meta={[
+          // { property:'og:type', content: "article"},
+          // { property:'og:title', content: "CÁC THÔNG TIN XE"},
+          // { property:'og:description', content: "THÔNG TIN CHI THIẾT CỦA XE"},
+          // { property:'og:image', content: images.img1},
+        ]}
+      >
+        {/* <meta property="og:type" content="article" />
+        <meta property="og:title" content="CÁC THÔNG TIN XE" />
+        <meta property="og:description" content="THÔNG TIN CHI THIẾT CỦA XE" />
+        <meta property="og:image" content={images.img1} /> */}
+      </Helmet>
+      <head>
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="CÁC THÔNG TIN XE" />
+        <meta property="og:description" content="THÔNG TIN CHI THIẾT CỦA XE" />
+        <meta property="og:image" content={images.img1} />
+      </head>
       <main>
         <div className="flex flex-col justify-center min-h-screen">
-          {cars !== undefined ? (
-            <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10  items-start lg:py-14">
-              <article>
+          {/* {cars !== undefined ? ( */}
+          <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10  items-start lg:py-14">
+            <article>
+              <img
+                src={activeImg}
+                alt=""
+                className="w-11/12 h-11/12 aspect-square object-cover rounded-xl items-center justify-center"
+              />
+              <div className="hidden lg:flex justify-items-center gap-5 flex-wrap mt-5">
                 <img
-                  src={activeImg}
+                  src={images.img1}
                   alt=""
-                  className="w-11/12 h-11/12 aspect-square object-cover rounded-xl items-center justify-center"
+                  className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
+                  onClick={() => setActiveImage(images.img1)}
                 />
-                <div className="hidden lg:flex justify-items-center gap-5 flex-wrap mt-5">
-                  <img
-                    src={images.img1}
-                    alt=""
-                    className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
-                    onClick={() => setActiveImage(images.img1)}
-                  />
-                  <img
-                    src={images.img2}
-                    alt=""
-                    className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
-                    onClick={() => setActiveImage(images.img2)}
-                  />
-                  <img
-                    src={images.img3}
-                    alt=""
-                    className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
-                    onClick={() => setActiveImage(images.img3)}
-                  />
-                  <img
-                    src={images.img4}
-                    alt=""
-                    className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
-                    onClick={() => setActiveImage(images.img4)}
-                  />
-                </div>
-              </article>
-              {/* ABOUT */}
-              <article className="space-x-4 flex flex-col">
-                <div className="space-x-4 mb-3">
-                  <span className="mx-4 mb-2 text-sky-600 font-semibold">
-                    {cars.carModel}
-                  </span>
-                  <h1 className="text-3xl font-bold">{cars.carName}</h1>
-                </div>
-                <p className="my-2 text-gray-700 leading-7">{cars.moTa}</p>
-                <p className="my-2 text-gray-700 leading-7">{cars.moTa2}</p>
+                <img
+                  src={images.img2}
+                  alt=""
+                  className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
+                  onClick={() => setActiveImage(images.img2)}
+                />
+                <img
+                  src={images.img3}
+                  alt=""
+                  className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
+                  onClick={() => setActiveImage(images.img3)}
+                />
+                <img
+                  src={images.img4}
+                  alt=""
+                  className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
+                  onClick={() => setActiveImage(images.img4)}
+                />
+              </div>
+            </article>
+            {/* ABOUT */}
+            <article className="space-x-4 flex flex-col">
+              <div className="space-x-4 mb-3">
+                <span className="mx-4 mb-2 text-sky-600 font-semibold">
+                  {cars.carModel}
+                </span>
+                <h1 className="text-3xl font-bold">
+                  {cars.carName}
+                  {"  "}
+                  <Popover content={popoverContent} trigger="click">
+                    <LinkOutlined
+                      className="text-[17px]"
+                      title="Copy link"
+                      onClick={() => handleCopyLink(cars.carName as string)}
+                      rev={undefined}
+                    />
+                  </Popover>
+                  <Segment>
+                    <FacebookShareButton 
+                      url={(carUrl)}
+                      quote="Born Pink"
+                      >
+                      <FacebookIcon iconFillColor="white" round={true}></FacebookIcon>
+                    </FacebookShareButton>
+                  </Segment>
+                </h1>
+              </div>
+              <p className="my-2 text-gray-700 leading-7">{cars.moTa}</p>
+              <p className="my-2 text-gray-700 leading-7">{cars.moTa2}</p>
 
-                <h6 className="my-2 text-2xl font-semibold">
-                  {cars?.carPrice}
-                </h6>
-                <div className="items-center my-3">
-                  <h6 className="mb-2">Quantity</h6>
-                  <div className="my-4 w-1/4 flex justify-between items-center border border-gray-200 rounded">
-                    <button
-                      className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
-                      onClick={() => {
-                        if (amount > 0) {
-                          setAmount((prev) => prev - 1);
-                        }
-                      }}
-                    >
-                      -
-                    </button>
-                    <span className="text-center items-center">{amount}</span>
-                    <button
-                      type="button"
-                      className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
-                      onClick={() => setAmount((prev) => prev + 1)}
-                    >
-                      +
-                    </button>
-                  </div>
-                  <div className="items-center flex-col">
-                    <button className="my-2 w-3/5  border border-zinc-600 hover:bg-slate-50 text-black font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
-                      Add to cart
-                    </button>
-                    <button className="w-3/5 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
-                      Buy it now
-                    </button>
-                  </div>
+              <h6 className="my-2 text-2xl font-semibold">{cars?.carPrice}</h6>
+              <div className="items-center my-3">
+                <h6 className="mb-2">Quantity</h6>
+                <div className="my-4 w-1/4 flex justify-between items-center border border-gray-200 rounded">
+                  <button
+                    className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
+                    onClick={() => {
+                      if (amount > 0) {
+                        setAmount((prev) => prev - 1);
+                      }
+                    }}
+                  >
+                    -
+                  </button>
+                  <span className="text-center items-center">{amount}</span>
+                  <button
+                    type="button"
+                    className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
+                    onClick={() => setAmount((prev) => prev + 1)}
+                  >
+                    +
+                  </button>
                 </div>
-              </article>
-            </section>
-          ) : (
-            <Spin size="large" className="flex justify-center items-center " />
-          )}
+                <div className="items-center flex-col">
+                  <Button className="my-2 w-3/5  border border-zinc-600 hover:bg-slate-50 text-black font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in" onClick={() => addToCart(cars)}>
+                    Add to cart
+                  </Button>
+                  <Button className="w-3/5 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
+                    Buy it now
+                  </Button>
+                </div>
+              </div>
+            </article>
+          </section>
+          {/* ) : (
+            <div className="flex justify-center items-center h-screen">
+              <Spin size="large" />
+            </div>
+          )} */}
           <section className="mx-20">
             <h1 className="text-[30px] font-bold text-center">
               Related Products

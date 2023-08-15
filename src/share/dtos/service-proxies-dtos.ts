@@ -78,6 +78,18 @@ export interface CartDTO {
     price?: number | undefined;
 }
 
+export interface CartDetailDTO {
+    cartId?: string;
+    customerId?: string;
+    carId?: string;
+    amount?: number | undefined;
+    price?: number | undefined;
+    carName?: string | undefined;
+    carModel?: string | undefined;
+    carAmount?: number;
+    carPrice?: number;
+}
+
 export interface CartNotiDTO {
     carName?: string | undefined;
     amount?: number;
@@ -91,6 +103,7 @@ export interface ChangeInfoDTO {
     customerDate?: Date;
     customerLicense?: string | undefined;
     customerEmail?: string | undefined;
+    customerVaild?: boolean | undefined;
 }
 
 export interface ChangePasswordDTO {
@@ -99,6 +112,7 @@ export interface ChangePasswordDTO {
 }
 
 export interface CustomerCartDTO {
+    customerCarts?: CartDetailDTO[] | undefined;
     totalAmount?: number | undefined;
     totalDiscount?: number | undefined;
 }
@@ -118,6 +132,7 @@ export interface CustomerDTO {
     customerLicense?: string | undefined;
     customerEmail?: string | undefined;
     customerPassword?: string | undefined;
+    customerVaild?: boolean | undefined;
 }
 
 export interface CustomerLoginDTO {
@@ -177,6 +192,11 @@ export interface UpdateCarDetailDTO {
     title2?: string | undefined;
     head3?: string | undefined;
     title3?: string | undefined;
+}
+
+export interface UpdateCartDTO {
+    cartId?: string;
+    amount?: number;
 }
 
 export interface UpdateOrderDTO {

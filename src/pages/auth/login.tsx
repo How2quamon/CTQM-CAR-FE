@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
+<<<<<<< HEAD
 
 import { Button, Checkbox, Form, Input } from "antd";
 import logo from "../../logo/ctqm-logo-2.png";
@@ -24,6 +25,24 @@ const Login = () => {
     }
   }, []);
 
+=======
+import { Button, Checkbox, Form, Input, notification } from "antd";
+import { useEffect, useState } from "react";
+import { Link, redirect, useNavigate } from "react-router-dom";
+import logo from "../../logo/ctqm-logo-2.png";
+import { ctqmService } from "../../services/ctqm.services";
+import { CustomerLoginDTO } from "@share/dtos/service-proxies-dtos";
+import handleHttpStatusCode from "src/utils/handleHttpStatusCode";
+import useTitle from "src/hooks/useTitle";
+
+export default function Login() {
+  useTitle("Login");
+
+  const [loading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+  
+  useEffect(() => {}, []);
+>>>>>>> e3e9840a51643fa1256e45777090943890c0db33
   const onFinish = (values: CustomerLoginDTO) => {
     setIsLoading(true);
     const currentToken = localStorage.getItem("CustomerName") != null ? localStorage.getItem("Token") : "";
@@ -37,6 +56,7 @@ const Login = () => {
       .loginAction(loginValue)
       .then((response) => {
         console.log(response);
+<<<<<<< HEAD
         if (response.customerName && response.tokenPass && response.customerId) {
           localStorage.setItem("Token", response.tokenPass.toString());
           localStorage.setItem("CustomerName", response.customerName.toString());
@@ -49,6 +69,21 @@ const Login = () => {
             customerId: response.customerId.toString()
           });
         }
+=======
+        if (response.customerName != null && response.tokenPass != null) {
+          localStorage.setItem("Token", response.tokenPass);
+          localStorage.setItem("CustomerName", response.customerName);
+          localStorage.setItem("CustomerId", response.customerId);
+          console.log("SAVE TOKEN");    
+          navigate("/");
+        }
+      }).catch(({ error }) => {
+        notification.error({
+          message: "Có lỗi xảy ra",
+          description: error?.message ?? "Account or password is not correct!  ",
+          placement: "bottomRight",
+        });
+>>>>>>> e3e9840a51643fa1256e45777090943890c0db33
       })
       .finally(() => {
         setIsLoading(false);
@@ -88,7 +123,14 @@ const Login = () => {
                   name="email"
                   rules={[
                     { required: true, message: "Please input your email!" },
+<<<<<<< HEAD
                     { type: 'email', message: 'Please enter a valid email address!' }, // Xác thực định dạng email
+=======
+                    {
+                      type: "email",
+                      message: "Please enter a valid email address!",
+                    },
+>>>>>>> e3e9840a51643fa1256e45777090943890c0db33
                   ]}
                 >
                   <Input
@@ -136,9 +178,9 @@ const Login = () => {
             </div>
           </div>
           <div className="w-2/5 bg-slate-900 text-white rounded-tr-2xl round-br-2xl py-36 px-12 flex flex-col justify-start">
-            <Link to={""}>
+            <Link to={"/"}>
               {/* <h2 className="text-3xl font-bold mb-2">Hello, Friend!</h2> */}
-              <img src={logo} className="mb-5" alt=""></img>
+              <img src={logo} className="mb-5" alt=""></img></Link>
               <div className="border-2 w-10 border-white inline-block mb-2"></div>
               <p className="my-5">
                 Fill up your information and start shopping with us.
@@ -154,7 +196,6 @@ const Login = () => {
                   </Button>
                 </div>
               </Link>
-            </Link>
           </div>
         </div>
       </main>

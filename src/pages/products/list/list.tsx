@@ -1,6 +1,6 @@
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import { CarDTO } from "@share/dtos/service-proxies-dtos";
-import { Button, Card, Select, Spin, notification } from "antd";
+import { CarDTO, CartNotiDTO, QuickAddCartDTO } from "@share/dtos/service-proxies-dtos";
+import { Button, Card, Spin, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "src/layout/Footer";
@@ -11,10 +11,15 @@ import { ctqmService } from "../../../services/ctqm.services";
 import Filter from "./Filter";
 
 export default function List() {
-  useTitle("Danh sách sản phẩm");
+  useTitle("Catalogs");
   const [filter, setFilter] = useState<any>();
   const [listCars, setListCars] = useState<CarDTO[]>([]);
+  const [quickAddDto, setQuickAddDto] = useState<QuickAddCartDTO>({
+    customerId: '',
+    carId: '',
+  });
   const [loading, setIsLoading] = useState<boolean>(false);
+  const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
   useEffect(() => {
     // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
     getListCar();
@@ -28,9 +33,9 @@ export default function List() {
       })
       .catch(({ error }) => {
         notification.error({
-          message: "Có lỗi xảy ra",
+          message: "An error occurred",
           description:
-            error?.message ?? "Lỗi trong quá trình xử lý, vui lòng thử lại!",
+            error?.message ?? "Error in processing, please try again!",
           placement: "bottomRight",
         });
       })
@@ -38,6 +43,43 @@ export default function List() {
         setIsLoading(false);
       });
   };
+
+  const quickAddToCart = (carId: string) => {
+    setLoadingProcess(true);
+    const customerId = localStorage.getItem("CustomerId");
+    if (customerId == null) {
+      notification.error({
+        message: "You're not login!",
+        description: "Please login to contiune!",
+        placement: "bottomRight",
+      });
+      return;
+    }
+    console.log("AIOAJFOIWER", carId);
+    quickAddDto.carId = carId;
+    quickAddDto.customerId = customerId;
+    ctqmService.cartApi
+      .quickAddToCart(quickAddDto)
+      .then((response: CartNotiDTO) => {
+        notification.success({
+          message: "Add to cart Success!",
+          description: response.carName + " with $" + response.price + " are in your cart.",
+          placement: "bottomRight", 
+        })
+      })
+      .catch(({ error }) => {
+        setLoadingProcess(false);
+        notification.error({
+          message: "An error occurred",
+          description:
+            error?.message ?? "Error in processing, please try again!",
+          placement: "bottomRight",
+        });
+      })
+      .finally(() => {
+        setLoadingProcess(false);
+      })
+  }
 
   return (
     <React.Fragment>
@@ -55,12 +97,16 @@ export default function List() {
           listCars.map((car, index) => (
             <Card key={index} loading={loading}>
               <img src={Image1} alt="" className="w-[300px] rounded" />
-              <Link to={""} className="absolute right-1 top-2">
-                <ShoppingCartOutlined rev={undefined} className="text-[17px]" />
-              </Link>
+              <Button onClick={() => quickAddToCart(car.carId as string)} className="absolute right-1 top-2">
+                {loadingProcess ? (
+                  <Spin size="large" />
+                ) : (
+                  <ShoppingCartOutlined rev={undefined} className="text-[17px]" />
+                )}
+              </Button>
               <div className="flex flex-col gap-3">
                 <p className="text-[15px] font-semibold mt-2">{car.carName}</p>
-                <p className="text-[15px] font-semibold">{car.carPrice}</p>
+                <p className="text-[15px] font-semibold">${car.carPrice}</p>
                 <Card className="border-none bg-gray-100 !p-0 m-0">
                   <div className="flex gap-8 justify-center ">
                     <div className="flex flex-col justify-center items-center">
