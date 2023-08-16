@@ -9,6 +9,7 @@ import Image1 from "src/videos/png_mercedes_21788.png";
 import useTitle from "../../../hooks/useTitle";
 import { ctqmService } from "../../../services/ctqm.services";
 import Filter from "./Filter";
+import {Cloudinary} from "@cloudinary/url-gen";
 
 export default function List() {
   useTitle("Catalogs");
@@ -20,9 +21,15 @@ export default function List() {
   });
   const [loading, setIsLoading] = useState<boolean>(false);
   const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
+
+  const [resourse, setResourse] = useState<any>();
+  const imagePath = "https://res.cloudinary.com/dbz9e4cwk/image/upload/v1692201767/product/";
+  const cloundinary = new Cloudinary({cloud: {cloudName: 'dbz9e4cwk'}});
+
   useEffect(() => {
     // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
     getListCar();
+    loadImage();
   }, []);
   const getListCar = () => {
     setIsLoading(true);
@@ -81,12 +88,23 @@ export default function List() {
       })
   }
 
+  const loadImage = () => {
+    console.log("LOAD IMAGE");
+    ctqmService.carApi
+    .getAllImage()
+    .then((response) => {
+      console.log("IM", response);
+      setResourse(response);
+    })
+  }
+
   return (
     <React.Fragment>
       <NavBar />
       <div className="flex flex-col gap-6">
         <h1 className="font-semibold text-[20px] ml-[181px] mt-4">
           Most popular cars
+          {resourse}
         </h1>
         <div className="flex items-end">
           <Filter setFilter={setFilter} filter={filter} />
