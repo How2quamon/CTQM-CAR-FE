@@ -38,6 +38,11 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+const getAllOrder = async () => {
+  const response = await api.get("/api/Order/GetCallOrder");
+  return response.data;
+};
+
 const getOrderWithId = async (id: string) => {
   const response = await api.get(`/api/Order/${id}`);
   return response.data;
@@ -79,6 +84,7 @@ const deleteOrderWithId = async (id: string) => {
 };
 
 export const orderService = {
+  getAllOrder,
   getOrderWithId,
   getCustomerOrder,
   createNewOrder,
