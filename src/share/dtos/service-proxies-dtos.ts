@@ -57,6 +57,10 @@ export interface CarDTO {
     moTa?: string | undefined;
     head1?: string | undefined;
     moTa2?: string | undefined;
+    image1?: string | undefined;
+    image2?: string | undefined;
+    image3?: string | undefined;
+    image4?: string | undefined;
 }
 
 export interface CarDetailDTO {

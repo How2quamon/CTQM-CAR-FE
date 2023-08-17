@@ -27,31 +27,45 @@ const Login = () => {
 
 =======
 import { Button, Checkbox, Form, Input, notification } from "antd";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
-import logo from "../../logo/ctqm-logo-2.png";
+import logoDark from "../../logo/ctqm-logo-dark.svg";
+import logoLight from "../../logo/ctqm-logo-2.png";
 import { ctqmService } from "../../services/ctqm.services";
 import { CustomerLoginDTO } from "@share/dtos/service-proxies-dtos";
 import handleHttpStatusCode from "src/utils/handleHttpStatusCode";
 import useTitle from "src/hooks/useTitle";
+import NavBar from "src/layout/navigationBar";
+import Footer from "src/layout/Footer";
 
 export default function Login() {
   useTitle("Login");
 
   const [loading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+<<<<<<< HEAD
   
   useEffect(() => {}, []);
 >>>>>>> e3e9840a51643fa1256e45777090943890c0db33
+=======
+
+  useEffect(() => { }, []);
+>>>>>>> 5b2c97a5f6aab17ed85564404c8d5d6b4a82b68f
   const onFinish = (values: CustomerLoginDTO) => {
     setIsLoading(true);
     const currentToken = localStorage.getItem("CustomerName") != null ? localStorage.getItem("Token") : "";
     const loginValue: CustomerLoginDTO = {
       email: values.email,
       password: values.password,
-      token: currentToken!
+      token: currentToken!,
+      admin: false,
     };
 
+<<<<<<< HEAD
+=======
+    console.log(values);
+
+>>>>>>> 5b2c97a5f6aab17ed85564404c8d5d6b4a82b68f
     ctqmService.customerApi
       .loginAction(loginValue)
       .then((response) => {
@@ -74,7 +88,7 @@ export default function Login() {
           localStorage.setItem("Token", response.tokenPass);
           localStorage.setItem("CustomerName", response.customerName);
           localStorage.setItem("CustomerId", response.customerId);
-          console.log("SAVE TOKEN");    
+          console.log("SAVE TOKEN");
           navigate("/");
         }
       }).catch(({ error }) => {
@@ -95,6 +109,7 @@ export default function Login() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
         <div className="bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl">
@@ -181,6 +196,98 @@ export default function Login() {
             <Link to={"/"}>
               {/* <h2 className="text-3xl font-bold mb-2">Hello, Friend!</h2> */}
               <img src={logo} className="mb-5" alt=""></img></Link>
+=======
+    <React.Fragment>
+      <div className="sticky top-0 z-10 bg-gray-100">
+        <div className="max-w-7xl- mx-auto px-4 sm:px-6 lg:px-8 py-1 md:py-5">
+          <div className="flex items-center md:justify-start">
+            <Link to="/">
+              <img className="h-6" src={logoDark} alt="CTQM logo" />
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
+        <main className=" flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+          <div className="bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl">
+            <div className="w-3/5 p-[50px]">
+              <div className="mt-5">
+                <h2 className="text-3xl font-bold text-black-500 mb-2">
+                  Sign in to Account
+                </h2>
+                <div className="border-2 w-10 border-black-500 inline-block"></div>
+                <div className="flex justify-center my-5">
+                  <p className="text-gray-400">Welcome to the car shop CTQM</p>
+                </div>
+              </div>
+              <div className="flex flex-col items-center justify-center ">
+                <Form
+                  name="basic"
+                  className="max-w-[600px]"
+                  initialValues={{ remember: false }}
+                  onFinish={onFinish}
+                  size="large"
+                  onFinishFailed={onFinishFailed}
+                  autoComplete="off"
+                >
+                  <Form.Item
+                    className="w-[260px] mb-5"
+                    name="email"
+                    rules={[
+                      { required: true, message: "Please input your email!" },
+                      {
+                        type: "email",
+                        message: "Please enter a valid email address!",
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Email"
+                      prefix={<MailOutlined rev={undefined} />}
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    className="w-[260px] mb-2"
+                    name="password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your password!",
+                      },
+                    ]}
+                  >
+                    <Input.Password
+                      placeholder="Password"
+                      prefix={<LockOutlined rev={undefined} />}
+                    />
+                  </Form.Item>
+
+                  <Form.Item name="remember" valuePropName="checked">
+                    <div className="flex justify-start">
+                      <Checkbox>Remember me</Checkbox>
+                    </div>
+                  </Form.Item>
+
+                  <Form.Item>
+                    <div className="flex justify-center">
+                      <Button
+                        className="border-2 border-slate-900  text-black-500 !rounded-full h-10 !px-10 !py-2 font-semibold 
+                        hover:bg-slate-900 hover:text-white flex items-center"
+                        htmlType="submit"
+                        // onClick={postLogin}
+                        loading={loading}
+                      >
+                        Sign In
+                      </Button>
+                    </div>
+                  </Form.Item>
+                </Form>
+              </div>
+            </div>
+            <div className="w-2/5 bg-slate-900 text-white rounded-tr-2xl round-br-2xl py-36 px-12 flex flex-col">
+                <img src={logoLight} className="mb-5" alt=""/>
+>>>>>>> 5b2c97a5f6aab17ed85564404c8d5d6b4a82b68f
               <div className="border-2 w-10 border-white inline-block mb-2"></div>
               <p className="my-5">
                 Fill up your information and start shopping with us.
@@ -196,10 +303,12 @@ export default function Login() {
                   </Button>
                 </div>
               </Link>
+            </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+
+    </React.Fragment>
   );
 }
 export default Login;
