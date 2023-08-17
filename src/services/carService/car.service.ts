@@ -61,17 +61,6 @@ const getCarWithModel = async (carModel: string) => {
     return response.data;
 }
 
-const getAllImage = async () => {
-  const response = await api.get('https://372784854985771:_r7HEZpFSfmK6LQTnktsCQqcSt4@api.cloudinary.com/v1_1/dbz9e4cwk/resources'
-  // , {
-  //   headers: {
-  //     Authorization: `Basic ${Buffer.from("372784854985771" + ':' + "_r7HEZpFSfmK6LQTnktsCQqcSt4").toString('base64')}`
-  //   }
-  // }
-  );
-  return response.data;
-}
-
 const getCarByName = async (carName: string) => {
     const response = await api.get(`/api/Car/GetCarByName/${carName}`);
     return response.data;
@@ -95,7 +84,6 @@ export const  carService = {
     getAllCar,
     getCarWithId,
     getCarWithModel,
-    getAllImage,
     searchCarWithName,
     createNewCar,
     updateCar,

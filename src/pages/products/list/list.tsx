@@ -5,11 +5,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
-import Image1 from "src/videos/png_mercedes_21788.png";
 import useTitle from "../../../hooks/useTitle";
 import { ctqmService } from "../../../services/ctqm.services";
 import Filter from "./Filter";
-import {Cloudinary} from "@cloudinary/url-gen";
 
 export default function List() {
   useTitle("Catalogs");
@@ -24,12 +22,10 @@ export default function List() {
 
   const [resourse, setResourse] = useState<any>();
   const imagePath = "https://res.cloudinary.com/dbz9e4cwk/image/upload/v1692201767/product/";
-  const cloundinary = new Cloudinary({cloud: {cloudName: 'dbz9e4cwk'}});
 
   useEffect(() => {
     // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
     getListCar();
-    loadImage();
   }, []);
   const getListCar = () => {
     setIsLoading(true);
@@ -88,16 +84,6 @@ export default function List() {
       })
   }
 
-  const loadImage = () => {
-    console.log("LOAD IMAGE");
-    ctqmService.carApi
-    .getAllImage()
-    .then((response) => {
-      console.log("IM", response);
-      setResourse(response);
-    })
-  }
-
   return (
     <React.Fragment>
       <NavBar />
@@ -114,7 +100,7 @@ export default function List() {
         {listCars.length > 0 ? (
           listCars.map((car, index) => (
             <Card key={index} loading={loading}>
-              <img src={Image1} alt="" className="w-[300px] rounded" />
+              <img src={imagePath + car.carName + '/' + car.image1?.trim()} alt="" className="w-[300px] h-[170px] rounded object-fill m-0" />
               <Button onClick={() => quickAddToCart(car.carId as string)} className="absolute right-1 top-2">
                 {loadingProcess ? (
                   <Spin size="large" />

@@ -25,7 +25,8 @@ export default function Login() {
     const loginValue: CustomerLoginDTO = {
       email: values.email,
       password: values.password,
-      token: currentToken!
+      token: currentToken!,
+      admin: false,
     };
 
     console.log(values);

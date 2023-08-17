@@ -58,7 +58,7 @@ const NavBar = () => {
               {isLogin ? (
                 <Link to={`/cart/${customerID}`}>Inventory</Link>
               ) : ( 
-                <Link to="/login">Inventory</Link>
+                null
               )}
               </li>
             </ul>
