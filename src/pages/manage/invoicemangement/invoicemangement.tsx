@@ -8,18 +8,8 @@ import { ctqmService } from "../../../services/ctqm.services";
 import useTitle from 'src/hooks/useTitle';
 import { OrderDTO, UpdateOrderDTO,  } from "@share/dtos/service-proxies-dtos";
 import { useParams } from 'react-router-dom';
+import { columns } from "./component/columnsinvoice";
 
-interface DataType {
-    lastName: ReactNode;
-    key: React.Key;
-    OrderID: string;
-    CarID: string;
-    CustomerID: string;
-    OrderDate: string;
-    OrderStatus: string;
-    Amount: number;
-    TotalPrice: number;
-}
 
 export default function Invoicemangement() {
     useTitle("Invoicemangement");
@@ -29,49 +19,6 @@ export default function Invoicemangement() {
     const [getData, setGetData] = useState(false);
     const { customerId } = useParams();
 
-    const columns: ColumnsType<DataType> = [
-        {
-            title: 'OrderID',
-            width: 100,
-            dataIndex: 'OrderID',
-            key: 'OrderID',
-            fixed: 'left',
-        },
-        {
-            title: 'CarID',
-            width: 100,
-            dataIndex: 'CarID',
-        },
-        {
-            title: 'CustomerID',
-            dataIndex: 'CustomerID',
-            width: 150,
-        },
-        {
-            title: 'OrderDate',
-            dataIndex: 'OrderDate',
-
-            width: 150,
-        },
-        {
-            title: 'OrderStatus',
-            dataIndex: 'OrderStatus',
-
-            width: 150,
-        },
-        {
-            title: 'Amount',
-            dataIndex: 'Amount',
-
-            width: 150,
-        },
-        {
-            title: 'TotalPrice',
-            dataIndex: 'TotalPrice',
-
-            width: 150,
-        },
-    ];
     // useEffect(() => {
     //     // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
     //     getListOrder();
@@ -103,7 +50,7 @@ export default function Invoicemangement() {
             <div className="h-screen bg-gray-100 pt-20 mt-[-20px]">
                 <h1 className="mb-8 text-center text-2xl font-bold">Invoice</h1>
                 <Table
-                    columns={columns}
+                    // columns={columns}
                     scroll={{ x: 1500 }}
                     sticky />
                 {/* <Column
