@@ -14,7 +14,8 @@ import ChangePassword from "../pages/user/ChangePassword";
 import Subscribe from "../pages/home/subscribe/subscribe";
 import PaymentSuccess from "../pages/paymentt/paymentSuccess";
 import PaymentFail from "../pages/paymentt/paymentFail";
-import Invoicemangement from "../pages/manage/invoicemangement/invoicemangement"
+import SearchList from "../pages/products/list/searchList";
+import Invoicemangement from "@pages/manage/invoicemangement/invoicemangement";
 
 export default function IndexRoute() {
   return (
@@ -24,6 +25,7 @@ export default function IndexRoute() {
         <Route path="auth" element={<AuthPage />}></Route>
         <Route element={<ProtectedRoute />}>
           <Route path="list" element={<List/>}></Route>
+          <Route path="search/:search" element={<SearchList/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="login" element={<Login/>}></Route>

@@ -51,8 +51,8 @@ const getCarWithId = async (id: string) => {
     return response.data;
 }
 
-const searchCarWithName = async (carName: string) => {
-  const response = await api.get(`/api/Car/GetCarByName/${carName}`);
+const searchCar = async (carName: string) => {
+  const response = await api.get(`/api/Car/SearchForCars/${carName}`);
   return response.data;
 }
 
@@ -84,7 +84,7 @@ export const  carService = {
     getAllCar,
     getCarWithId,
     getCarWithModel,
-    searchCarWithName,
+    searchCar,
     createNewCar,
     updateCar,
     deleteCarWithId,
