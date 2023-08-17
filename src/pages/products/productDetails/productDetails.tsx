@@ -19,13 +19,7 @@ import { Segment, Container } from "semantic-ui-react";
 
 const ProductDetails: React.FC = () => {
   useTitle("Chi tiết sản phẩm");
-  const [images] = useState({
-    img1: "https://cdn.wallpapersafari.com/25/59/5cwSa8.jpg",
-    img2: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-    img3: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-    img4: "https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-  });
-  const [activeImg, setActiveImage] = useState(images.img1);
+  const [activeImg, setActiveImage] = useState("");
   const [amount, setAmount] = useState(1);
   const { carName } = useParams();
   const [carTrim, setCarTrim] = useState("");
@@ -48,7 +42,9 @@ const ProductDetails: React.FC = () => {
     amount: 0,
     price: 0
   });
-  
+
+  const imagePath = "https://res.cloudinary.com/dbz9e4cwk/image/upload/v1692201767/product/";
+
   useEffect(() => {
     getCarDetail();
   }, [getData]);
@@ -70,7 +66,8 @@ const ProductDetails: React.FC = () => {
       })
       .finally(() => {
         setGetData(true);
-        setIsLoading(false);    
+        setIsLoading(false);
+        setActiveImage(imagePath + cars?.carName + '/' + cars?.image1?.trim());
         const modifiedString = carName?.replace(/ /g, "%20");
         setCarUrl(baseAppURL+modifiedString);
         console.log("URL: ", carUrl);
@@ -131,26 +128,16 @@ const ProductDetails: React.FC = () => {
   return (
     <React.Fragment>
       <NavBar />
-      <Helmet
-        meta={[
-          // { property:'og:type', content: "article"},
-          // { property:'og:title', content: "CÁC THÔNG TIN XE"},
-          // { property:'og:description', content: "THÔNG TIN CHI THIẾT CỦA XE"},
-          // { property:'og:image', content: images.img1},
-        ]}
-      >
-        {/* <meta property="og:type" content="article" />
-        <meta property="og:title" content="CÁC THÔNG TIN XE" />
-        <meta property="og:description" content="THÔNG TIN CHI THIẾT CỦA XE" />
-        <meta property="og:image" content={images.img1} /> */}
-      </Helmet>
-      <head>
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="CÁC THÔNG TIN XE" />
-        <meta property="og:description" content="THÔNG TIN CHI TIẾT CỦA XE" />
-        <meta property="og:image" content={images.img1} />
-      </head>
       <main>
+        <Helmet>
+          <meta name="title" content={cars.carName} />
+          <meta name="description" content={cars.head1} />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content={carUrl} />
+          <meta property="og:title" content={cars.carName} />
+          <meta property="og:description" content={cars.head1} />
+          <meta property="og:image" content={imagePath + cars.carName + '/' + cars.image1?.trim()} />
+        </Helmet>
         <div className="flex flex-col justify-center min-h-screen">
           {/* {cars !== undefined ? ( */}
           <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10  items-start lg:py-14">
@@ -162,28 +149,28 @@ const ProductDetails: React.FC = () => {
               />
               <div className="hidden lg:flex justify-items-center gap-5 flex-wrap mt-5">
                 <img
-                  src={images.img1}
+                  src={imagePath + cars.carName + '/' + cars.image1?.trim()}
                   alt=""
                   className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
-                  onClick={() => setActiveImage(images.img1)}
+                  onClick={() => setActiveImage(imagePath + cars.carName + '/' + cars.image1?.trim())}
                 />
                 <img
-                  src={images.img2}
+                  src={imagePath + cars.carName + '/' + cars.image2?.trim()}
                   alt=""
                   className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
-                  onClick={() => setActiveImage(images.img2)}
+                  onClick={() => setActiveImage(imagePath + cars.carName + '/' + cars.image2?.trim())}
                 />
                 <img
-                  src={images.img3}
+                  src={imagePath + cars.carName + '/' + cars.image3?.trim()}
                   alt=""
                   className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
-                  onClick={() => setActiveImage(images.img3)}
+                  onClick={() => setActiveImage(imagePath + cars.carName + '/' + cars.image3?.trim())}
                 />
                 <img
-                  src={images.img4}
+                  src={imagePath + cars.carName + '/' + cars.image4?.trim()}
                   alt=""
                   className="w-32 h-32 object-cover rounded-lg mb-4 cursor-pointer"
-                  onClick={() => setActiveImage(images.img4)}
+                  onClick={() => setActiveImage(imagePath + cars.carName + '/' + cars.image4?.trim())}
                 />
               </div>
             </article>
@@ -218,7 +205,7 @@ const ProductDetails: React.FC = () => {
               <p className="my-1 text-gray-700 leading-7">{cars.moTa2}</p>
               <div className="my-1 py-4 flex flex-row items-center">
                 <h6 className="pr-4">Price:</h6>
-                <h6 className="text-2xl font-semibold tracking-wider">{cars?.carPrice}</h6>
+                <h6 className="text-2xl font-semibold tracking-wider">${cars?.carPrice}</h6>
               </div>
 
               <div className="items-center my-3">
@@ -266,7 +253,7 @@ const ProductDetails: React.FC = () => {
             <div className="flex flex-wrap justify-center gap-3 m-2 mt-10">
               <Link to={""}>
                 <Card>
-                  <img src={images.img1} alt="" className="w-[300px] rounded" />
+                  <img src={imagePath + cars.carName + '/' + cars.image1?.trim()} alt="" className="w-[300px] rounded" />
                   <Link to={""} className="absolute right-1 top-2">
                     <ShoppingCartOutlined
                       rev={undefined}
