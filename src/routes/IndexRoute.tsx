@@ -14,6 +14,7 @@ import ChangePassword from "../pages/user/ChangePassword";
 import Subscribe from "../pages/home/subscribe/subscribe";
 import PaymentSuccess from "../pages/paymentt/paymentSuccess";
 import PaymentFail from "../pages/paymentt/paymentFail";
+import ProductManagement from "../pages/manage/productmanagement/productmangenent";
 
 export default function IndexRoute() {
   return (
@@ -50,6 +51,9 @@ export default function IndexRoute() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="subscribe" element={<Subscribe/>}></Route>
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="product-management" element={<ProductManagement/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
