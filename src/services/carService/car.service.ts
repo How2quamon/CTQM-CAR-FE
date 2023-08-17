@@ -1,6 +1,7 @@
 import { CarDTO } from '@share/dtos/service-proxies-dtos';
 import { notification } from 'antd';
 import axios from 'axios';
+import { Buffer } from 'buffer';
 
 const baseURL = 'https://ctqmapi.azurewebsites.net';
 
@@ -50,11 +51,16 @@ const getCarWithId = async (id: string) => {
     return response.data;
 }
 
+const searchCarWithName = async (carName: string) => {
+  const response = await api.get(`/api/Car/GetCarByName/${carName}`);
+  return response.data;
+}
+
 const getCarWithModel = async (carModel: string) => {
     const response = await api.get(`/api/Car/GetCarWithModel/${carModel}`);
     return response.data;
-   
 }
+
 const getCarByName = async (carName: string) => {
     const response = await api.get(`/api/Car/GetCarByName/${carName}`);
     return response.data;
@@ -78,6 +84,7 @@ export const  carService = {
     getAllCar,
     getCarWithId,
     getCarWithModel,
+    searchCarWithName,
     createNewCar,
     updateCar,
     deleteCarWithId,

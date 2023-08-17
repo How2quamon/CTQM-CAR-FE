@@ -20,7 +20,7 @@ const Subscribe: React.FC = () => {
     console.log("sss", email);
 
     setIsLoading(true);
-    const url = `https://gmail.us8.list-manage.com/subscribe/post?u=e0b08f64193468684ada6b111&amp;id=fa8f616500&amp;f_id=005d71e0f0`;
+    const url = `https://gmail.us21.list-manage.com/subscribe/post?u=08528effd2175ff885db393f4&amp;id=d05ff76d34&amp;f_id=003f63e1f0`;
     jsonp(`${url}&EMAIL=${email}`, { param: "c" }, (_, _ref) => {
       notification.success({
         message: "You have successfully subscribed",
