@@ -3,9 +3,10 @@ import logo from "../logo/ctqm-logo-2.png";
 import React, { useEffect, useState } from "react";
 import { CaretDownOutlined, CustomerServiceOutlined, EditOutlined, InboxOutlined, LogoutOutlined, UserOutlined, CloseOutlined, SearchOutlined } from "@ant-design/icons";
 import { Input, Space } from 'antd';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [customer, setCustomer] = useState<string>("");
   const [customerID, setCustomerID] = useState<string>("");
@@ -36,9 +37,9 @@ const NavBar = () => {
   const handleInputKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       console.log(searchValue);
-      // Call your function here, e.g., handleSearchBar()
-      // You might want to pass the searchValue as an argument
       console.log('Enter key pressed');
+      navigate(`/search/${searchValue}`);
+      setSearchValue('');
     }
   };
 
@@ -54,13 +55,13 @@ const NavBar = () => {
               <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
                 <Link to="/list">Catalogs</Link>
               </li> 
-              <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">             
               {isLogin ? (
+              <li className="py-2 px-4 mx-1 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">             
                 <Link to={`/cart/${customerID}`}>Inventory</Link>
+              </li>
               ) : ( 
                 null
               )}
-              </li>
             </ul>
           </div>
           <div className="flex justify-between items-center space-x-4">
@@ -102,7 +103,7 @@ const NavBar = () => {
             </div>
             <ul className="h-screen pt-8 px-6 bg-stone-950 ">
             <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-                <Link to={'/'}>Product Management</Link>
+                <Link to={'/product-management'}>Product Management</Link>
               </li>
               <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
                 <Link to={'/'}>Invoice Management</Link>

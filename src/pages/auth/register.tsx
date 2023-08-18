@@ -6,6 +6,7 @@ import { ctqmService } from "../../services/ctqm.services";
 import useTitle from "src/hooks/useTitle";
 import NavBar from "src/layout/navigationBar";
 import Footer from "src/layout/Footer";
+import logoDark from "../../logo/ctqm-logo-dark.svg";
 
 export default function Register() {
   useTitle("Register");
@@ -66,7 +67,15 @@ export default function Register() {
 
   return (
     <React.Fragment>
-      <NavBar/>
+      <div className="sticky top-0 z-10 bg-gray-100">
+        <div className="max-w-7xl- mx-auto px-4 sm:px-6 lg:px-8 py-1 md:py-5">
+          <div className="flex items-center md:justify-start">
+            <Link to="/">
+              <img className="h-6" src={logoDark} alt="CTQM logo" />
+            </Link>
+          </div>
+        </div>
+      </div>
       <div className="flex justify-center py-5 bg-slate-200 ">
         <div className="w-2/5 bg-slate-900 text-white flex justify-center rounded-l-lg py-36 px-12 flex-col">
         <img

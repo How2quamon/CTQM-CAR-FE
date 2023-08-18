@@ -2,14 +2,14 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import { CarDTO, CartNotiDTO, QuickAddCartDTO } from "@share/dtos/service-proxies-dtos";
 import { Button, Card, Spin, notification } from "antd";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
 import useTitle from "../../../hooks/useTitle";
 import { ctqmService } from "../../../services/ctqm.services";
 import Filter from "./Filter";
 
-export default function List() {
+export default function SearchList() {
   useTitle("Catalogs");
   const [filter, setFilter] = useState<any>();
   const [listCars, setListCars] = useState<CarDTO[]>([]);
@@ -19,19 +19,20 @@ export default function List() {
   });
   const [loading, setIsLoading] = useState<boolean>(false);
   const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
+  const { search } = useParams();
 
-  const [resourse, setResourse] = useState<any>();
   const imagePath = "https://res.cloudinary.com/dbz9e4cwk/image/upload/v1692201767/product/";
 
   useEffect(() => {
     // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
-    getListCar();
-  }, []);
-  const getListCar = () => {
+    getListCarSearch();
+  }, [search]);
+  const getListCarSearch = () => {
     setIsLoading(true);
     ctqmService.carApi
-      .getAllCar()
+      .searchCar(search as string)
       .then((response) => {
+        console.log(response);
         setListCars(response);
       })
       .catch(({ error }) => {
@@ -89,8 +90,7 @@ export default function List() {
       <NavBar />
       <div className="flex flex-col gap-6">
         <h1 className="font-semibold text-[20px] ml-[181px] mt-4">
-          Most popular cars
-          {resourse}
+          Most Relate For {search}
         </h1>
         <div className="flex items-end">
           <Filter setFilter={setFilter} filter={filter} />
@@ -275,7 +275,11 @@ export default function List() {
             </Card>
           ))
         ) : (
-          <Spin size="large"/>
+          <div className="flex flex-col gap-6">
+          <h1 className="font-semibold text-[20px]">
+            Empty!
+          </h1>
+        </div>
         )}
       </section>
       <Footer />

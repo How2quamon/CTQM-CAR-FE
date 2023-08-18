@@ -152,7 +152,7 @@ export default function Login() {
               <p className="my-5">
                 Fill up your information and start shopping which us.
               </p>
-              <Link to={"/register"}>
+              <Link to={'/register'}>
                 <div className="flex justify-center">
                   <Button
                     className="border-2 border-white rounded-full h-10 px-10 py-2 flex items-center font-semibold hover:bg-white
