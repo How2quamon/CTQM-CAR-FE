@@ -8,7 +8,7 @@ export const columns = [
     render: (text: any, record: any, index: any) => index + 1,
   },
   {
-    title: "ID",
+    title: "Id",
     dataIndex: "carId",
     key: "carId",
     width: 80,
@@ -64,13 +64,6 @@ export const columns = [
     width: 70,
   },
   {
-    title: "Describe",
-    dataIndex: "moTa",
-    key: "moTa",
-    width: 120,
-    render: (moTa: any) => <span className="line-clamp-2">{moTa}</span>,
-  },
-  {
     title: "Head",
     dataIndex: "head1",
     key: "head1",
@@ -82,7 +75,14 @@ export const columns = [
     ),
   },
   {
-    title: "Describe 2",
+    title: "Description",
+    dataIndex: "moTa",
+    key: "moTa",
+    width: 120,
+    render: (moTa: any) => <span className="line-clamp-2">{moTa}</span>,
+  },
+  {
+    title: "Description 2",
     dataIndex: "moTa2",
     key: "moTa2",
     width: 100,
