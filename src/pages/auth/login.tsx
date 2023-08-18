@@ -1,31 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
-<<<<<<< HEAD
-
-import { Button, Checkbox, Form, Input } from "antd";
-import logo from "../../logo/ctqm-logo-2.png";
-import { ctqmService } from "../../services/ctqm.services";
-import { CustomerLoginDTO, CustomerDTO } from "@share/dtos/service-proxies-dtos";
-
-const Login = () => {
-  const navigate = useNavigate();
-  const [loading, setIsLoading] = useState<boolean>(false);
-  const [loggedInUser, setLoggedInUser] = useState<CustomerDTO | null>(null);
-
-  useEffect(() => {
-    // Kiểm tra xem liệu có thông tin đăng nhập trước đó trong localStorage hay không
-    const customerName = localStorage.getItem("CustomerName");
-    const customerId = localStorage.getItem("CustomerId");
-    if (customerName && customerId) {
-      setLoggedInUser({
-        customerName: customerName,
-        customerId: customerId
-      });
-    }
-  }, []);
-
-=======
 import { Button, Checkbox, Form, Input, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
@@ -43,15 +16,10 @@ export default function Login() {
 
   const [loading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-<<<<<<< HEAD
-  
-  useEffect(() => {}, []);
->>>>>>> e3e9840a51643fa1256e45777090943890c0db33
-=======
 
   useEffect(() => { }, []);
->>>>>>> 5b2c97a5f6aab17ed85564404c8d5d6b4a82b68f
   const onFinish = (values: CustomerLoginDTO) => {
+    // Xử lý dữ liệu đăng nhập khi form submit thành công
     setIsLoading(true);
     const currentToken = localStorage.getItem("CustomerName") != null ? localStorage.getItem("Token") : "";
     const loginValue: CustomerLoginDTO = {
@@ -61,29 +29,12 @@ export default function Login() {
       admin: false,
     };
 
-<<<<<<< HEAD
-=======
     console.log(values);
 
->>>>>>> 5b2c97a5f6aab17ed85564404c8d5d6b4a82b68f
     ctqmService.customerApi
       .loginAction(loginValue)
       .then((response) => {
         console.log(response);
-<<<<<<< HEAD
-        if (response.customerName && response.tokenPass && response.customerId) {
-          localStorage.setItem("Token", response.tokenPass.toString());
-          localStorage.setItem("CustomerName", response.customerName.toString());
-          localStorage.setItem("CustomerId", response.customerId.toString());
-          // Chuyển hướng về trang chủ sau khi đăng nhập thành công
-          navigate('/');
-          // Lưu thông tin người dùng vào state để hiển thị trên thanh điều hướng (nav bar)
-          setLoggedInUser({
-            customerName: response.customerName.toString(),
-            customerId: response.customerId.toString()
-          });
-        }
-=======
         if (response.customerName != null && response.tokenPass != null) {
           localStorage.setItem("Token", response.tokenPass);
           localStorage.setItem("CustomerName", response.customerName);
@@ -97,106 +48,16 @@ export default function Login() {
           description: error?.message ?? "Account or password is not correct!  ",
           placement: "bottomRight",
         });
->>>>>>> e3e9840a51643fa1256e45777090943890c0db33
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
-
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
 
   return (
-<<<<<<< HEAD
-    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <div className="bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl">
-          <div className="w-3/5 p-[50px]">
-            <div className="mt-5">
-              <h2 className="text-3xl font-bold text-black-500 mb-2">
-                Sign in to Account
-              </h2>
-              <div className="border-2 w-10 border-black-500 inline-block"></div>
-              <div className="flex justify-center my-5">
-                <p className="text-gray-400">Welcome to the car shop CTQM</p>
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-center ">
-              <Form
-                name="basic"
-                className="max-w-[600px]"
-                initialValues={{ remember: false }}
-                onFinish={onFinish}
-                size="large"
-                onFinishFailed={onFinishFailed}
-                autoComplete="off"
-              >
-                <Form.Item
-                  className="w-[260px] mb-5"
-                  name="email"
-                  rules={[
-                    { required: true, message: "Please input your email!" },
-<<<<<<< HEAD
-                    { type: 'email', message: 'Please enter a valid email address!' }, // Xác thực định dạng email
-=======
-                    {
-                      type: "email",
-                      message: "Please enter a valid email address!",
-                    },
->>>>>>> e3e9840a51643fa1256e45777090943890c0db33
-                  ]}
-                >
-                  <Input
-                    placeholder="Email"
-                    prefix={<MailOutlined rev={undefined} />}
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  className="w-[260px] mb-2"
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your password!",
-                    },
-                  ]}
-                >
-                  <Input.Password
-                    placeholder="Password"
-                    prefix={<LockOutlined rev={undefined} />}
-                  />
-                </Form.Item>
-
-                <Form.Item name="remember" valuePropName="checked">
-                  <div className="flex justify-start">
-                    <Checkbox>Remember me</Checkbox>
-                  </div>
-                </Form.Item>
-
-                <Form.Item>
-                  <div className="flex justify-center">
-                    <Button
-                      className="border-2 border-slate-900  text-black-500 !rounded-full h-10 !px-10 !py-2 font-semibold 
-                        hover:bg-slate-900 hover:text-white flex items-center"
-                      htmlType="submit"
-                      // onClick={postLogin}
-                      loading={loading}
-                    >
-                      Sign In
-                    </Button>
-                  </div>
-                </Form.Item>
-              </Form>
-            </div>
-          </div>
-          <div className="w-2/5 bg-slate-900 text-white rounded-tr-2xl round-br-2xl py-36 px-12 flex flex-col justify-start">
-            <Link to={"/"}>
-              {/* <h2 className="text-3xl font-bold mb-2">Hello, Friend!</h2> */}
-              <img src={logo} className="mb-5" alt=""></img></Link>
-=======
     <React.Fragment>
       <div className="sticky top-0 z-10 bg-gray-100">
         <div className="max-w-7xl- mx-auto px-4 sm:px-6 lg:px-8 py-1 md:py-5">
@@ -287,12 +148,11 @@ export default function Login() {
             </div>
             <div className="w-2/5 bg-slate-900 text-white rounded-tr-2xl round-br-2xl py-36 px-12 flex flex-col">
                 <img src={logoLight} className="mb-5" alt=""/>
->>>>>>> 5b2c97a5f6aab17ed85564404c8d5d6b4a82b68f
               <div className="border-2 w-10 border-white inline-block mb-2"></div>
               <p className="my-5">
-                Fill up your information and start shopping with us.
+                Fill up your information and start shopping which us.
               </p>
-              <Link to={"/register"}>
+              <Link to={'/register'}>
                 <div className="flex justify-center">
                   <Button
                     className="border-2 border-white rounded-full h-10 px-10 py-2 flex items-center font-semibold hover:bg-white
@@ -311,4 +171,3 @@ export default function Login() {
     </React.Fragment>
   );
 }
-export default Login;
