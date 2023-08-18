@@ -39,7 +39,7 @@ api.interceptors.response.use(
   }
 );
 const getAllOrder = async () => {
-  const response = await api.get("/api/Order/GetCallOrder");
+  const response = await api.get("/api/Order");
   return response.data;
 };
 

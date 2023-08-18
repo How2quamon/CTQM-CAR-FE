@@ -15,8 +15,8 @@ import Subscribe from "../pages/home/subscribe/subscribe";
 import PaymentSuccess from "../pages/paymentt/paymentSuccess";
 import PaymentFail from "../pages/paymentt/paymentFail";
 import SearchList from "../pages/products/list/searchList";
-import Invoicemangement from "@pages/manage/invoicemangement/invoicemangement";
-
+import Invoicemangement from "../pages/manage/invoicemangement/invoicemangement";
+import UpdateOrder from "../pages/manage/invoicemangement/component/Update"
 export default function IndexRoute() {
   return (
     <BrowserRouter>
@@ -56,6 +56,9 @@ export default function IndexRoute() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="invoicemangement" element={<Invoicemangement/>}></Route>
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="updateOrder" element={<UpdateOrder/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
