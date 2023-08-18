@@ -20,7 +20,7 @@ export default function UpdateCar() {
                   label="Id"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
-                    { required: true, message: "Dữ liệu không được để trống!" },
+                    { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
                   <Input disabled allowClear />
@@ -30,7 +30,7 @@ export default function UpdateCar() {
                   label="Product Name"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
-                    { required: true, message: "Dữ liệu không được để trống!" },
+                    { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
                   <Input placeholder="Enter Product Name" allowClear />
@@ -40,7 +40,7 @@ export default function UpdateCar() {
                   label="Model"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
-                    { required: true, message: "Dữ liệu không được để trống!" },
+                    { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
                   <Select placeholder="Enter Model" allowClear />
@@ -50,7 +50,7 @@ export default function UpdateCar() {
                   label="Class"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
-                    { required: true, message: "Dữ liệu không được để trống!" },
+                    { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
                   <Input placeholder="Enter class" allowClear />
@@ -60,7 +60,7 @@ export default function UpdateCar() {
                   label="Engine"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
-                    { required: true, message: "Dữ liệu không được để trống!" },
+                    { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
                   <Input placeholder="Enter Engine" allowClear />
@@ -70,7 +70,7 @@ export default function UpdateCar() {
                   label="Price"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
-                    { required: true, message: "Dữ liệu không được để trống!" },
+                    { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
                   <Input placeholder="Enter Price" allowClear />
@@ -80,7 +80,7 @@ export default function UpdateCar() {
                   label="Head"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
-                    { required: true, message: "Dữ liệu không được để trống!" },
+                    { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
                   <Input placeholder="Enter Head" allowClear />
@@ -90,7 +90,7 @@ export default function UpdateCar() {
                   label="Description"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
-                    { required: true, message: "Dữ liệu không được để trống!" },
+                    { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
                   <Input placeholder=" Enter Description" allowClear />
@@ -100,7 +100,7 @@ export default function UpdateCar() {
                   label="Description 2"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
-                    { required: true, message: "Dữ liệu không được để trống!" },
+                    { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
                   <Input placeholder=" Enter Description 2" allowClear />
@@ -113,7 +113,7 @@ export default function UpdateCar() {
                   icon={<CloseOutlined rev={undefined} />}
                   type="default"
                 >
-                  Hủy
+                  Cancel
                 </Button>
                 <Button
                   type="primary"
@@ -123,16 +123,7 @@ export default function UpdateCar() {
                   htmlType="submit"
                   icon={<SaveOutlined rev={undefined} />}
                 >
-                  Lưu và đóng
-                </Button>
-                <Button // Lưu & tiếp tục
-                  // type="primary"
-                  className="bg-blue-400 text-white"
-                  //   onClick={() => setIsContinue(true)}
-                  htmlType="submit"
-                  icon={<SaveOutlined rev={undefined} />}
-                >
-                  Lưu
+                  Save and Cancel
                 </Button>
               </div>
             </Form>
