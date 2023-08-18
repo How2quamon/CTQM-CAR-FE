@@ -103,7 +103,7 @@ const NavBar = () => {
             </div>
             <ul className="h-screen pt-8 px-6 bg-stone-950 ">
             <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-                <Link to={'/'}>Product Management</Link>
+                <Link to={'/product-management'}>Product Management</Link>
               </li>
               <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
                 <Link to={'/'}>Invoice Management</Link>
