@@ -72,7 +72,7 @@ export default function Register() {
         <img
                 src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
                 className="object-cover h-full w-full"
-              />
+               alt=""/>
           {/* <div className="w-[100px] ">
             <Link to={'/'}><img src={logo} className="h-6 mt-[-270px]" alt="" /></Link>
           </div> */}

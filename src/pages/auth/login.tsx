@@ -44,7 +44,7 @@ export default function Login() {
         }
       }).catch(({ error }) => {
         notification.error({
-          message: "Có lỗi xảy ra",
+          message: "An error occurred",
           description: error?.message ?? "Account or password is not correct!  ",
           placement: "bottomRight",
         });
