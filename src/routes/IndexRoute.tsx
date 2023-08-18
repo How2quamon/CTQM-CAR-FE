@@ -16,6 +16,8 @@ import PaymentSuccess from "../pages/paymentt/paymentSuccess";
 import PaymentFail from "../pages/paymentt/paymentFail";
 import ProductManagement from "../pages/manage/productmanagement/productmangenent";
 import UpdateCar from "../pages/manage/productmanagement/component/Update";
+import SearchList from "../pages/products/list/searchList";
+
 
 export default function IndexRoute() {
   return (
@@ -25,6 +27,7 @@ export default function IndexRoute() {
         <Route path="auth" element={<AuthPage />}></Route>
         <Route element={<ProtectedRoute />}>
           <Route path="list" element={<List/>}></Route>
+          <Route path="search/:search" element={<SearchList/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="login" element={<Login/>}></Route>
