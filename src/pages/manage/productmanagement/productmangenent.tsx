@@ -135,11 +135,11 @@ export default function ProductManagement() {
                             </Link>
                             <Menu.Item>
                               <Popconfirm
-                                title="Xóa vai trò"
-                                description="Bạn có chắc chắn xóa vai trò này không?"
+                                title="Delete product!"
+                                description="Are you sure you want to delete this product?"
                                 onConfirm={() => handleDelete(carId)}
-                                okText={<span className="text-black">Có</span>}
-                                cancelText="Không"
+                                okText={<span className="text-black">Yes</span>}
+                                cancelText="No"
                                 className="flex justify-start items-center gap-3"
                               >
                                 <DeleteOutlined rev={undefined} />
