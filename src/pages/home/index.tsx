@@ -130,8 +130,8 @@ export default function List() {
                 </div>
                 <div className="flex flex-row justify-around mt-10">
                     <div className="flex flex-col gap-6 justify-center w-[500px]">
-                        <h1 className='font-bold text-[30px]'>Let's explore the wonders.</h1>
-                        <p className=''>Open up the era of electrification with technological advancements from Mercedes-Benz.</p>
+                        <h1 className='font-bold text-[30px]'>More than an attractive Gran Turismo.</h1>
+                        <p className=''>Mercedes-AMG GT Coupé 4-door: Indulge in your own style with a variety of versions and an exciting driving experience.</p>
                         <Button size='large' className='w-36'>Discover Now</Button>
                     </div>
                     <img src={homepage1} alt="Mecedes Benx" className='w-[50%] h-100' />

@@ -17,7 +17,8 @@ import PaymentFail from "../pages/paymentt/paymentFail";
 import ProductManagement from "../pages/manage/productmanagement/productmangenent";
 import UpdateCar from "../pages/manage/productmanagement/component/Update";
 import SearchList from "../pages/products/list/searchList";
-
+import Invoicemangement from "../pages/manage/invoicemangement/invoicemangement";
+import UpdateOrder from "../pages/manage/invoicemangement/component/Update"
 
 export default function IndexRoute() {
   return (
@@ -57,6 +58,10 @@ export default function IndexRoute() {
           <Route path="subscribe" element={<Subscribe/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
+          <Route path="invoicemangement" element={<Invoicemangement/>}></Route>
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="updateOrder" element={<UpdateOrder/>}></Route>
           <Route path="product-management" element={<ProductManagement/>}></Route>
           <Route path="updateCar" element={<UpdateCar/>}></Route>
         </Route>
