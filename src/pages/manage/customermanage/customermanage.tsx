@@ -7,7 +7,6 @@ import {
   Button,
   Card,
   Dropdown,
-  Form,
   Menu,
   Pagination,
   Popconfirm,
@@ -24,7 +23,6 @@ import { CustomerDTO } from "../../../share/dtos/service-proxies-dtos";
 import { columns } from "./columns";
 import modal from "antd/es/modal";
 import usePopup from "src/hooks/usePopup";
-import AddResourcePlanPopup from "./Update";
 import { Link } from "react-router-dom";
 import Footer from "src/layout/Footer";
 import dayjs from 'dayjs';
@@ -47,19 +45,19 @@ export default function ProductManagement() {
   const [customers, setCustomers] = useState<CustomerDTO[]>([]);
   const [loading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
-    getCustomer();
+    getCustomers();
   }, []);
 
   useEffect(() => {
     // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
-    getCustomer();
+    getCustomers();
   }, []);
-  const getCustomer = () => {
+
+  const getCustomers = () => {
     setIsLoading(true);
     ctqmService.customerApi
       .getAllCustomer()
       .then((response) => {
-        response.customerDate = dayjs(response.customerDate) || '',
         setCustomers(response);
       })
       .catch(({ error }) => {
@@ -77,26 +75,24 @@ export default function ProductManagement() {
 
   const handleDelete = async (customerId: string) => {
     modal.confirm({
-      title: "Are you sure you want to delete this customer?",
-      onOk() {
-        ctqmService.customerApi
-          .deleteCustomerWithId(customerId as string)
-          .then(() => {
-            handleDeleteSuccess();
-          })
-          .catch(({ error }) => {
-            handleDeleteFailed(error);
-          })
-          .finally(() => {
-            setIsLoading(false);
-          });
-      },
+        title: "Confirm to delete?",
+        async onOk() {
+            try {
+                setIsLoading(true);
+                await ctqmService.customerApi.deleteCustomerWithId(customerId)
+                handleDeleteSuccess();
+            } catch (error) {
+                handleDeleteFailed(error);
+            } finally {
+                setIsLoading(false);
+            }       
+        },      
     });
-  };
+};
 
   const handleDeleteSuccess = () => {
     message.success("Deleted successfully!");
-    getCustomer();
+    getCustomers();
   };
 
   const handleDeleteFailed = (error: any) => {
@@ -117,53 +113,53 @@ export default function ProductManagement() {
             pagination={false}
             className="w-full"
             columns={[
-                {
-                  title: "",
-                  width: 50,
-                  dataIndex: "action",
-                  key: "action",
-                  render(customerId: string) {
-                    return (
-                      <Dropdown
-                        placement="bottomRight"
-                        overlay={
-                          <Menu>
-                            <Link to={`/updateCustomer/${customerId}`}>
-                              <Menu.Item>
-                                <div className="flex gap-3">
+              {
+                title: "",
+                width: 50,
+                dataIndex: "action",
+                key: "action",
+                render(item: string, customer: any) {
+                  return (
+                    <Dropdown
+                      placement="bottomRight"
+                      overlay={
+                        <Menu>
+                          <Link to={`/updateCustomer/${customer.customerId}`}>
+                            <Menu.Item>
+                              <div className="flex gap-3">
                                 <EditOutlined rev={undefined} />
                                 <p>Update</p>
-                                </div>
-                              </Menu.Item>
-                            </Link>
-                            <Menu.Item>
-                              <Popconfirm
-                                title="Delete customer?"
-                                description="Are you sure you want to delete this customer?"
-                                onConfirm={() => handleDelete(customerId)}
-                                okText={<span className="text-black">Yes</span>}
-                                cancelText="No"
-                                className="flex justify-start items-center gap-3"
-                              >
-                                <DeleteOutlined rev={undefined} />
-                                <p>Delete</p>
-                              </Popconfirm>
+                              </div>
                             </Menu.Item>
-                          </Menu>
-                        }
-                      >
-                        <Button icon={<EllipsisOutlined rev={undefined} />} />
-                      </Dropdown>
-                    );
-                  },
+                          </Link>
+                          <Menu.Item>
+                            <Popconfirm
+                              title="Delete customer?"
+                              description="Are you sure you want to delete this customer?"
+                              onConfirm={() => handleDelete(customer.customerId)}
+                              okText={<span className="text-black">Yes</span>}
+                              cancelText="No"
+                              className="flex justify-start items-center gap-3"
+                            >
+                              <DeleteOutlined rev={undefined} />
+                              <p>Delete</p>
+                            </Popconfirm>
+                          </Menu.Item>
+                        </Menu>
+                      }
+                    >
+                      <Button icon={<EllipsisOutlined rev={undefined} />} />
+                    </Dropdown>
+                  );
                 },
-              ].concat(columns as [])}
+              },
+            ].concat(columns as [])}
             loading={loading}
           />
           <Pagination total={data.totalCount} className="m-2" />
         </div>
       </Card>
-      <Footer/>
+      <Footer />
     </React.Fragment>
   );
 }

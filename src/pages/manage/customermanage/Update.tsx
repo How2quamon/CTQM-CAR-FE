@@ -54,10 +54,18 @@ export default function UpdateCustomer() {
       console.log('Submitting form with values:', validatedValues);
       await ctqmService.customerApi.updateCustomerInfo(customerId, validatedValues);
       setUpdateSuccess(true);
-      alert("Update Successfully: Customer data has been updated.");
+      notification.success({
+        message: "Update successfully!",
+        description: "Customer information has been updated.",
+        placement: "bottomRight",
+    });
     } catch (error) {
       console.error('Error during form submission:', error);
-      alert("Update Failed: Failed to update customer data.");
+      notification.error({
+        message: "Action Failed",
+        description: "Failed to update customer information.",
+        placement: "bottomRight",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -69,7 +77,7 @@ export default function UpdateCustomer() {
       <Spin spinning={loading}>
         <main className="w-full">
           <Card title={"Product Information"}>
-            <Form form={form} layout="vertical">
+            <Form form={form} layout="vertical" onFinish={handleFormSubmit}>
               <div className="grid grid-cols-2 items-start justify-start gap-x-3">
                 <Form.Item
                   name={"customerId"}
@@ -99,7 +107,7 @@ export default function UpdateCustomer() {
                     { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
-                  <Select placeholder="Enter phone number" allowClear />
+                  <Input placeholder="Enter phone number" allowClear />
                 </Form.Item>
                 <Form.Item
                   name={"customerEmail"}
@@ -155,6 +163,11 @@ export default function UpdateCustomer() {
                 </Form.Item>
               </div>
               {/* Footer*/}
+              {updateSuccess && (
+                <div className="text-green-500 font-semibold mt-2">
+                  Change to public
+                </div>
+              )}
               <div className="flex gap-3 mt-6 col-span-2 justify-end items-center">
                 <Button
                   className="font-semibold"
@@ -171,7 +184,7 @@ export default function UpdateCustomer() {
                   htmlType="submit"
                   icon={<SaveOutlined rev={undefined} />}
                 >
-                  Save and Exit
+                  Save
                 </Button>
               </div>
             </Form>
