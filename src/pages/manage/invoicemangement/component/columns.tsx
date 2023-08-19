@@ -12,7 +12,7 @@ export const columns = [
         dataIndex: 'orderId',       
         key: 'orderId',
         // fixed: FixedType.Left,
-        render: (orderId: any) => (
+        render: (orderId: any) => (   
             <span className="line-clamp-2" title={orderId}>
                 {orderId}
             </span>

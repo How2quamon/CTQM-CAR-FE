@@ -30,6 +30,7 @@ export default function Invoicemangement() {
         popupComponent: updatePopup,
     } = usePopup();
     const [ListOrders, setListOrders] = useState<OrderDTO[]>([]);
+    // const [deletingOrderId, setDeletingOrderId] = useState<string | null>(null);
     const [loading, setIsLoading] = useState<boolean>(false);
     useEffect(() => {
         // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
@@ -57,88 +58,86 @@ export default function Invoicemangement() {
     const handleDelete = async (orderId: string) => {
         modal.confirm({
             title: "Xác nhận xóa!",
-            onOk() {
-                ctqmService.orderApi
-                    .deleteOrderWithId(orderId as string)
-                    .then(() => {
-                        handleDeleteSuccess();
-                    })
-                    .catch(({ error }) => {
-                        handleDeleteFailed(error);
-                    })
-                    .finally(() => {
-                        setIsLoading(false);
-                    });
-            },
+            async onOk() {
+                try {
+                    setIsLoading(true);
+                    await ctqmService.orderApi.deleteOrderWithId(orderId)
+                    handleDeleteSuccess();
+                } catch (error) {
+                    handleDeleteFailed(error);
+                } finally {
+                    setIsLoading(false);
+                }       
+            },      
         });
     };
-    const handleDeleteSuccess = () => {
-        message.success("Xóa thành công");
-        getListOrder();
-    };
+const handleDeleteSuccess = () => {
+    message.success("Xóa thành công");
+    getListOrder();
+};
 
-    const handleDeleteFailed = (error: any) => {
-        showNotificationError(error);
-    };
+const handleDeleteFailed = (error: any) => {
+    showNotificationError(error);
+};
 
-    return (
-        <React.Fragment>
-            <NavBar />
-            <Card title="Order List">
-                <div className="h-screen bg-gray-100 pt-[40px] mt-[-20px]">
-                    <Table
-                        scroll={{ x: 1500 }}
-                        dataSource={ListOrders}
-                        pagination={false}
-                        columns={[
-                            {
-                                title: "",
-                                width: 50,
-                                dataIndex: "action",
-                                key: "action",
-                                render(orderId: string) {
-                                    return (
-                                        <Dropdown
-                                            placement="bottomRight"
-                                            overlay={
-                                                <Menu>
-                                                    <Link to={"/updateOrder"}>
-                                                        <Menu.Item>
-                                                            <div className="flex gap-3">
-                                                                <EditOutlined rev={undefined} />
-                                                                <p>Update</p>
-                                                            </div>
-                                                        </Menu.Item>
-                                                    </Link>
+return (
+    <React.Fragment>
+        <NavBar />
+        <Card title="Order List">
+            <div className="h-screen bg-gray-100 pt-[40px] mt-[-20px]">
+                <Table
+                    scroll={{ x: 1500 }}
+                    dataSource={ListOrders}
+                    pagination={false}
+                    columns={[
+                        {
+                            title: "",
+                            width: 50,
+                            dataIndex: "action",
+                            key: "action",
+                            render(item: string, order: any) {
+                                return (
+                                    <Dropdown
+                                        placement="bottomRight"
+                                        overlay={
+                                            <Menu>
+                                                <Link to={`/updateOrder/${order.orderId}`}>
                                                     <Menu.Item>
-                                                        <Popconfirm
-                                                            title="Delete order!"
-                                                            description="Are you sure you want to delete this product?"
-                                                            onConfirm={() => handleDelete(orderId)}
-                                                            okText={<span className="text-black">Yes</span>}
-                                                            cancelText="No"
-                                                            className="flex justify-start items-center gap-3"
-                                                        >
-                                                            <DeleteOutlined rev={undefined} />
-                                                            <p>Delete</p>
-                                                        </Popconfirm>
+                                                        <div className="flex gap-3">
+                                                            <EditOutlined rev={undefined} />
+                                                            <p>Update</p>
+                                                        </div>
                                                     </Menu.Item>
-                                                </Menu>
-                                            }
-                                        >
-                                            <Button icon={<EllipsisOutlined rev={undefined} />} />
-                                        </Dropdown>
-                                    );
-                                },
+                                                </Link>
+                                                <Menu.Item>
+                                                    <Popconfirm
+                                                        title="Delete order!"
+                                                        description="Are you sure you want to delete this product?"
+                                                        onConfirm={() => handleDelete(order.orderId)}
+                                                        okText={<span className="text-black">Yes</span>}
+                                                        cancelText="No"
+                                                        className="flex justify-start items-center gap-3"
+                                                    >
+                                                        <DeleteOutlined rev={undefined} />
+                                                        <p>Delete</p>
+                                                    </Popconfirm>
+                                                </Menu.Item>
+                                            </Menu>
+                                        }
+                                    >
+                                        <Button icon={<EllipsisOutlined rev={undefined} />} />
+                                    </Dropdown>
+                                );
                             },
-                        ].concat(columns as [])}
-                        loading={loading} />
-                    <Pagination total={data.totalCount} className="m-2" />
-                </div>
-                <Footer />
-            </Card>
-        </React.Fragment>
-    );
+                        },
+                    ].concat(columns as [])}
+                    loading={loading} />
+                <Pagination total={data.totalCount} className="m-2" />
+            </div>
+            <Footer />
+        </Card>
+    </React.Fragment>
+);
 };
 
 
