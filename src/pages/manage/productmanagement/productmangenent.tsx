@@ -119,13 +119,13 @@ export default function ProductManagement() {
                   width: 50,
                   dataIndex: "action",
                   key: "action",
-                  render(carId: string) {
+                  render(item: string, car: any) {
                     return (
                       <Dropdown
                         placement="bottomRight"
                         overlay={
                           <Menu>
-                            <Link to={"/updateCar"}>
+                            <Link to={`/updateCar/${car.carId}`}>
                               <Menu.Item>
                                 <div className="flex gap-3">
                                 <EditOutlined rev={undefined} />
@@ -137,7 +137,7 @@ export default function ProductManagement() {
                               <Popconfirm
                                 title="Delete product!"
                                 description="Are you sure you want to delete this product?"
-                                onConfirm={() => handleDelete(carId)}
+                                onConfirm={() => handleDelete(car.carId)}
                                 okText={<span className="text-black">Yes</span>}
                                 cancelText="No"
                                 className="flex justify-start items-center gap-3"

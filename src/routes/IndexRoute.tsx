@@ -66,7 +66,10 @@ export default function IndexRoute() {
           <Route path="updateCar" element={<UpdateCar />}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
+          <Route path="updateOrder" element={<UpdateOrder/>}></Route>
           <Route path="updateOrder/:orderId" element={<UpdateOrder />}></Route>
+          <Route path="product-management" element={<ProductManagement/>}></Route>
+          <Route path="updateCar/:carId" element={<UpdateCar/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
