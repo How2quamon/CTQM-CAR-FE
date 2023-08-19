@@ -123,7 +123,7 @@ export default function UpdateCar() {
                   htmlType="submit"
                   icon={<SaveOutlined rev={undefined} />}
                 >
-                  Save and Cancel
+                  Save and Exit
                 </Button>
               </div>
             </Form>

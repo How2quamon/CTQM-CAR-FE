@@ -27,6 +27,8 @@ import usePopup from "src/hooks/usePopup";
 import AddResourcePlanPopup from "./Update";
 import { Link } from "react-router-dom";
 import Footer from "src/layout/Footer";
+import dayjs from 'dayjs';
+
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
 const title = "Customer Management";
@@ -57,6 +59,7 @@ export default function ProductManagement() {
     ctqmService.customerApi
       .getAllCustomer()
       .then((response) => {
+        response.customerDate = dayjs(response.customerDate) || '',
         setCustomers(response);
       })
       .catch(({ error }) => {
@@ -125,7 +128,7 @@ export default function ProductManagement() {
                         placement="bottomRight"
                         overlay={
                           <Menu>
-                            <Link to={"/updateCustomer"}>
+                            <Link to={`/updateCustomer/${customerId}`}>
                               <Menu.Item>
                                 <div className="flex gap-3">
                                 <EditOutlined rev={undefined} />

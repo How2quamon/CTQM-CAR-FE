@@ -3,7 +3,7 @@ export const columns = [
       title: "STT",
       dataIndex: "STT",
       key: "STT",
-      width: 40,
+      width: 30,
       // fixed: 'left',
       render: (text: any, record: any, index: any) => index + 1,
     },

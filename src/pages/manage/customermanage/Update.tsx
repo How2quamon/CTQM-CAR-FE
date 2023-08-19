@@ -1,12 +1,68 @@
 import { CloseOutlined, SaveOutlined } from "@ant-design/icons";
-import { Button, Card, Form, Input, Select, Spin } from "antd";
-import React from "react";
+import { Button, Card, DatePicker, Form, Input, notification, Select, Spin } from "antd";
+import dayjs from 'dayjs';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import useTitle from "src/hooks/useTitle";
 import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
+import { ctqmService } from "../../../services/ctqm.services";
+import { CustomerDTO } from "../../../share/dtos/service-proxies-dtos";
+
+const { Option } = Select;
 
 export default function UpdateCustomer() {
+  useTitle("Update Customer");
+  const { customerId = '' } = useParams();
   const [form] = Form.useForm();
   const [loading, setIsLoading] = React.useState<boolean>(false);
+  const [customerData, setCustomerData] = useState<CustomerDTO | null>(null);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    ctqmService.customerApi
+      .getCustomerWithId(customerId)
+      .then((response) => {
+        setCustomerData(response);
+        form.setFieldsValue({
+          customerId: response.customerId || '', // Nếu response.customerId undefined thì gán ''
+          customerName: response.customerName || '',
+          customerPhone: response.customerPhone || '',
+          customerAddress: response.customerAddress || '',
+          customerDate: dayjs(response.customerDate) || '',
+          customerLicense: response.customerLicense || '',
+          customerEmail: response.customerEmail || '',
+        })
+      })
+      .catch(({ error }) => {
+        notification.error({
+          message: "Action Failed",
+          description: error?.message ?? "Cannot get customer data!",
+          placement: "bottomRight",
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [customerId, form]);
+
+  const handleFormSubmit = async (values: CustomerDTO) => {
+    try {
+      setIsLoading(true);
+      const validatedValues = await form.validateFields(); // ...
+      console.log('Submitting form with values:', validatedValues);
+      await ctqmService.customerApi.updateCustomerInfo(customerId, validatedValues);
+      setUpdateSuccess(true);
+      alert("Update Successfully: Customer data has been updated.");
+    } catch (error) {
+      console.error('Error during form submission:', error);
+      alert("Update Failed: Failed to update customer data.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <NavBar />
@@ -27,83 +83,75 @@ export default function UpdateCustomer() {
                 </Form.Item>
                 <Form.Item
                   name={"customerName"}
-                  label="User Name"
+                  label="Customer Name"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
                     { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
-                  <Input placeholder="Enter User Name" allowClear />
+                  <Input placeholder="Enter Customer Name" allowClear />
                 </Form.Item>
                 <Form.Item
-                  name={"carModel"}
-                  label="Model"
+                  name={"customerPhone"}
+                  label="Phone Number"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
                     { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
-                  <Select placeholder="Enter Model" allowClear />
-                </Form.Item>  
-                <Form.Item
-                  name={"carClass"}
-                  label="Class"
-                  className="font-semibold text-[#828282] w-full"
-                  rules={[
-                    { required: true, message: "Data cannot be blank!" },
-                  ]}
-                >
-                  <Input placeholder="Enter class" allowClear />
+                  <Select placeholder="Enter phone number" allowClear />
                 </Form.Item>
                 <Form.Item
-                  name={"carEngine"}
-                  label="Engine"
+                  name={"customerEmail"}
+                  label="Email"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
                     { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
-                  <Input placeholder="Enter Engine" allowClear />
+                  <Input placeholder="Enter email" allowClear />
                 </Form.Item>
                 <Form.Item
-                  name={"carPrice"}
-                  label="Price"
+                  name={"customerAddress"}
+                  label="Address"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
                     { required: true, message: "Data cannot be blank!" },
                   ]}
                 >
-                  <Input placeholder="Enter Price" allowClear />
+                  <Input placeholder="Enter address" allowClear />
                 </Form.Item>
                 <Form.Item
-                  name={"head1"}
-                  label="Head"
+                  name="customerDate"
+                  label="Date of Birth"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
-                    { required: true, message: "Data cannot be blank!" },
+                    { required: true, message: 'Data cannot be blank!' }
                   ]}
                 >
-                  <Input placeholder="Enter Head" allowClear />
+                  <DatePicker />
                 </Form.Item>
                 <Form.Item
-                  name={"moTa"}
-                  label="Description"
+                  name="customerLicense"
+                  label="License"
                   className="font-semibold text-[#828282] w-full"
                   rules={[
-                    { required: true, message: "Data cannot be blank!" },
+                    { required: true, message: 'Please select license!' }
                   ]}
                 >
-                  <Input placeholder=" Enter Description" allowClear />
-                </Form.Item>
-                <Form.Item
-                  name={"moTa2"}
-                  label="Description 2"
-                  className="font-semibold text-[#828282] w-full"
-                  rules={[
-                    { required: true, message: "Data cannot be blank!" },
-                  ]}
-                >
-                  <Input placeholder=" Enter Description 2" allowClear />
+                  <Select placeholder="Select your license"
+                  >
+                    <Option value="B1">B1</Option>
+                    <Option value="B2">B2</Option>
+                    <Option value="C">C</Option>
+                    <Option value="D">D</Option>
+                    <Option value="E">E</Option>
+                    <Option value="F">F</Option>
+                    <Option value="FB2">FB2</Option>
+                    <Option value="FC">FC</Option>
+                    <Option value="FD">FD</Option>
+                    <Option value="FE">FE</Option>
+                  </Select>
                 </Form.Item>
               </div>
               {/* Footer*/}
@@ -123,7 +171,7 @@ export default function UpdateCustomer() {
                   htmlType="submit"
                   icon={<SaveOutlined rev={undefined} />}
                 >
-                  Save and Cancel
+                  Save and Exit
                 </Button>
               </div>
             </Form>
