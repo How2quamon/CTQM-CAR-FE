@@ -96,17 +96,14 @@ export default function List() {
           <Filter setFilter={setFilter} filter={filter} />
         </div>
       </div>
+      
       <section className="flex flex-wrap justify-center gap-3 m-2 mt-10">
         {listCars.length > 0 ? (
           listCars.map((car, index) => (
             <Card key={index} loading={loading}>
               <img src={imagePath + car.carName + '/' + car.image1?.trim()} alt="" className="w-[300px] h-[170px] rounded object-fill m-0" />
-              <Link to={''} onClick={() => quickAddToCart(car.carId as string)} className="absolute right-1 top-2">
-                {loadingProcess ? (
-                  <Spin size="large" />
-                ) : (
-                  <ShoppingCartOutlined rev={undefined} className="text-[17px]" />
-                )}
+              <Link to={''} onClick={() => quickAddToCart(car.carId as string)} className="absolute right-1 top-2" >
+                  <ShoppingCartOutlined rev={undefined} className="text-[17px]"/>
               </Link>
               <div className="flex flex-col gap-3">
                 <p className="text-[15px] font-semibold mt-2">{car.carName}</p>

@@ -1,6 +1,7 @@
 import { ctqmService } from "../../../services/ctqm.services";
 import { Form, Select, notification } from "antd";
 import React, { useEffect, useState } from "react";
+import { CarDTO} from "@share/dtos/service-proxies-dtos";
 
 interface FilterProps {
   setFilter: Function;
@@ -12,34 +13,32 @@ export default function Filter({ setFilter, filter }: FilterProps) {
   const onChangeCarModel = (carModel: string) => {
     setFilter({ ...filter, carModel: carModel });
   };
-  const carModel = 'Coupé';
+  const [listCars, setListCars] = useState<CarDTO[]>([]);
   const [filtertModel, setFiltertModel] = useState<any>();
   const [loading, setIsLoading] = useState<boolean>(false);
-  // useEffect(() => {
-  //   // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
-  //     setFiltertModel(response.map((item) => item.empFullName));
-  // }, []);
-  // const getListCar = () => {
-  //   setIsLoading(true);
-  //   ctqmService.carApi
-  //     .getCarWithModel(carModel)
-  //     .then((response) => {
-  //       setFiltertModel(response);
-  //       console.log(response);
-        
-  //     })
-  //     .catch(({ error }) => {
-  //       notification.error({
-  //         message: "Có lỗi xảy ra",
-  //         description:
-  //           error?.message ?? "Lỗi trong quá trình xử lý, vui lòng thử lại!",
-  //         placement: "bottomRight",
-  //       });
-  //     })
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     });
-  // };
+  useEffect(() => {
+    // Gọi API trong useEffect để lấy dữ liệu khi component được tải lần đầu
+    getListCar();
+  }, []);
+  const getListCar = () => {
+    setIsLoading(true);
+    ctqmService.carApi
+      .getAllCar()
+      .then((response) => {
+        setListCars(response);
+      })
+      .catch(({ error }) => {
+        notification.error({
+          message: "An error occurred",
+          description:
+            error?.message ?? "Error in processing, please try again!",
+          placement: "bottomRight",
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   return (
     <React.Fragment>
@@ -60,18 +59,14 @@ export default function Filter({ setFilter, filter }: FilterProps) {
         <Form.Item name="carModel">
           <Select
             defaultValue={null}
+            placeholder="Car Model"
             className="ml-5"
             style={{ width: 230 }}
             onChange={onChangeCarModel}
-            options={[
-              { value: null, label: 'Mercedes-Maybach' },
-              { value: 1, label: 'Mercedes-AMG' },
-              { value: 2, label: 'Mercedes-Benz GLS-Class' },
-              { value: 3, label: 'Mercedes-Benz G-Class' },
-              { value: 4, label: 'Mercedes-Benz EQ' },
-              { value: 5, label: 'Mercedes-Benz CLS-Class' },
-              { value: 6, label: 'Mercedes-Benz SL-Class' },
-          ]}
+            options={listCars?.map((item) => ({
+              value: item.carModel,
+              label: item.carModel,
+            }))}
           />
         </Form.Item>
       </div>
