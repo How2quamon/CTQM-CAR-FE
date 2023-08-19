@@ -17,8 +17,9 @@ import PaymentFail from "../pages/paymentt/paymentFail";
 import SearchList from "../pages/products/list/searchList";
 import Invoicemangement from "../pages/manage/invoicemangement/invoicemangement";
 import UpdateOrder from "../pages/manage/invoicemangement/component/Update"
-import ProductManagement from "@pages/manage/productmanagement/productmangenent";
-import UpdateCar from "@pages/manage/productmanagement/component/Update";
+import ProductManagement from "../pages/manage/productmanagement/productmangenent";
+import UpdateCar from "../pages/manage/productmanagement/component/Update";
+
 
 export default function IndexRoute() {
   return (
@@ -27,45 +28,47 @@ export default function IndexRoute() {
         <Route path="/" element={<HomePage />}></Route>
         <Route path="auth" element={<AuthPage />}></Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="list" element={<List/>}></Route>
-          <Route path="search/:search" element={<SearchList/>}></Route>
+          <Route path="list" element={<List />}></Route>
+          <Route path="search/:search" element={<SearchList />}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="login" element={<Login/>}></Route>
+          <Route path="login" element={<Login />}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="register" element={<Register/>}></Route>
+          <Route path="register" element={<Register />}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="products-details/:carName" element={<ProductDetails/>}></Route>
+          <Route path="products-details/:carName" element={<ProductDetails />}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="payment/:customerId" element={<Payment/>}></Route>
-          <Route path="paymentsuccess/:customerId" element={<PaymentSuccess/>}></Route>
-          <Route path="paymentfail/:customerId" element={<PaymentFail/>}></Route>
+          <Route path="payment/:customerId" element={<Payment />}></Route>
+          <Route path="paymentsuccess/:customerId" element={<PaymentSuccess />}></Route>
+          <Route path="paymentfail/:customerId" element={<PaymentFail />}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="cart/:customerId" element={<Cart/>}></Route>
-          <Route path="profile/:customerId" element={<UserPage/>}></Route>
+          <Route path="cart/:customerId" element={<Cart />}></Route>
+          <Route path="profile/:customerId" element={<UserPage />}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="profile/purchase-history/:customerId" element={<PurchaseHistory/>}></Route>
+          <Route path="profile/purchase-history/:customerId" element={<PurchaseHistory />}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="profile/change-password/:customerId" element={<ChangePassword/>}></Route>
+          <Route path="profile/change-password/:customerId" element={<ChangePassword />}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="subscribe" element={<Subscribe/>}></Route>
+          <Route path="subscribe" element={<Subscribe />}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="invoicemangement" element={<Invoicemangement/>}></Route>
+          <Route path="invoicemangement" element={<Invoicemangement />}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="updateOrder" element={<UpdateOrder/>}></Route>
-          <Route path="product-management" element={<ProductManagement/>}></Route>
-          <Route path="updateCar" element={<UpdateCar/>}></Route>
+          <Route path="product-management" element={<ProductManagement />}></Route>
+          <Route path="updateCar" element={<UpdateCar />}></Route>
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="updateOrder/:orderId" element={<UpdateOrder />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
-  );  
+  );
 }

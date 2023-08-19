@@ -146,7 +146,7 @@ export default function UpdateOrder() {
               {/* Footer*/}
               {updateSuccess && (
                 <div className="text-green-500 font-semibold mt-2">
-                  Update thành công
+                  Change to public
                 </div>
               )}
               <div className="flex gap-3 mt-6 col-span-2 justify-end items-center">
