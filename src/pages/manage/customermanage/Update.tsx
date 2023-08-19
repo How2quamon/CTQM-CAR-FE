@@ -1,8 +1,8 @@
-import { CloseOutlined, SaveOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, CloseOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, Card, DatePicker, Form, Input, notification, Select, Spin } from "antd";
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useTitle from "src/hooks/useTitle";
 import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
@@ -78,7 +78,7 @@ export default function UpdateCustomer() {
         <main className="w-full">
           <Card title={"Product Information"}>
             <Form form={form} layout="vertical" onFinish={handleFormSubmit}>
-              <div className="grid grid-cols-2 items-start justify-start gap-x-3">
+              <div className="grid grid-cols-1 lg:grid-cols-2 items-start justify-start gap-x-3">
                 <Form.Item
                   name={"customerId"}
                   label="ID"
@@ -168,17 +168,27 @@ export default function UpdateCustomer() {
                   Change to public
                 </div>
               )}
+              <div className="flex justify-between items-center">
+                <Link to={"/customer-management"}>
+                  <Button
+                    className="font-semibold"
+                    icon={<ArrowLeftOutlined rev={undefined} />}
+                    type="default"
+                  >
+                    Back
+                  </Button>
+                </Link>
               <div className="flex gap-3 mt-6 col-span-2 justify-end items-center">
                 <Button
                   className="font-semibold"
                   icon={<CloseOutlined rev={undefined} />}
                   type="default"
+                  danger
                 >
                   Cancel
                 </Button>
                 <Button
                   type="primary"
-                  ghost
                   className=" text-white font-semibold"
                   //   onClick={() => setIsContinue(false)}
                   htmlType="submit"
@@ -186,6 +196,7 @@ export default function UpdateCustomer() {
                 >
                   Save
                 </Button>
+              </div>
               </div>
             </Form>
           </Card>

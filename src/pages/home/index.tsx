@@ -4,8 +4,13 @@ import React from 'react';
 import useTitle from 'src/hooks/useTitle';
 import Footer from 'src/layout/Footer';
 import NavBar from 'src/layout/navigationBar';
-import homepage1 from 'src/videos/mercedes-amg-car-png-image-pngpix-9.png';
+import img4 from 'src/videos/img4.png';
+import img1 from 'src/videos/img1.png';
+import img7 from 'src/videos/img7.png';
+import img5 from 'src/videos/img5.png';
+
 import Howworks from 'src/videos/mercedes-benz-g-63-amg-mercedes-car-suv-white-front-view-115698742139qrfpozcbr.jpeg';
+import { Link } from 'react-router-dom';
 
 export default function List() {
     useTitle("CTQM - Car Shop");
@@ -18,21 +23,21 @@ export default function List() {
                         <source src="https://res.cloudinary.com/dbz9e4cwk/video/upload/v1692200866/rq1arbirg7suoaqcgn8k.mp4" type="video/mp4"/>
                     </video>
                     <h1 className='font-semibold text-[35px] absolute top-[100px] text-gray-200 flex items-center text-center left-[37%] justify-center tracking-widest'>Mercedes - Benz</h1>
-                    <div className="flex absolute bottom-[150px] text-gray-200 gap-10 justify-center left-[30%] text-center">
+                    <div className="flex absolute bottom-[150px] text-gray-200 gap-10 justify-center left-[23%] text-center">
                         <div className="flex flex-col">
-                            <p>333mi</p>
-                            <p>Range (EPA est.)</p>
+                            <p>621 hp</p>
+                            <p>Power @ 5,250-5,500 rpm</p>
                         </div>
                         <div className="flex flex-col">
-                            <p>333mi</p>
-                            <p>Range (EPA est.)</p>
+                            <p>4.5 sec **</p>
+                            <p>Acceleration, 0-60 mph</p>
                         </div>
                         <div className="flex flex-col">
-                            <p>333mi</p>
-                            <p>Range (EPA est.)</p>
+                            <p>664 lb-ft</p>
+                            <p>Torque @ 2,000-4,000 rpm</p>
                         </div>
                     </div>
-                    <Button size='large' className=' absolute bottom-12 bg-slate-300 w-[20%] left-[37%] flex justify-center' >Discover Now</Button>
+                    <Link to={"/list"}><Button size='large' className=' absolute bottom-12 bg-slate-300 w-[20%] left-[38%] flex justify-center' >Shop Now</Button></Link>
                     <Card title='Buy by body type' className='border-none'>
                         <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 content-center m-4  ">
                             <div className="flex flex-col justify-center items-center gap-4   ">
@@ -83,7 +88,6 @@ export default function List() {
                                         </clipPath>
                                     </defs>
                                 </svg>
-
                                 <p>Mercedes-Benz G-Class</p>
                             </div>
                             <div className="flex flex-col justify-center items-center gap-4">
@@ -130,34 +134,34 @@ export default function List() {
                 </div>
                 <div className="flex flex-row justify-around mt-10">
                     <div className="flex flex-col gap-6 justify-center w-[500px]">
-                        <h1 className='font-bold text-[30px]'>Let's explore the wonders.</h1>
-                        <p className=''>Open up the era of electrification with technological advancements from Mercedes-Benz.</p>
-                        <Button size='large' className='w-36'>Discover Now</Button>
+                        <h1 className='font-bold text-[30px]'>More captivating than a Gran Turismo.</h1>
+                        <p className=''> Mercedes-AMG GT 4-Door Coupé: Fulfilling individual style with diverse editions and an exhilarating driving experience.</p>
+                        {/* <Button size='large' className='w-36'>Discover Now</Button> */}
                     </div>
-                    <img src={homepage1} alt="Mecedes Benx" className='w-[50%] h-100' />
+                    <img src={img4} alt="Mecedes Benx" className='w-[50%] h-100' />
                 </div>
                 <div className="flex flex-row justify-around mt-10">
-                    <img src={homepage1} alt="Mecedes Benx" className='w-[50%] h-100' />
+                    <img src={img7} alt="Mecedes Benx" className='w-[50%] h-100' />
                     <div className="flex flex-col gap-6 justify-center w-[500px]">
-                        <h1 className='font-bold text-[30px]'>Let's explore the wonders.</h1>
-                        <p className=''>Open up the era of electrification with technological advancements from Mercedes-Benz.</p>
-                        <Button size='large' className='w-36'>Discover Now</Button>
+                        <h1 className='font-bold text-[30px]'>Style is everything.</h1>
+                        <p className=''>Few challenges are greater than crafting such sleek and tidy design for a large luxury SUV like the new GLS.</p>
+                        {/* <Button size='large' className='w-36'>Discover Now</Button> */}
                     </div>
                 </div>
                 <div className="flex flex-row justify-around mt-10">
                     <div className="flex flex-col gap-6 justify-center w-[500px]">
-                        <h1 className='font-bold text-[30px]'>Let's explore the wonders.</h1>
-                        <p className=''>Open up the era of electrification with technological advancements from Mercedes-Benz.</p>
-                        <Button size='large' className='w-36'>Discover Now</Button>
+                        <h1 className='font-bold text-[30px]'>Leading with style.</h1>
+                        <p className=''>Perfection of movement style is the hallmark of the Mercedes-Maybach S-Class. Improvements in body design, wheelbase, rear compartment doors and extended C-pillar side windows maximize vehicle space, providing a luxurious feeling.</p>
+                        {/* <Button size='large' className='w-36'>Discover Now</Button> */}
                     </div>
-                    <img src={homepage1} alt="Mecedes Benx" className='w-[50%] h-100' />
+                    <img src={img5} alt="Mecedes Benx" className='w-[50%] h-100' />
                 </div>
                 <div className="flex flex-row justify-around mt-10">
-                    <img src={homepage1} alt="Mecedes Benx" className='w-[50%] h-100' />
+                    <img src={img1} alt="Mecedes Benx" className='w-[50%] h-100' />
                     <div className="flex flex-col gap-6 justify-center w-[500px]">
-                        <h1 className='font-bold text-[30px]'>Let's explore the wonders.</h1>
-                        <p className=''>Open up the era of electrification with technological advancements from Mercedes-Benz.</p>
-                        <Button size='large' className='w-36'>Discover Now</Button>
+                        <h1 className='font-bold text-[30px]'>The New Mercedes-AMG C-Class.</h1>
+                        <p className=''>A game-changing model that transforms every journey into an exciting and captivating sports driving experience.</p>
+                        {/* <Button size='large' className='w-36'>Discover Now</Button> */}
                     </div>
                 </div>
 

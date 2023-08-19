@@ -8,40 +8,27 @@ import {
   Card,
   Dropdown,
   Menu,
-  Pagination,
   Popconfirm,
   Table,
   message,
-  notification,
+  notification
 } from "antd";
+import modal from "antd/es/modal";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import usePopup from "src/hooks/usePopup";
 import useTitle from "src/hooks/useTitle";
+import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
 import { showNotificationError } from "src/utils/notification";
 import { ctqmService } from "../../../services/ctqm.services";
 import { CustomerDTO } from "../../../share/dtos/service-proxies-dtos";
 import { columns } from "./columns";
-import modal from "antd/es/modal";
-import usePopup from "src/hooks/usePopup";
-import { Link } from "react-router-dom";
-import Footer from "src/layout/Footer";
-import dayjs from 'dayjs';
-
-// eslint-disable-next-line react-hooks/rules-of-hooks
 
 const title = "Customer Management";
 
-export default function ProductManagement() {
+export default function CustomerManagement() {
   useTitle(title);
-  const [data, setData] = useState<any>({
-    items: [],
-    totalCount: 0,
-  });
-  const {
-    show: showUpdatePopup,
-    hidden: hiddenUpdatePopup,
-    popupComponent: updatePopup,
-  } = usePopup();
   const [customers, setCustomers] = useState<CustomerDTO[]>([]);
   const [loading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
@@ -75,20 +62,20 @@ export default function ProductManagement() {
 
   const handleDelete = async (customerId: string) => {
     modal.confirm({
-        title: "Confirm to delete?",
-        async onOk() {
-            try {
-                setIsLoading(true);
-                await ctqmService.customerApi.deleteCustomerWithId(customerId)
-                handleDeleteSuccess();
-            } catch (error) {
-                handleDeleteFailed(error);
-            } finally {
-                setIsLoading(false);
-            }       
-        },      
+      title: "Confirm to delete?",
+      async onOk() {
+        try {
+          setIsLoading(true);
+          await ctqmService.customerApi.deleteCustomerWithId(customerId);
+          handleDeleteSuccess();
+        } catch (error) {
+          handleDeleteFailed(error);
+        } finally {
+          setIsLoading(false);
+        }
+      },
     });
-};
+  };
 
   const handleDeleteSuccess = () => {
     message.success("Deleted successfully!");
@@ -136,8 +123,10 @@ export default function ProductManagement() {
                             <Popconfirm
                               title="Delete customer?"
                               description="Are you sure you want to delete this customer?"
-                              onConfirm={() => handleDelete(customer.customerId)}
-                              okText={<span className="text-black">Yes</span>}
+                              onConfirm={() =>
+                                handleDelete(customer.customerId)
+                              }
+                              okText="Yes"
                               cancelText="No"
                               className="flex justify-start items-center gap-3"
                             >
@@ -156,7 +145,6 @@ export default function ProductManagement() {
             ].concat(columns as [])}
             loading={loading}
           />
-          <Pagination total={data.totalCount} className="m-2" />
         </div>
       </Card>
       <Footer />

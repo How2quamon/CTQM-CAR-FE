@@ -1,11 +1,15 @@
-import { CloseOutlined, SaveOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  CloseOutlined,
+  SaveOutlined,
+} from "@ant-design/icons";
 import { CarDTO } from "@share/dtos/service-proxies-dtos";
 import { Button, Card, Form, Input, Select, Spin, notification } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
 import { ctqmService } from "../../../../services/ctqm.services";
-import { Link, useParams } from "react-router-dom";
 
 export default function UpdateCar() {
   const [form] = Form.useForm();
@@ -13,7 +17,7 @@ export default function UpdateCar() {
   const { carId } = useParams();
   const [getData, setGetData] = useState(false);
   const [carInfo, setCarInfo] = useState<CarDTO | null>(null);
-  
+
   useEffect(() => {
     getCarDetail();
   }, [getData]);
@@ -41,7 +45,7 @@ export default function UpdateCar() {
   };
 
   const onFinish = (values: CarDTO) => {
-    console.log('Success:', values);
+    console.log("Success:", values);
     setIsLoading(true);
     const updateCarInfo: CarDTO = {
       carId: values.carId,
@@ -57,22 +61,23 @@ export default function UpdateCar() {
       image1: carInfo?.image1,
       image2: carInfo?.image2,
       image3: carInfo?.image3,
-      image4: carInfo?.image4
+      image4: carInfo?.image4,
     };
     ctqmService.carApi
       .updateCar(carId as string, updateCarInfo)
       .then((response) => {
         console.log("Result: ", response);
         notification.success({
-            message: "Action Success",
-            description: "Update car success!  ",
-            placement: "bottomRight",
-            });
-      }).catch(({ error }) => {
+          message: "Action Success",
+          description: "Update car success!  ",
+          placement: "bottomRight",
+        });
+      })
+      .catch(({ error }) => {
         notification.error({
-            message: "Action Failed",
-            description: error?.message ?? "Update car Failed!  ",
-            placement: "bottomRight",
+          message: "Action Failed",
+          description: error?.message ?? "Update car Failed!",
+          placement: "bottomRight",
         });
       })
       .finally(() => {
@@ -86,9 +91,6 @@ export default function UpdateCar() {
       {carInfo ? (
         <Spin spinning={loading}>
           <main className="w-full">
-          <Link to={'/product-management'} className="w-auto text-3xl font-bold text-black hover:underline hover:cursor-pointer">
-              Product management
-            </Link>
             <Card title={"Product Information"}>
               <Form
                 layout="vertical"
@@ -104,10 +106,10 @@ export default function UpdateCar() {
                   carPrice: carInfo?.carPrice,
                   head1: carInfo?.head1,
                   moTa: carInfo?.moTa,
-                  moTa2: carInfo?.moTa2
+                  moTa2: carInfo?.moTa2,
                 }}
               >
-                <div className="grid grid-cols-2 items-start justify-start gap-x-3">
+                <div className="grid grid-cols-1 lg:grid-cols-2 items-start justify-start gap-x-3">
                   <Form.Item
                     name="carId"
                     label="Id"
@@ -210,33 +212,40 @@ export default function UpdateCar() {
                   </Form.Item>
                 </div>
                 {/* Footer*/}
-                <div className="flex gap-3 mt-6 col-span-2 justify-end items-center">
-                  <Button
-                    className="font-semibold"
-                    icon={<CloseOutlined rev={undefined} />}
-                    type="default"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="primary"
-                    ghost
-                    className=" text-white font-semibold"
-                    //   onClick={() => setIsContinue(false)}
-                    htmlType="submit"
-                    icon={<SaveOutlined rev={undefined} />}
-                  >
-                    Save and Cancel
-                  </Button>
+                <div className="flex justify-between items-center">
+                  <Link to={"/product-management"}>
+                    <Button
+                      className="font-semibold"
+                      icon={<ArrowLeftOutlined rev={undefined} />}
+                      type="default"
+                    >
+                      Back
+                    </Button>
+                  </Link>
+                  <div className="flex gap-3 col-span-2 justify-end items-center">
+                    <Button
+                      className="font-semibold"
+                      icon={<CloseOutlined rev={undefined} />}
+                      type="default"
+                      danger
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="primary"
+                      className=" text-white font-semibold"
+                      htmlType="submit"
+                      icon={<SaveOutlined rev={undefined} />}
+                    >
+                      Save
+                    </Button>
+                  </div>
                 </div>
               </Form>
             </Card>
           </main>
         </Spin>
-
-      ) : (
-        null
-      )}
+      ) : null}
       <Footer />
     </>
   );
