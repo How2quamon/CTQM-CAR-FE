@@ -44,6 +44,11 @@ export default function Register() {
       .createNewCustomer(values)
       .then((response) => {
         setLogin(response);
+        notification.success({
+          message: "Registration Successful",
+          description: "Your account has been registered successfully!",
+          placement: "bottomRight",
+        });
       })
       .catch(({ error }) => {
         notification.error({
@@ -124,7 +129,7 @@ export default function Register() {
             onFinishFailed={onFinishFailed}
           >
             <Form.Item
-              name="email"
+              name="customerEmail"
               label="E-mail"
               rules={[
                 {
@@ -140,7 +145,7 @@ export default function Register() {
               <Input />
             </Form.Item>
             <Form.Item
-              name="password"
+              name="customerPassword"
               label="Password"
               rules={[
                 {
@@ -156,7 +161,7 @@ export default function Register() {
             <Form.Item
               name="confirm"
               label="Confirm Password"
-              dependencies={["password"]}
+              dependencies={["customerPassword"]}
               hasFeedback
               rules={[
                 {
@@ -165,9 +170,9 @@ export default function Register() {
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
+                    if (!value || getFieldValue("customerPassword") === value) {
                       return Promise.resolve();
-                    }
+                    } 
                     return Promise.reject(
                       new Error(
                         "The new password that you entered do not match!"
@@ -180,7 +185,7 @@ export default function Register() {
               <Input.Password />
             </Form.Item>
             <Form.Item
-              name="Full Name"
+              name="customerName"
               label="Full Name"
               tooltip="What do you want others to call you?"
               rules={[
@@ -194,7 +199,7 @@ export default function Register() {
               <Input />
             </Form.Item>
             <Form.Item
-              name="phone"
+              name="customerPhone"
               label="Phone Number"
               rules={[
                 { required: true, message: "Please input your phone number!" },
