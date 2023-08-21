@@ -17,6 +17,7 @@ const PurchaseHistory: React.FC = () => {
     const { customerId } = useParams();
     const [listOrders, setListOrders] = useState<CustomerOrderDTO[]>([]);
     const [loading, setIsLoading] = useState<boolean>(false);
+    const imagePath = "https://res.cloudinary.com/dbz9e4cwk/image/upload/v1692201767/product/";
     useEffect(() => {
         getListOrder();
     }, []);
@@ -69,7 +70,7 @@ const PurchaseHistory: React.FC = () => {
                                                 extra={<Link to={`/products-details/${order.carName}`} target="_blank">View</Link>}
                                             >
                                                 <Meta
-                                                    avatar={<Avatar size={100} shape="square" src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" />}
+                                                    avatar={<Avatar size={100} shape="square" src={imagePath + order.carName + '/' + order.image1?.trim()} />}
                                                     title={order.carName}
                                                     description={order.amount} />
                                                 <p className='mt-2 flex justify-end text-xl font-bold'>{order.totalPrice}</p>

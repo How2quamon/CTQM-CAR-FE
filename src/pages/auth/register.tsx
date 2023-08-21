@@ -35,7 +35,7 @@ export default function Register() {
   const [login, setLogin] = useState<any>();
   const [loading, setIsLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
   const onFinish = (values: any) => {
     // Xử lý dữ liệu đăng nhập khi form submit thành công
     setIsLoading(true);
@@ -72,10 +72,18 @@ export default function Register() {
 
   return (
     <React.Fragment>
+      {/* <div className="sticky top-0 z-10 bg-gray-100">
+        <div className="max-w-7xl- mx-auto px-4 sm:px-6 lg:px-8 py-1 md:py-5">
+          <div className="flex items-center md:justify-start">
+            <Link to="/">
+              <img className="h-6" src={logoDark} alt="CTQM logo" />
+            </Link>
+          </div>
+        </div>
+      </div> */}
       <div className="flex justify-center py-5 bg-slate-200 ">
         <div className="w-2/5 bg-slate-900 text-white flex justify-center rounded-l-lg py-36 px-12 flex-col">
-        {/* <img className="h-6" src={logoDark} alt="CTQM logo" className="h-6 mt-[-270px]"/> */}
-          {/* <img
+        {/* <img
                 src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
                 className="object-cover h-full w-full"
               /> */}
@@ -229,7 +237,7 @@ export default function Register() {
               </div>
             </Form.Item>
             <Form.Item {...tailFormItemLayout} className="ml-[60px]">
-              <Button
+              <Button                
                 htmlType="submit"
                 loading={loading}
                 className="border-2 border-slate-900  text-black-500 !rounded-full h-10 !px-10 !py-2 font-semibold hover:bg-slate-900 hover:text-white flex items-center"

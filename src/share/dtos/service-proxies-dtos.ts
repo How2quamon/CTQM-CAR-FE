@@ -92,6 +92,7 @@ export interface CartDetailDTO {
     carModel?: string | undefined;
     carAmount?: number;
     carPrice?: number;
+    image1?: string | undefined;
 }
 
 export interface CartNotiDTO {
@@ -158,6 +159,7 @@ export interface CustomerOrderDTO {
     orderStatus?: string | undefined;
     amount?: number;
     totalPrice?: number;
+    image1?: string | undefined;
 }
 
 export interface CustomerPaymentDTO {
