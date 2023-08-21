@@ -132,8 +132,8 @@ export default function Invoicemangement() {
             loading={loading}
           />
         </div>
-        <Footer />
       </Card>
+      <Footer />
     </React.Fragment>
   );
 }

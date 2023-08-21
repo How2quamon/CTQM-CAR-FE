@@ -243,7 +243,6 @@ export default function Register() {
           </Form>
         </div>
       </div>
-      <Footer/>
     </React.Fragment>
   );
 }

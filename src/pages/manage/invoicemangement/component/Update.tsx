@@ -55,10 +55,18 @@ export default function UpdateOrder() {
       console.log("Submitting form with values:", validatedValues);
       await ctqmService.orderApi.updateOrder(orderId, validatedValues);
       setUpdateSuccess(true);
-      alert("Update Successful: Order information has been updated.");
+      notification.success({
+        message: "Update successfully!",
+        description: "Customer information has been updated.",
+        placement: "bottomRight",
+    });
     } catch (error) {
       console.error("Error during form submission:", error);
-      alert("Update Failed: Failed to update order information.");
+      notification.error({
+        message: "Action Failed",
+        description: "Failed to update customer information.",
+        placement: "bottomRight",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -85,7 +93,7 @@ export default function UpdateOrder() {
                   className="font-semibold text-[#828282] w-full"
                   rules={[{ required: true, message: "Data cannot be blank!" }]}
                 >
-                  <Input placeholder="Enter Product Name" allowClear />
+                  <Input placeholder="Enter carId" allowClear />
                 </Form.Item>
                 <Form.Item
                   name={"customerId"}
@@ -93,23 +101,25 @@ export default function UpdateOrder() {
                   className="font-semibold text-[#828282] w-full"
                   rules={[{ required: true, message: "Data cannot be blank!" }]}
                 >
-                  <Input placeholder="Enter Model" allowClear />
+                  <Input placeholder="Enter customerId" allowClear />
                 </Form.Item>
+
                 <Form.Item
                   name={"orderDate"}
                   label="Date of payment"
                   className="font-semibold text-[#828282] w-full"
                   rules={[{ required: true, message: "Data cannot be blank!" }]}
                 >
-                  <Input placeholder="Enter class" allowClear />
+                  <Input placeholder="Enter Date" allowClear />
                 </Form.Item>
+
                 <Form.Item
                   name={"orderStatus"}
                   label="Payment methods"
                   className="font-semibold text-[#828282] w-full"
                   rules={[{ required: true, message: "Data cannot be blank!" }]}
                 >
-                  <Input placeholder="Enter Engine" allowClear />
+                  <Input placeholder="Enter Payment methods" allowClear />
                 </Form.Item>
                 <Form.Item
                   name={"amount"}
@@ -117,7 +127,7 @@ export default function UpdateOrder() {
                   className="font-semibold text-[#828282] w-full"
                   rules={[{ required: true, message: "Data cannot be blank!" }]}
                 >
-                  <Input placeholder="Enter Price" allowClear />
+                  <Input placeholder="Enter amount" allowClear />
                 </Form.Item>
                 <Form.Item
                   name={"totalPrice"}
@@ -125,7 +135,7 @@ export default function UpdateOrder() {
                   className="font-semibold text-[#828282] w-full"
                   rules={[{ required: true, message: "Data cannot be blank!" }]}
                 >
-                  <Input placeholder="Enter Head" allowClear />
+                  <Input placeholder="Enter total price" allowClear />
                 </Form.Item>
               </div>
               {/* Footer*/}
