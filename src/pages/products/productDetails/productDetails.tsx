@@ -297,6 +297,7 @@ const ProductDetails: React.FC = () => {
                   <Button
                     className="flex justify-center items-center my-2 w-3/5 h-10 border border-zinc-600 hover:bg-slate-50 text-black font-semibold !py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in"
                     onClick={() => addToCart(cars)}
+                    loading={loading}
                   >
                     Add to cart
                   </Button>

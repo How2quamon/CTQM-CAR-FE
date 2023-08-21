@@ -13,11 +13,12 @@ export default function Cart() {
   const [customerCartList, setCustomerCartList] = useState<CartDetailDTO[]>([]);
   const [amount, setAmount] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
-  const [taxTotal, setTaxTotal] = useState(19.09);
+  const [taxTotal, setTaxTotal] = useState(119.09);
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setIsLoading] = useState<boolean>(false);
   const { customerId } = useParams();
   const [getData, setGetData] = useState(false);
+  const imagePath = "https://res.cloudinary.com/dbz9e4cwk/image/upload/v1692201767/product/";
 
   // Hàm thay đổi số lượng cho một item cụ thể
   const handleChangeAmount = (
@@ -47,16 +48,21 @@ export default function Cart() {
         .then((rs) => {
           customerCartList[index].amount = newAmount;
           var tmpSubTotal = 0;
+          var taxSum = 1;
           if (type) {
             setAmount(amount + 1);
             tmpSubTotal = subTotal + customerCartList[index].carPrice!;
+            taxSum = taxTotal * (amount + 1);
+            setTaxTotal(taxSum);
           }
           if (!type) {
             setAmount(amount - 1);
             tmpSubTotal = subTotal - customerCartList[index].carPrice!;
+            taxSum = taxTotal * (amount - 1);
+            setTaxTotal(taxSum);
           }
           setSubTotal(tmpSubTotal)
-          setTotalPrice(tmpSubTotal + taxTotal);
+          setTotalPrice(tmpSubTotal + taxSum);
           console.log(customerCartList[index].amount);
           console.log("UPDATE", rs);
         })
@@ -86,8 +92,10 @@ export default function Cart() {
       .then((response: CustomerCartDTO) => {
         setCustomerCartList(response.customerCarts!);
         setAmount(response.totalAmount!);
+        const taxSum = taxTotal * response.totalAmount!;
+        setTaxTotal(taxSum)
         setSubTotal(response.totalDiscount!);
-        setTotalPrice(response.totalDiscount! + taxTotal);
+        setTotalPrice(response.totalDiscount! + taxSum);
       })
       .catch(({ error }) => {
         notification.error({
@@ -155,9 +163,9 @@ export default function Cart() {
                   className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start"
                 >
                   <img
-                    src="Homepage.png"
+                    src={imagePath + cart.carName + '/' + cart.image1?.trim()}
                     alt="product"
-                    className="w-full rounded-lg sm:w-40"
+                    className="w-full rounded-lg sm:w-40 object-cover"
                   />
                   <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                     <div className="mt-5 sm:mt-0">
@@ -209,7 +217,7 @@ export default function Cart() {
                         Remove
                       </button>
                       <div className="flex items-center space-x-4">
-                        <p className="text-sm">{cart.carPrice} $</p>
+                        <h6 className="text-sm">${cart.carPrice}</h6>
                       </div>
                     </div>
                   </div>
@@ -224,7 +232,7 @@ export default function Cart() {
           <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
             <div className="mb-2 flex justify-between">
               <p className="text-gray-700">Amounts</p>
-              <p className="text-gray-700">${amount}</p>
+              <p className="text-gray-700">{amount}</p>
             </div>
             <div className="mb-2 flex justify-between">
               <p className="text-gray-700">Subtotal</p>
@@ -235,7 +243,7 @@ export default function Cart() {
               <p className="text-lg font-bold">Total</p>
               <div className="">
                 <p className="mb-1 text-lg font-bold">${totalPrice} USD</p>
-                <p className="text-sm text-gray-700">including VAT</p>
+                <p className="text-sm text-gray-700">including GST</p>
               </div>
             </div>
             <hr className="my-4" />

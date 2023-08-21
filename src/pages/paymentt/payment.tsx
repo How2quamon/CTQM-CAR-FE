@@ -22,12 +22,13 @@ export default function Payment() {
   const [customerCartList, setCustomerCartList] = useState<CartDetailDTO[]>([]);
   const [amount, setAmount] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
-  const [taxTotal, setTaxTotal] = useState(19.09);
+  const [taxTotal, setTaxTotal] = useState(119.09);
   const [totalPrice, setTotalPrice] = useState(0);
   const [paymentMethods, setPaymentMethods] = useState("paypal");
   const [loading, setIsLoading] = useState<boolean>(false);
   const { customerId } = useParams();
   const [getData, setGetData] = useState(false);
+  const imagePath = "https://res.cloudinary.com/dbz9e4cwk/image/upload/v1692201767/product/";
 
   const handleToggleForm = () => {
     setIsLoginForm(!isLoginForm);
@@ -58,8 +59,10 @@ export default function Payment() {
       .then((response: CustomerCartDTO) => {
         setCustomerCartList(response.customerCarts!);
         setAmount(response.totalAmount!);
+        const taxSum = taxTotal * response.totalAmount!;
+        setTaxTotal(taxSum)
         setSubTotal(response.totalDiscount!);
-        setTotalPrice(response.totalDiscount! + taxTotal);
+        setTotalPrice(response.totalDiscount! + taxSum);
       })
       .catch(({ error }) => {
         notification.error({
@@ -137,7 +140,9 @@ export default function Payment() {
                     >
                       <div className="w-full flex items-center">
                         <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
-                          <img src="Homepage.png" alt="" />
+                          <img src={imagePath + cart.carName + '/' + cart.image1?.trim()} 
+                          alt="product"
+                          className="w-full h-full object-cover" />
                         </div>
                         <div className="flex-grow pl-3">
                           <h6 className="font-semibold uppercase ">
