@@ -61,7 +61,7 @@ export default function IndexRoute() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="updateOrder/:orderId" element={<UpdateOrder/>}></Route>
-          <Route path="invoicemangement" element={<Invoicemangement/>}></Route>
+          <Route path="invoice-management" element={<Invoicemangement/>}></Route>
         </Route>
         <Route element={<ProtectedRoute />}>          
           <Route path="product-management" element={<ProductManagement/>}></Route>

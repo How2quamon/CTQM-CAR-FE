@@ -140,78 +140,80 @@ export default function Cart() {
   return (
     <React.Fragment>
       <NavBar />
-      <div className="h-screen bg-gray-100 pt-20">
-        <h1 className="mb-8 text-center text-2xl font-bold">Cart Items</h1>
+      <main className="bg-gray-100 relative">
+        <div className="flex mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold mt-[30px] ml-[500px]">Cart Items</h1>
+        </div>
         <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
           <div className="rounded-lg md:w-2/3">
             {loading ? (
               <Spin size="large" className="flex justify-center items-center" />
             ) : customerCartList.length > 0 ? (
               customerCartList.map((cart, cartIndex) =>
-                    <div
-                      key={cart.carId}
-                      className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start"
-                    >
-                      <img
-                        src="Homepage.png"
-                        alt="product"
-                        className="w-full rounded-lg sm:w-40"
-                      />
-                      <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-                        <div className="mt-5 sm:mt-0">
-                          <h2 className="text-lg font-bold text-gray-900">
-                            {cart.carName}
-                          </h2>
-                          <p className="mt-1 text-xs text-gray-700">
-                            {cart.carModel}
-                          </p>
-                        </div>
-                        <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-                          <div className="flex items-center border border-gray-200 rounded">
-                            <button
-                              className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
-                              onClick={() =>
-                                handleChangeAmount(
-                                  cartIndex,
-                                  (cart.amount as number) - 1,
-                                  cart.cartId as string,
-                                  false
-                                )
-                              } // Xử lý cho item đầu tiên
-                            >
-                              -
-                            </button>
-                            <span className="text-center items-center">
-                              {cart.amount}
-                            </span>
-                            <button
-                              className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
-                              onClick={() =>
-                                handleChangeAmount(
-                                  cartIndex,
-                                  (cart.amount as number) + 1,
-                                  cart.cartId as string,
-                                  true
-                                )
-                              } // Xử lý cho item đầu tiên
-                            >
-                              +
-                            </button>
-                          </div>
-                          <button
-                            className="underline decoration-solid bg-white hover:bg-gray-200"
-                            onClick={() =>
-                              deleteCart(cart.cartId as string, cartIndex)
-                            }
-                          >
-                            Remove
-                          </button>
-                          <div className="flex items-center space-x-4">
-                            <p className="text-sm">{cart.carPrice} $</p>
-                          </div>
-                        </div>
+                <div
+                  key={cart.carId}
+                  className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start"
+                >
+                  <img
+                    src="Homepage.png"
+                    alt="product"
+                    className="w-full rounded-lg sm:w-40"
+                  />
+                  <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+                    <div className="mt-5 sm:mt-0">
+                      <h2 className="text-lg font-bold text-gray-900">
+                        {cart.carName}
+                      </h2>
+                      <p className="mt-1 text-xs text-gray-700">
+                        {cart.carModel}
+                      </p>
+                    </div>
+                    <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+                      <div className="flex items-center border border-gray-200 rounded">
+                        <button
+                          className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
+                          onClick={() =>
+                            handleChangeAmount(
+                              cartIndex,
+                              (cart.amount as number) - 1,
+                              cart.cartId as string,
+                              false
+                            )
+                          } // Xử lý cho item đầu tiên
+                        >
+                          -
+                        </button>
+                        <span className="text-center items-center">
+                          {cart.amount}
+                        </span>
+                        <button
+                          className="w-10 h-10 leading-5 text-gray-600 transition hover:opacity-75"
+                          onClick={() =>
+                            handleChangeAmount(
+                              cartIndex,
+                              (cart.amount as number) + 1,
+                              cart.cartId as string,
+                              true
+                            )
+                          } // Xử lý cho item đầu tiên
+                        >
+                          +
+                        </button>
+                      </div>
+                      <button
+                        className="underline decoration-solid bg-white hover:bg-gray-200"
+                        onClick={() =>
+                          deleteCart(cart.cartId as string, cartIndex)
+                        }
+                      >
+                        Remove
+                      </button>
+                      <div className="flex items-center space-x-4">
+                        <p className="text-sm">{cart.carPrice} $</p>
                       </div>
                     </div>
+                  </div>
+                </div>
               )
             ) : (
               <p className="text-[15px] font-semibold mt-2">
@@ -252,7 +254,7 @@ export default function Cart() {
             </p>
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </React.Fragment>
   );
