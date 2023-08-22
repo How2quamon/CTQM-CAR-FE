@@ -84,7 +84,13 @@ export default function SearchList() {
         setLoadingProcess(false);
       })
   }
-
+  if (!loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin size="large" />
+      </div>
+    );
+  }
   return (
     <React.Fragment>
       <NavBar />
