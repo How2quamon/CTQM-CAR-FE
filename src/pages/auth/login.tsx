@@ -59,15 +59,11 @@ export default function Login() {
 
   return (
     <React.Fragment>
-      <div className="sticky top-0 z-10 bg-gray-100">
-        <div className="max-w-7xl- mx-auto px-4 sm:px-6 lg:px-8 py-1 md:py-5">
-          <div className="flex items-center md:justify-start">
-            <Link to="/">
-              <img className="h-6" src={logoDark} alt="CTQM logo" />
-            </Link>
-          </div>
-        </div>
-      </div>
+        {/* <div className="flex items-center md:justify-start px-4 py-1 md:py-5  bg-gray-100">
+          <Link to="/">
+            <img className="h-6" src={logoDark} alt="CTQM logo" />
+          </Link>
+        </div> */}
       <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
         <main className=" flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
           <div className="bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl">
@@ -147,7 +143,10 @@ export default function Login() {
               </div>
             </div>
             <div className="w-2/5 bg-slate-900 text-white rounded-tr-2xl round-br-2xl py-36 px-12 flex flex-col">
-                <img src={logoLight} className="mb-5" alt=""/>
+            <Link to="/">
+            <img src={logoLight} className="mb-5" alt="CTQM logo" />
+          </Link>
+              {/* <img src={logoLight} className="mb-5" alt="" /> */}
               <div className="border-2 w-10 border-white inline-block mb-2"></div>
               <p className="my-5">
                 Fill up your information and start shopping which us.
