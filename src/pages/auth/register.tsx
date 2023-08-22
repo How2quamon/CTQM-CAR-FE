@@ -6,6 +6,7 @@ import { ctqmService } from "../../services/ctqm.services";
 import useTitle from "src/hooks/useTitle";
 import NavBar from "src/layout/navigationBar";
 import Footer from "src/layout/Footer";
+import logoDark from "../../logo/ctqm-logo-dark.svg";
 
 export default function Register() {
   useTitle("Register");
@@ -43,6 +44,11 @@ export default function Register() {
       .createNewCustomer(values)
       .then((response) => {
         setLogin(response);
+        notification.success({
+          message: "Registration Successful",
+          description: "Your account has been registered successfully!",
+          placement: "bottomRight",
+        });
       })
       .catch(({ error }) => {
         notification.error({
@@ -66,16 +72,24 @@ export default function Register() {
 
   return (
     <React.Fragment>
-      <NavBar/>
+      {/* <div className="sticky top-0 z-10 bg-gray-100">
+        <div className="max-w-7xl- mx-auto px-4 sm:px-6 lg:px-8 py-1 md:py-5">
+          <div className="flex items-center md:justify-start">
+            <Link to="/">
+              <img className="h-6" src={logoDark} alt="CTQM logo" />
+            </Link>
+          </div>
+        </div>
+      </div> */}
       <div className="flex justify-center py-5 bg-slate-200 ">
         <div className="w-2/5 bg-slate-900 text-white flex justify-center rounded-l-lg py-36 px-12 flex-col">
-        <img
+        {/* <img
                 src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
                 className="object-cover h-full w-full"
-              />
-          {/* <div className="w-[100px] ">
+              /> */}
+          <div className="w-[100px] ">
             <Link to={'/'}><img src={logo} className="h-6 mt-[-270px]" alt="" /></Link>
-          </div> */}
+          </div>
           <div className="mt-[-60px]">
             <h2 className="text-3xl font-bold mb-2">Greetings, new customer!</h2>
             <div className="border-2 w-10 border-white inline-block mb-2"></div>
@@ -115,7 +129,7 @@ export default function Register() {
             onFinishFailed={onFinishFailed}
           >
             <Form.Item
-              name="email"
+              name="customerEmail"
               label="E-mail"
               rules={[
                 {
@@ -131,7 +145,7 @@ export default function Register() {
               <Input />
             </Form.Item>
             <Form.Item
-              name="password"
+              name="customerPassword"
               label="Password"
               rules={[
                 {
@@ -147,7 +161,7 @@ export default function Register() {
             <Form.Item
               name="confirm"
               label="Confirm Password"
-              dependencies={["password"]}
+              dependencies={["customerPassword"]}
               hasFeedback
               rules={[
                 {
@@ -156,7 +170,7 @@ export default function Register() {
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
+                    if (!value || getFieldValue("customerPassword") === value) {
                       return Promise.resolve();
                     }
                     return Promise.reject(
@@ -171,7 +185,7 @@ export default function Register() {
               <Input.Password />
             </Form.Item>
             <Form.Item
-              name="Full Name"
+              name="customerName"
               label="Full Name"
               tooltip="What do you want others to call you?"
               rules={[
@@ -185,7 +199,7 @@ export default function Register() {
               <Input />
             </Form.Item>
             <Form.Item
-              name="phone"
+              name="customerPhone"
               label="Phone Number"
               rules={[
                 { required: true, message: "Please input your phone number!" },
@@ -234,7 +248,6 @@ export default function Register() {
           </Form>
         </div>
       </div>
-      <Footer/>
     </React.Fragment>
   );
 }

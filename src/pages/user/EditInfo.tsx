@@ -77,7 +77,7 @@ const EditInfo: React.FC = () => {
   let navigate = useNavigate();
   const { customerId } = useParams();
   const [getdata, setGetData] = useState(false);
-  const [customers, setCustomers] = useState<CustomerDTO | null>(null)
+  const [customers, setCustomers] = useState<CustomerDTO | null>(null);
 
   useEffect(() => {
     getUserInfo();

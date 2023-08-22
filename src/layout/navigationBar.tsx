@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 const NavBar = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [customer, setCustomer] = useState<string>("");
   const [customerID, setCustomerID] = useState<string>("");
   useEffect(() => {
@@ -17,6 +18,7 @@ const NavBar = () => {
       setCustomer(customerName);
       setCustomerID(customerId!);
       setIsLogin(true);
+      if (customerName == "Cao Viet Thang") setIsAdmin(true);
     }
   }, []);
   const [showSideBar, setSideBar] = useState(false);
@@ -86,9 +88,13 @@ const NavBar = () => {
                   <Link to="/login">Account</Link>
                 )}
             </div>
+            {isAdmin ? (
               <div onClick={handleNav} className="py-2 px-4 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in hover:cursor-pointer">
                 Management
               </div>
+            ) : (
+              null
+            )}
           </div>
           {/* Responsive menu for later dev */}
           <div
@@ -103,13 +109,13 @@ const NavBar = () => {
             </div>
             <ul className="h-screen pt-8 px-6 bg-stone-950 ">
             <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-                <Link to={'/'}>Product Management</Link>
+                <Link to={'/product-management'}>Product Management</Link>
               </li>
               <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-                <Link to={'/'}>Invoice Management</Link>
+                <Link to={'/invoice-management'}>Invoice Management</Link>
               </li>
               <li className="py-5 pl-3 hover:rounded hover:bg-slate-700 transition duration-150 ease-out hover:ease-in">
-                <Link to={'/'}>Customer Management</Link>
+              <Link to={'/customer-management'}>Customer Management</Link>
               </li>
             </ul>
           </div>

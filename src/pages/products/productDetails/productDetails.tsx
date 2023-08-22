@@ -5,32 +5,34 @@ import {
   LinkOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
-import { CarDTO, CartDTO, CartNotiDTO } from "../../../share/dtos/service-proxies-dtos";
 import { Button, Card, Popover, Spin, notification } from "antd";
+import copy from "copy-to-clipboard";
+import { Helmet } from "react-helmet";
 import { Link, useParams } from "react-router-dom";
+import { FacebookIcon, FacebookShareButton } from "react-share";
+import { Segment } from "semantic-ui-react";
 import useTitle from "src/hooks/useTitle";
 import Footer from "src/layout/Footer";
 import NavBar from "src/layout/navigationBar";
 import { ctqmService } from "../../../services/ctqm.services";
-import copy from "copy-to-clipboard";
-import { Helmet } from "react-helmet";
-import { FacebookShareButton, FacebookIcon } from "react-share";
-import { Segment, Container } from "semantic-ui-react";
+import {
+  CarDTO,
+  CartDTO,
+  CartNotiDTO,
+} from "../../../share/dtos/service-proxies-dtos";
 
 const ProductDetails: React.FC = () => {
   useTitle("Chi tiết sản phẩm");
   const [activeImg, setActiveImage] = useState("");
   const [amount, setAmount] = useState(1);
   const { carName } = useParams();
-  const [carTrim, setCarTrim] = useState("");
   const [carUrl, setCarUrl] = useState("");
   const [cars, setCars] = useState<CarDTO | null>(null);
   const [relateCars, setRelateCars] = useState<CarDTO[]>([]);
-  const [addCart, setaddCart] = useState<CartDTO| null>(null);
   const [loading, setIsLoading] = useState<boolean>(false);
   const [productLinkCopied, setProductLinkCopied] = useState(false);
   const [getData, setGetData] = useState(false);
-  const baseAppURL = "https://ctqmmec.azurewebsites.net/products-details/"; 
+  const baseAppURL = "https://ctqmmec.azurewebsites.net/products-details/";
   const handleCopyLink = (carName: string) => {
     const modifiedString = carName?.replace(/ /g, "%20");
     const productURL = `${baseAppURL}${modifiedString}`; // Lấy URL hiện tại của sản phẩm
@@ -38,13 +40,14 @@ const ProductDetails: React.FC = () => {
     setProductLinkCopied(true); // Đánh dấu rằng URL đã được sao chép
   };
   const [addToCartDto, setAddToCartDto] = useState<CartDTO>({
-    customerId: '',
-    carId: '',
+    customerId: "",
+    carId: "",
     amount: 0,
-    price: 0
+    price: 0,
   });
 
-  const imagePath = "https://res.cloudinary.com/dbz9e4cwk/image/upload/v1692201767/product/";
+  const imagePath =
+    "https://res.cloudinary.com/dbz9e4cwk/image/upload/v1692201767/product/";
 
   useEffect(() => {
     getCarDetail();
@@ -69,9 +72,9 @@ const ProductDetails: React.FC = () => {
       .finally(() => {
         setGetData(true);
         setIsLoading(false);
-        setActiveImage(imagePath + cars?.carName + '/' + cars?.image1?.trim());
+        setActiveImage(imagePath + cars?.carName + "/" + cars?.image1?.trim());
         const modifiedString = carName?.replace(/ /g, "%20");
-        setCarUrl(baseAppURL+modifiedString);
+        setCarUrl(baseAppURL + modifiedString);
         console.log("URL: ", carUrl);
       });
   };
@@ -97,9 +100,15 @@ const ProductDetails: React.FC = () => {
       .then((response: CartNotiDTO) => {
         notification.success({
           message: "Add to cart Success!",
-          description: response.amount + " " + response.carName + " with $" + response.price + " are in your cart.",
-          placement: "bottomRight", 
-        })
+          description:
+            response.amount +
+            " " +
+            response.carName +
+            " with $" +
+            response.price +
+            " are in your cart.",
+          placement: "bottomRight",
+        });
       })
       .catch(({ error }) => {
         notification.error({
@@ -113,26 +122,29 @@ const ProductDetails: React.FC = () => {
         setIsLoading(false);
       });
   };
-  
+
   const getCarRelate = (carModel: string) => {
     setGetData(false);
     setIsLoading(true);
     ctqmService.carApi
-    .getCarWithModel(carModel)
-    .then((response) => {
-      setRelateCars(response);
-    })
-    .finally(() => {
-      setGetData(true);
-      setIsLoading(false);
-    });
-  }
+      .getCarWithModel(carModel)
+      .then((response) => {
+        setRelateCars(response);
+      })
+      .finally(() => {
+        setGetData(true);
+        setIsLoading(false);
+      });
+  };
 
   if (!cars) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <Spin size="large" />
-      </div>
+      <React.Fragment>
+        <NavBar />
+        <div className="flex justify-center items-center h-screen">
+          <Spin size="large" />
+        </div>
+      </React.Fragment>
     );
   }
   const popoverContent = (
@@ -145,15 +157,16 @@ const ProductDetails: React.FC = () => {
     <React.Fragment>
       <NavBar />
       <main>
-      <meta name="title" content={cars.carName} />
-          <meta name="description" content={cars.head1} />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content={carUrl} />
-          <meta property="og:title" content={cars.carName} />
-          <meta property="og:description" content={cars.head1} />
-          <meta
-            property="og:image"
-            content={imagePath + cars.carName + "/" + cars.image1?.trim()}/>
+        <meta name="title" content={cars.carName} />
+        <meta name="description" content={cars.head1} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={carUrl} />
+        <meta property="og:title" content={cars.carName} />
+        <meta property="og:description" content={cars.head1} />
+        <meta
+          property="og:image"
+          content={imagePath + cars.carName + "/" + cars.image1?.trim()}
+        />
         <Helmet>
           <meta name="title" content={cars.carName} />
           <meta name="description" content={cars.head1} />
@@ -284,6 +297,7 @@ const ProductDetails: React.FC = () => {
                   <Button
                     className="flex justify-center items-center my-2 w-3/5 h-10 border border-zinc-600 hover:bg-slate-50 text-black font-semibold !py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in"
                     onClick={() => addToCart(cars)}
+                    loading={loading}
                   >
                     Add to cart
                   </Button>
@@ -309,9 +323,7 @@ const ProductDetails: React.FC = () => {
                   <Link to={""}>
                     <Card>
                       <img
-                        src={
-                          imagePath + car.carName + "/" + car.image1?.trim()
-                        }
+                        src={imagePath + car.carName + "/" + car.image1?.trim()}
                         alt=""
                         className="w-[300px] rounded"
                       />
@@ -325,7 +337,9 @@ const ProductDetails: React.FC = () => {
                         <p className="text-[15px] font-semibold mt-2">
                           {car.carName}
                         </p>
-                        <p className="text-[15px] font-semibold">${car.carPrice}</p>
+                        <p className="text-[15px] font-semibold">
+                          ${car.carPrice}
+                        </p>
                         <Card className="border-none bg-gray-100 !p-0 m-0">
                           <div className="flex gap-8 justify-center ">
                             <div className="flex flex-col justify-center items-center">
@@ -483,7 +497,10 @@ const ProductDetails: React.FC = () => {
                             </div>
                           </div>
                         </Card>
-                        <Link key={car.carName} to={`/products-details/${car.carName}`}>
+                        <Link
+                          key={car.carName}
+                          to={`/products-details/${car.carName}`}
+                        >
                           <Button className="w-full">Details</Button>
                         </Link>
                       </div>

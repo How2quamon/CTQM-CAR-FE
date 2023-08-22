@@ -283,7 +283,7 @@ export default function SearchList() {
         ) : (
           <div className="flex flex-col gap-6">
           <h1 className="font-semibold text-[20px]">
-            Empty!
+            No data
           </h1>
         </div>
         )}
