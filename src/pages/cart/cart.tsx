@@ -148,7 +148,7 @@ export default function Cart() {
   return (
     <React.Fragment>
       <NavBar />
-      <main className="bg-gray-100 relative">
+      <main className="bg-gray-100 relative h-screen">
         <div className="flex mb-8">
           <h1 className="text-3xl md:text-4xl font-bold mt-[30px] ml-[500px]">Cart Items</h1>
         </div>
