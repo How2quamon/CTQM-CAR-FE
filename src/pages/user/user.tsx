@@ -11,7 +11,7 @@ import SideMenu from "./SideMenu";
     return (
         <React.Fragment>
             <NavBar/>
-            <div className="min-h-screen bg-slate-700 leading-normal overflow-x-hidden lg:overflow-auto">
+            <div className="min-h-screen bg-gray-100 leading-normal overflow-x-hidden lg:overflow-auto">
             <div className='flex flex-col flex-1 md:p-0 md:mx-32 '>
                 <section className="mx-15 grid grid-cols-4 gap-6 bg-white">
                     <div className="">
