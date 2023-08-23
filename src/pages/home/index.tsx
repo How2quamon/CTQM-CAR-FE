@@ -23,7 +23,7 @@ export default function List() {
                         <source src="https://res.cloudinary.com/dbz9e4cwk/video/upload/v1692200866/rq1arbirg7suoaqcgn8k.mp4" type="video/mp4"/>
                     </video>
                     <h1 className='font-semibold text-[35px] absolute top-[100px] text-gray-200 flex items-center text-center left-[37%] justify-center tracking-widest'>Mercedes - Benz</h1>
-                    <div className="flex absolute bottom-[150px] text-gray-200 gap-10 justify-center left-[23%] text-center">
+                    <div className="flex absolute bottom-[150px] text-gray-200 gap-10 justify-center left-[28%] text-center">
                         <div className="flex flex-col">
                             <p>621 hp</p>
                             <p>Power @ 5,250-5,500 rpm</p>
