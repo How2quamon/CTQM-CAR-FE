@@ -248,9 +248,15 @@ export default function Cart() {
             </div>
             <hr className="my-4" />
             <div className="text-center">
+            {customerCartList.length > 0 ? (
               <Link to={`/payment/${customerId}`} className="px-20 py-3 rounded bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
                 Check out
               </Link>
+              ) : (
+              <Link to={''} className="px-20 py-3 rounded bg-blue-500 py-1.5 font-medium text-blue-50 opacity-50">
+                Check out
+              </Link>
+              )}
             </div>
             <hr className="my-4" />
             <p className="text-sm text-gray-700 text-justify">

@@ -100,6 +100,13 @@ export default function Payment() {
             window.location.href = rs.url;
           }
         })
+        .catch(({ error }) => {
+          notification.error({
+            message: "Action Failed",
+            description: error?.message ?? "Can't get your payment!",
+            placement: "bottomRight",
+          });
+        })
         .finally(() => {
           setIsLoading(false);
         });
@@ -112,6 +119,13 @@ export default function Payment() {
           if (rs.message == "redirect") {
             window.location.href = rs.url;
           }
+        })
+        .catch(({ error }) => {
+          notification.error({
+            message: "Action Failed",
+            description: error?.message ?? "Can't get your payment!",
+            placement: "bottomRight",
+          });
         })
         .finally(() => {
           setIsLoading(false);

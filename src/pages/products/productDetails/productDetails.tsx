@@ -301,9 +301,9 @@ const ProductDetails: React.FC = () => {
                   >
                     Add to cart
                   </Button>
-                  <Button className="flex justify-center items-center w-3/5 h-10 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
+                  {/* <Button className="flex justify-center items-center w-3/5 h-10 bg-slate-800 border border-zinc-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition ease-in-out duration-300 hover:ease-in">
                     Buy it now
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </article>
