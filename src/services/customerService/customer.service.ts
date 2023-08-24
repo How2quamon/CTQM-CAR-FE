@@ -15,7 +15,7 @@ const api = axios.create({
 
 // Hàm này sẽ thêm JWT token vào header trước mỗi lần gọi API
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("jwtToken"); // Thay đổi thành cách lấy JWT token trong ứng dụng của bạn
+  const token = localStorage.getItem("Token"); // Thay đổi thành cách lấy JWT token trong ứng dụng của bạn
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -32,12 +32,14 @@ api.interceptors.response.use(
       notification.error({
         message: "Unauthorized",
         description: "You are not logged in, Unauthorized!",
+        placement: "bottomRight",
       });
     }
     if (error.response.status === 403) {
       notification.error({
         message: "Forbidden",
         description: "You are not logged in, Forbidden!",
+        placement: "bottomRight",
       });
     }
     return Promise.reject(error);

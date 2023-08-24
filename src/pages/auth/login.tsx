@@ -42,6 +42,13 @@ export default function Login() {
           console.log("SAVE TOKEN");
           navigate("/");
         }
+        else {
+          notification.error({
+            message: "Password incorrect",
+            description: "Account or password is not correct!  ",
+            placement: "bottomRight",
+          });
+        }
       }).catch(({ error }) => {
         notification.error({
           message: "Có lỗi xảy ra",

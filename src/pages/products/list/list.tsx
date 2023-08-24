@@ -108,7 +108,7 @@ export default function List() {
               <div className="flex flex-col gap-3">
                 <p className="text-[15px] font-semibold mt-2">{car.carName}</p>
                 <p className="text-[15px] font-semibold">${car.carPrice}</p>
-                <Card className="border-none bg-gray-100 !p-0 m-0">
+                <Card className="border-none bg-gray-200 !p-0 m-0">
                   <div className="flex gap-8 justify-center ">
                     <div className="flex flex-col justify-center items-center">
                       <svg
