@@ -2,8 +2,7 @@ import { CustomerPaymentDTO, OrderDTO } from "@share/dtos/service-proxies-dtos";
 import { message, notification } from "antd";
 import axios from "axios";
 
-// const baseURL = "https://ctqmapi.azurewebsites.net";
-const baseURL = "https://localhost:7147";
+const baseURL = "https://ctqmapi.azurewebsites.net";
 
 const api = axios.create({
   baseURL,
