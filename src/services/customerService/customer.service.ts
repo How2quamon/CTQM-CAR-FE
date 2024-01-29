@@ -7,7 +7,7 @@ import {
 import { notification } from "antd";
 import axios from "axios";
 
-const baseURL = "https://ctqmapi.azurewebsites.net";
+const baseURL = "https://localhost:7147";
 
 const api = axios.create({
   baseURL,
